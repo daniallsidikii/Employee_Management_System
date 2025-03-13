@@ -1,0 +1,42 @@
+<Window x:Class="OHSAdminPanel.EmployeeDashboard"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Employee Dashboard" Height="750" Width="1350" WindowStartupLocation="CenterScreen">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="200"/> <!-- Left Dashboard Panel -->
+            <ColumnDefinition Width="*"/>   <!-- Main Content -->
+        </Grid.ColumnDefinitions>
+        
+        <!-- Dashboard Panel -->
+        <StackPanel Grid.Column="0" Background="#2C3E50" Width="200" VerticalAlignment="Stretch" Margin="10">
+            <Button Content="Mark Attendance" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="MarkAttendance_Click"/>
+            <Button Content="View Health Records" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="ViewHealthRecords_Click"/>
+            <Button Content="Logout" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="Logout_Click"/>
+        </StackPanel>
+
+        <!-- Main Content -->
+        <Grid Grid.Column="1" Margin="10">
+            <!-- Title -->
+            <TextBlock Text="Welcome to Employee Dashboard" 
+                       FontSize="28" 
+                       FontWeight="Bold" 
+                       HorizontalAlignment="Center" 
+                       VerticalAlignment="Top" 
+                       Margin="0,20,0,0"/>
+            
+            <!-- Attendance Status -->
+            <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20">
+                <TextBlock Text="Attendance Status:" FontSize="16" Margin="0,0,0,10"/>
+                <Button Content="Clock In" Width="150" Height="40" Click="ClockIn_Click"/>
+                <Button Content="Clock Out" Width="150" Height="40" Margin="0,10,0,0" Click="ClockOut_Click"/>
+            </StackPanel>
+
+            <!-- Health Records -->
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
+                <TextBlock Text="Health Records:" FontSize="16" Margin="0,0,0,10"/>
+                <Button Content="View Health Details" Width="200" Click="ViewHealth_Click"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

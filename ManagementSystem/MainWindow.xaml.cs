@@ -21,6 +21,12 @@ namespace OHSAdminPanel
                 EmployeeListView.ItemsSource = Employees;
             }
         }
+         private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
         private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(NameTextBox.Text) || NameTextBox.Text == "Enter Name" ||
@@ -49,14 +55,15 @@ namespace OHSAdminPanel
             EmailTextBox.Foreground = Brushes.Gray;
         }
 
+       
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            TextBox textBox = sender as TextBox;
-            if (textBox != null && textBox.Foreground == Brushes.Gray)
-            {
-                textBox.Text = "";
-                textBox.Foreground = Brushes.Black;
-            }
+           TextBox textBox = sender as TextBox;
+           if (textBox != null && textBox.Foreground == Brushes.Gray)
+           {
+               textBox.Text = "";
+               textBox.Foreground = Brushes.Black;
+           }
         }
 
         private void TextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -67,11 +74,12 @@ namespace OHSAdminPanel
                 if (textBox.Name == "NameTextBox") textBox.Text = "Enter Name";
                 else if (textBox.Name == "RoleTextBox") textBox.Text = "Enter Role";
                 else if (textBox.Name == "EmailTextBox") textBox.Text = "Enter Email";
+                else if (textBox.Name == "UsernameTextBox") textBox.Text = "Enter Username";
 
                 textBox.Foreground = Brushes.Gray;
             }
         }
-
+        
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (EmployeeListView.SelectedItem is Employee selectedEmployee)
@@ -101,6 +109,7 @@ namespace OHSAdminPanel
         }
     }
 
+   
     public class Employee
     {
         public int Id { get; set; }

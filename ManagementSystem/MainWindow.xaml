@@ -7,7 +7,7 @@
             <ColumnDefinition Width="200"/> <!-- Left Dashboard Panel -->
             <ColumnDefinition Width="*"/>   <!-- Main Content -->
         </Grid.ColumnDefinitions>
-
+        
         <!-- Dashboard Panel -->
         <StackPanel Grid.Column="0" Background="#2C3E50" Width="200" VerticalAlignment="Stretch" Margin="10">
             <Button Content="Attendance" Margin="5" Height="40" Background="#34495E" Foreground="White"/>
@@ -15,6 +15,7 @@
             <Button Content="OHS Violations" Margin="5" Height="40" Background="#34495E" Foreground="White"/>
             <Button Content="Contacts" Margin="5" Height="40" Background="#34495E" Foreground="White"/>
             <Button Content="Help" Margin="5" Height="40" Background="#34495E" Foreground="White"/>
+            <Button Content="Logout" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="Logout_Click"/>
         </StackPanel>
 
         <!-- Employee ListView -->
@@ -52,5 +53,3 @@
 
     </Grid>
 </Window>
-
-

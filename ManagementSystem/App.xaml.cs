@@ -9,8 +9,8 @@ namespace OHSAdminPanel
             base.OnStartup(e);
 
             // Directly open MainWindow
-            MainWindow mainWindow = new MainWindow();
-            mainWindow.Show();
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
         }
     }
 }
