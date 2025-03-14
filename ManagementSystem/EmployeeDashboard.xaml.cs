@@ -162,7 +162,7 @@ namespace OHSAdminPanel
                 DateTime clockOutTime = DateTime.Now;
                 TimeSpan workDuration = clockOutTime - clockInTime.Value;
 
-                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
+                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. \n Worked: {workDuration.TotalHours:F2} hours.";
                 attendanceLogs.Add(log);
 
                 // Show Clock-Out message separately
