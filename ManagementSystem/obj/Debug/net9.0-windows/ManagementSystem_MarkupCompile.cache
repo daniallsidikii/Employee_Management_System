@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\daniyal\ManagementSystem\obj\Debug\net9.0-windows\
+C:\daniyal\ManagementSystem\ManagementSystem\obj\Debug\net9.0-windows\
 ManagementSystem
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
-C:\daniyal\ManagementSystem\App.xaml
-11407045341
+C:\daniyal\ManagementSystem\ManagementSystem\App.xaml
+31827112224
 
-4-1973025649
+6-71299305
 205-1762148010
-MainWindow.xaml;
+EmployeeDashboard.xaml;LoginWindow.xaml;MainWindow.xaml;
 
 False
 

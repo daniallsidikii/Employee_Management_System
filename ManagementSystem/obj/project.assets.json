@@ -1221,11 +1221,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\daniyal\\ManagementSystem\\ManagementSystem.csproj",
+      "projectUniqueName": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\ManagementSystem.csproj",
       "projectName": "ManagementSystem",
-      "projectPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem.csproj",
+      "projectPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\ManagementSystem.csproj",
       "packagesPath": "C:\\Users\\SM TRADERs\\.nuget\\packages\\",
-      "outputPath": "C:\\daniyal\\ManagementSystem\\obj\\",
+      "outputPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
