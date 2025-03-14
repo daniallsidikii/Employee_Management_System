@@ -139,11 +139,18 @@ namespace OHSAdminPanel
                 clockInTime = DateTime.Now;
                 string log = $"Clocked In at {clockInTime.Value:hh:mm tt}";
                 attendanceLogs.Add(log);
-                MessageBox.Show(log, "Attendance", MessageBoxButton.OK, MessageBoxImage.Information);
+                
+                // Show Clock-In message
+                lblClockInStatus.Content = log;
+                lblClockInStatus.Foreground = Brushes.LightGreen;
+
+                // Clear Clock-Out status when clocking in again
+                lblClockOutStatus.Content = "";
             }
             else
             {
-                MessageBox.Show("You are already Clocked-In.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                lblClockInStatus.Content = "You are already Clocked-In.";
+                lblClockInStatus.Foreground = Brushes.Yellow;
             }
         }
 
@@ -155,16 +162,19 @@ namespace OHSAdminPanel
                 DateTime clockOutTime = DateTime.Now;
                 TimeSpan workDuration = clockOutTime - clockInTime.Value;
 
-                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Total Worked: {workDuration.TotalHours:F2} hours.";
+                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
                 attendanceLogs.Add(log);
 
-                MessageBox.Show(log, "Attendance", MessageBoxButton.OK, MessageBoxImage.Information);
+                // Show Clock-Out message separately
+                lblClockOutStatus.Content = log;
+                lblClockOutStatus.Foreground = Brushes.LightBlue;
 
                 clockInTime = null; // Reset for next session
             }
             else
             {
-                MessageBox.Show("You must Clock-In first!", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                lblClockOutStatus.Content = "You must Clock-In first!";
+                lblClockOutStatus.Foreground = Brushes.Red;
             }
         }
 
