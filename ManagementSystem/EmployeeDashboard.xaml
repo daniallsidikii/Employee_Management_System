@@ -4,38 +4,54 @@
         Title="Employee Dashboard" Height="750" Width="1350" WindowStartupLocation="CenterScreen">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="200"/> <!-- Left Dashboard Panel -->
-            <ColumnDefinition Width="*"/>   <!-- Main Content -->
+            <ColumnDefinition Width="200"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
-        
+
         <!-- Dashboard Panel -->
         <StackPanel Grid.Column="0" Background="#2C3E50" Width="200" VerticalAlignment="Stretch" Margin="10">
             <Button Content="Mark Attendance" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="MarkAttendance_Click"/>
-            <Button Content="View Health Records" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="ViewHealthRecords_Click"/>
+            <Button Content="View Attendance Logs" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="ViewAttendanceLogs_Click"/>
             <Button Content="Logout" Margin="5" Height="40" Background="#34495E" Foreground="White" Click="Logout_Click"/>
         </StackPanel>
 
         <!-- Main Content -->
         <Grid Grid.Column="1" Margin="10">
-            <!-- Title -->
-            <TextBlock Text="Welcome to Employee Dashboard" 
-                       FontSize="28" 
-                       FontWeight="Bold" 
-                       HorizontalAlignment="Center" 
-                       VerticalAlignment="Top" 
-                       Margin="0,20,0,0"/>
-            
-            <!-- Attendance Status -->
+            <TextBlock Text="Welcome to Employee Dashboard" FontSize="28" FontWeight="Bold" HorizontalAlignment="Center" VerticalAlignment="Top" Margin="0,20,0,0"/>
+
+            <!-- Health Records Section -->
             <StackPanel HorizontalAlignment="Left" VerticalAlignment="Bottom" Margin="20">
+                <TextBlock Text="Health Records:" FontSize="16" Margin="0,0,0,10"/>
+
+                <!-- Blood Pressure -->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Blood Pressure:" FontSize="14"/>
+                    <TextBox x:Name="txtBloodPressure" Width="150" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="txtBPAlert" FontSize="14" Foreground="Green" Text="✅"/>
+                </StackPanel>
+
+                <!-- Vision -->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Vision:" FontSize="14"/>
+                    <TextBox x:Name="txtVision" Width="150" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="txtVisionAlert" FontSize="14" Foreground="Green" Text="✅"/>
+                </StackPanel>
+
+                <!-- Last Checkup -->
+                <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                    <TextBlock Text="Last Checkup (YYYY-MM-DD):" FontSize="14"/>
+                    <TextBox x:Name="txtLastCheckup" Width="150" Margin="10,0,0,0"/>
+                    <TextBlock x:Name="txtCheckupAlert" FontSize="14" Foreground="Green" Text="✅"/>
+                </StackPanel>
+
+                <Button Content="Save Health Records" Width="200" Height="40" Margin="0,20,0,0" Click="SaveHealthRecords_Click"/>
+            </StackPanel>
+
+            <!-- Attendance Status -->
+            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
                 <TextBlock Text="Attendance Status:" FontSize="16" Margin="0,0,0,10"/>
                 <Button Content="Clock In" Width="150" Height="40" Click="ClockIn_Click"/>
                 <Button Content="Clock Out" Width="150" Height="40" Margin="0,10,0,0" Click="ClockOut_Click"/>
-            </StackPanel>
-
-            <!-- Health Records -->
-            <StackPanel HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="20">
-                <TextBlock Text="Health Records:" FontSize="16" Margin="0,0,0,10"/>
-                <Button Content="View Health Details" Width="200" Click="ViewHealth_Click"/>
             </StackPanel>
         </Grid>
     </Grid>
