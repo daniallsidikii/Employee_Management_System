@@ -35,6 +35,8 @@
                 </StackPanel>
             </Border>
 
+
+            <!-- FURQAN YOU HAVE TO HANDLE THIS CODE IN THE EMPLOYEE DASHBOARD -->
                 <!-- <Border BorderBrush="Black" BorderThickness="2" Padding="5" CornerRadius="5" Margin="2">
 
                 <StackPanel Orientation="Vertical" HorizontalAlignment="Center" Background="Yellow">

@@ -141,6 +141,8 @@ namespace Employee_Management_System
             MessageBox.Show(log, "Attendance", MessageBoxButton.OK, MessageBoxImage.Information);
         }
 
+        // FURQAN YOU HAVE TO HANDLE THIS CODE IN THE EMPLOYEE DASHBOARD
+
         // Clock In - Record clock-in time
         // private void ClockIn_Click(object sender, RoutedEventArgs e)
         // {
