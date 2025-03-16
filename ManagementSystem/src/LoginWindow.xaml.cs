@@ -10,9 +10,6 @@ namespace Employee_Management_System
         {
             InitializeComponent();
         }
-
-
-
         
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
@@ -29,8 +26,8 @@ namespace Employee_Management_System
             // Perform login logic
             if (username == "admin" && password == "password")
             {
-                MainWindow adminPanel = new MainWindow(); // Admin Dashboard
-                adminPanel.Show();
+                MainWindow mainWindow = new MainWindow(); // Admin Dashboard
+                mainWindow.Show();
                 this.Close();
             }
             else if (username == "employee" && password == "emp123")
