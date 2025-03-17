@@ -26,16 +26,24 @@
 
             <!-- Employee Input Fields -->
             <StackPanel Grid.Column="0" VerticalAlignment="Top">
+                <TextBox x:Name="EmployeeIdTextBox" Text="Enter Employee ID" Foreground="Gray"
+                         GotFocus="EmployeeIdTextBox_GotFocus" LostFocus="EmployeeIdTextBox_LostFocus"
+                         Margin="5" Padding="5"/>
+
                 <TextBox x:Name="NameTextBox" Text="Enter Name" Foreground="Gray"
                          GotFocus="NameTextBox_GotFocus" LostFocus="NameTextBox_LostFocus"
-                         Margin="5" Padding="5"/>
-                         
-                <TextBox x:Name="RoleTextBox" Text="Enter Role" Foreground="Gray"
-                         GotFocus="RoleTextBox_GotFocus" LostFocus="RoleTextBox_LostFocus"
                          Margin="5" Padding="5"/>
 
                 <TextBox x:Name="EmailTextBox" Text="Enter Email" Foreground="Gray"
                          GotFocus="EmailTextBox_GotFocus" LostFocus="EmailTextBox_LostFocus"
+                         Margin="5" Padding="5"/>
+
+                <TextBox x:Name="SalaryTextBox" Text="Enter Salary" Foreground="Gray"
+                         GotFocus="SalaryTextBox_GotFocus" LostFocus="SalaryTextBox_LostFocus"
+                         Margin="5" Padding="5"/>
+
+                <TextBox x:Name="DesignationTextBox" Text="Enter Designation" Foreground="Gray"
+                         GotFocus="DesignationTextBox_GotFocus" LostFocus="DesignationTextBox_LostFocus"
                          Margin="5" Padding="5"/>
 
                 <Button Content="Add Employee" Click="AddEmployeeButton_Click" Background="Green"
@@ -48,9 +56,11 @@
                     <ListView.View>
                         <GridView>
                             <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                            <GridViewColumn Header="Employee ID" DisplayMemberBinding="{Binding EmployeeId}" Width="100"/>
                             <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                            <GridViewColumn Header="Role" DisplayMemberBinding="{Binding Role}" Width="100"/>
                             <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="150"/>
+                            <GridViewColumn Header="Salary" DisplayMemberBinding="{Binding Salary}" Width="100"/>
+                            <GridViewColumn Header="Designation" DisplayMemberBinding="{Binding Designation}" Width="150"/>
                         </GridView>
                     </ListView.View>
                 </ListView>
