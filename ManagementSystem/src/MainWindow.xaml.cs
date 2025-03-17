@@ -83,7 +83,7 @@ namespace Employee_Management_System
         // For id text box
         private void EmployeeIdTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (EmployeeIdTextBox.Text == "Enter EmployeeId")
+            if (EmployeeIdTextBox.Text == "Enter Employee ID")
             {
                 EmployeeIdTextBox.Text = "";
                 EmployeeIdTextBox.Foreground = System.Windows.Media.Brushes.Black;
@@ -94,7 +94,7 @@ namespace Employee_Management_System
         {
             if (string.IsNullOrWhiteSpace(EmployeeIdTextBox.Text))
             {
-                EmployeeIdTextBox.Text = "Enter EmployeeId";
+                EmployeeIdTextBox.Text = "Enter Employee ID";
                 EmployeeIdTextBox.Foreground = System.Windows.Media.Brushes.Gray;
             }
         }
