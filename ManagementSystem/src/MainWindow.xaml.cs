@@ -31,62 +31,85 @@ namespace Employee_Management_System
             LoadEmployees();  // Load employees when the app starts
             EmployeeListView.ItemsSource = Employees;
             DataContext = this;
-            StartClock(); // Start the digital clock
         }
 
         private void InitializeDatabase()
         {
-            using (var connection = new SQLiteConnection(dbPath))
+            try
             {
-                connection.Open();
-                string createTableQuery = @"CREATE TABLE IF NOT EXISTS Employees (
-                                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
-                                            EmployeeId TEXT NOT NULL,
-                                            Name TEXT NOT NULL,
-                                            Email TEXT NOT NULL,
-                                            Salary TEXT NOT NULL,   
-                                            Designation TEXT NOT NULL
-                                        );";
-                using (var command = new SQLiteCommand(createTableQuery, connection))
+                using (var connection = new SQLiteConnection(dbPath))
                 {
-                    command.ExecuteNonQuery();
+                    connection.Open();
+
+                    // Drop the table if it exists (for testing purposes)
+                    string dropTableQuery = "DROP TABLE IF EXISTS Employees;";
+                    using (var dropCommand = new SQLiteCommand(dropTableQuery, connection))
+                    {
+                        dropCommand.ExecuteNonQuery();
+                    }
+
+                    // Create the table with the correct schema
+                    string createTableQuery = @"
+                        CREATE TABLE IF NOT EXISTS Employees (
+                            Id INTEGER PRIMARY KEY AUTOINCREMENT,
+                            EmployeeId TEXT NOT NULL,
+                            Name TEXT NOT NULL,
+                            Email TEXT NOT NULL,
+                            Salary TEXT NOT NULL,
+                            Designation TEXT NOT NULL
+                        );";
+                    using (var createCommand = new SQLiteCommand(createTableQuery, connection))
+                    {
+                        createCommand.ExecuteNonQuery();
+                    }
                 }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error initializing database: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
         private void LoadEmployees()
         {
-            Employees.Clear();
-            using (var connection = new SQLiteConnection(dbPath))
+            try
             {
-                connection.Open();
-                string selectQuery = "SELECT * FROM Employees";
-                using (var command = new SQLiteCommand(selectQuery, connection))
-                using (var reader = command.ExecuteReader())
+                Employees.Clear();
+                using (var connection = new SQLiteConnection(dbPath))
                 {
-                    while (reader.Read())
+                    connection.Open();
+                    string selectQuery = "SELECT Id, EmployeeId, Name, Email, Salary, Designation FROM Employees";
+                    using (var command = new SQLiteCommand(selectQuery, connection))
+                    using (var reader = command.ExecuteReader())
                     {
-                        Employees.Add(new Employee
+                        while (reader.Read())
                         {
-                            Id = reader.GetInt32(0),
-                            EmployeeId = reader.GetString(1),
-                            Name = reader.GetString(2),
-                            Email = reader.GetString(3),
-                            Salary = reader.GetString(4),
-                            Designation = reader.GetString(5)
-                        });
+                            Employees.Add(new Employee
+                            {
+                                Id = reader.GetInt32(0),
+                                EmployeeId = reader.GetString(1),
+                                Name = reader.GetString(2),
+                                Email = reader.GetString(3),
+                                Salary = reader.GetString(4),
+                                Designation = reader.GetString(5)
+                            });
+                        }
                     }
                 }
             }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading employees: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
-        // For id text box
+        // For Employee ID text box
         private void EmployeeIdTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            if (EmployeeIdTextBox.Text == "Enter EmployeeId")
+            if (EmployeeIdTextBox.Text == "Enter Employee ID")
             {
                 EmployeeIdTextBox.Text = "";
-                EmployeeIdTextBox.Foreground = System.Windows.Media.Brushes.Black;
+                EmployeeIdTextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -94,18 +117,18 @@ namespace Employee_Management_System
         {
             if (string.IsNullOrWhiteSpace(EmployeeIdTextBox.Text))
             {
-                EmployeeIdTextBox.Text = "Enter EmployeeId";
-                EmployeeIdTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                EmployeeIdTextBox.Text = "Enter Employee ID";
+                EmployeeIdTextBox.Foreground = Brushes.Gray;
             }
         }
 
-        // for name text box
+        // For Name text box
         private void NameTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (NameTextBox.Text == "Enter Name")
             {
                 NameTextBox.Text = "";
-                NameTextBox.Foreground = System.Windows.Media.Brushes.Black;
+                NameTextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -114,17 +137,17 @@ namespace Employee_Management_System
             if (string.IsNullOrWhiteSpace(NameTextBox.Text))
             {
                 NameTextBox.Text = "Enter Name";
-                NameTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                NameTextBox.Foreground = Brushes.Gray;
             }
         }
 
-        // for salary text box
+        // For Salary text box
         private void SalaryTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (SalaryTextBox.Text == "Enter Salary")
             {
                 SalaryTextBox.Text = "";
-                SalaryTextBox.Foreground = System.Windows.Media.Brushes.Black;
+                SalaryTextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -133,17 +156,17 @@ namespace Employee_Management_System
             if (string.IsNullOrWhiteSpace(SalaryTextBox.Text))
             {
                 SalaryTextBox.Text = "Enter Salary";
-                SalaryTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                SalaryTextBox.Foreground = Brushes.Gray;
             }
         }
 
-        // for email text box
+        // For Email text box
         private void EmailTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (EmailTextBox.Text == "Enter Email")
             {
                 EmailTextBox.Text = "";
-                EmailTextBox.Foreground = System.Windows.Media.Brushes.Black;
+                EmailTextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -152,17 +175,17 @@ namespace Employee_Management_System
             if (string.IsNullOrWhiteSpace(EmailTextBox.Text))
             {
                 EmailTextBox.Text = "Enter Email";
-                EmailTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                EmailTextBox.Foreground = Brushes.Gray;
             }
         }
 
-
+        // For Designation text box
         private void DesignationTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
             if (DesignationTextBox.Text == "Enter Designation")
             {
                 DesignationTextBox.Text = "";
-                DesignationTextBox.Foreground = System.Windows.Media.Brushes.Black;
+                DesignationTextBox.Foreground = Brushes.Black;
             }
         }
 
@@ -171,100 +194,129 @@ namespace Employee_Management_System
             if (string.IsNullOrWhiteSpace(DesignationTextBox.Text))
             {
                 DesignationTextBox.Text = "Enter Designation";
-                DesignationTextBox.Foreground = System.Windows.Media.Brushes.Gray;
+                DesignationTextBox.Foreground = Brushes.Gray;
             }
         }
 
-
+        // Add Employee Button Click
         private void AddEmployeeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (string.IsNullOrWhiteSpace(NameTextBox.Text) || 
+            if (string.IsNullOrWhiteSpace(NameTextBox.Text) ||
                 NameTextBox.Text == "Enter Name" ||
-                string.IsNullOrWhiteSpace(EmployeeIdTextBox.Text) || 
-                EmployeeIdTextBox.Text == "Enter EmployeeId" ||
-                string.IsNullOrWhiteSpace(EmailTextBox.Text) || 
-                EmailTextBox.Text == "Enter Email" || 
-                string.IsNullOrWhiteSpace(SalaryTextBox.Text) || 
-                SalaryTextBox.Text == "Enter Salary" || 
-                string.IsNullOrWhiteSpace(DesignationTextBox.Text) || 
+                string.IsNullOrWhiteSpace(EmployeeIdTextBox.Text) ||
+                EmployeeIdTextBox.Text == "Enter Employee ID" ||
+                string.IsNullOrWhiteSpace(EmailTextBox.Text) ||
+                EmailTextBox.Text == "Enter Email" ||
+                string.IsNullOrWhiteSpace(SalaryTextBox.Text) ||
+                SalaryTextBox.Text == "Enter Salary" ||
+                string.IsNullOrWhiteSpace(DesignationTextBox.Text) ||
                 DesignationTextBox.Text == "Enter Designation")
             {
                 MessageBox.Show("Please enter valid employee details.", "Validation Error");
                 return;
             }
 
-            using (var connection = new SQLiteConnection(dbPath))
-            {
-                connection.Open();
-                string insertQuery = "INSERT INTO Employees (EmployeeId, Name, Email, Salary, Designation) VALUES (@EmployeeId, @Name, @Email, @Salary, @Designation)";
-                using (var command = new SQLiteCommand(insertQuery, connection))
-                {
-                    command.Parameters.AddWithValue("@EmployeeId", EmployeeIdTextBox.Text);
-                    command.Parameters.AddWithValue("@Name", NameTextBox.Text);
-                    command.Parameters.AddWithValue("@Email", EmailTextBox.Text);
-                    command.Parameters.AddWithValue("@Salary", SalaryTextBox.Text);
-                    command.Parameters.AddWithValue("@Designation", DesignationTextBox.Text);
-                    command.ExecuteNonQuery();
-                }
-            }
-
-            LoadEmployees(); // Refresh the list after adding an employee
-
-            EmployeeIdTextBox.Text = "Enter Employee ID";
-            NameTextBox.Text = "Enter Name";
-            EmailTextBox.Text = "Enter Email";
-            SalaryTextBox.Text = "Enter Salary";
-            DesignationTextBox.Text = "Enter Designation";
-
-            EmployeeIdTextBox.Foreground = Brushes.Gray;
-            NameTextBox.Foreground = Brushes.Gray;
-            EmailTextBox.Foreground = Brushes.Gray;
-            SalaryTextBox.Foreground = Brushes.Gray;
-            DesignationTextBox.Foreground = Brushes.Gray;
-        }
-
-        private void DeleteButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (EmployeeListView.SelectedItem is Employee selectedEmployee)
+            try
             {
                 using (var connection = new SQLiteConnection(dbPath))
                 {
                     connection.Open();
-                    string deleteQuery = "DELETE FROM Employees WHERE Id = @Id";
-                    using (var command = new SQLiteCommand(deleteQuery, connection))
+                    string insertQuery = "INSERT INTO Employees (EmployeeId, Name, Email, Salary, Designation) VALUES (@EmployeeId, @Name, @Email, @Salary, @Designation)";
+                    using (var command = new SQLiteCommand(insertQuery, connection))
                     {
-                        command.Parameters.AddWithValue("@Id", selectedEmployee.Id);
+                        command.Parameters.AddWithValue("@EmployeeId", EmployeeIdTextBox.Text);
+                        command.Parameters.AddWithValue("@Name", NameTextBox.Text);
+                        command.Parameters.AddWithValue("@Email", EmailTextBox.Text);
+                        command.Parameters.AddWithValue("@Salary", SalaryTextBox.Text);
+                        command.Parameters.AddWithValue("@Designation", DesignationTextBox.Text);
                         command.ExecuteNonQuery();
                     }
                 }
 
-                LoadEmployees(); // Refresh list after deletion
+                LoadEmployees(); // Refresh the list after adding an employee
+
+                // Reset text boxes
+                EmployeeIdTextBox.Text = "Enter Employee ID";
+                NameTextBox.Text = "Enter Name";
+                EmailTextBox.Text = "Enter Email";
+                SalaryTextBox.Text = "Enter Salary";
+                DesignationTextBox.Text = "Enter Designation";
+
+                EmployeeIdTextBox.Foreground = Brushes.Gray;
+                NameTextBox.Foreground = Brushes.Gray;
+                EmailTextBox.Foreground = Brushes.Gray;
+                SalaryTextBox.Foreground = Brushes.Gray;
+                DesignationTextBox.Foreground = Brushes.Gray;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error adding employee: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // Delete Employee Button Click
+        private void DeleteButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (EmployeeListView.SelectedItem is Employee selectedEmployee)
+            {
+                try
+                {
+                    using (var connection = new SQLiteConnection(dbPath))
+                    {
+                        connection.Open();
+                        string deleteQuery = "DELETE FROM Employees WHERE Id = @Id";
+                        using (var command = new SQLiteCommand(deleteQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@Id", selectedEmployee.Id);
+                            command.ExecuteNonQuery();
+                        }
+                    }
+
+                    LoadEmployees(); // Refresh list after deletion
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error deleting employee: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                }
             }
             else
             {
                 MessageBox.Show("Please select an employee to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        // Edit Employee Button Click
         private void EditButton_Click(object sender, RoutedEventArgs e)
         {
             if (EmployeeListView.SelectedItem is Employee selectedEmployee)
             {
-                EmployeeIdTextBox.Text = selectedEmployee.EmployeeId;
-                NameTextBox.Text = selectedEmployee.Name;
-                EmailTextBox.Text = selectedEmployee.Email;
-                SalaryTextBox.Text = selectedEmployee.Salary;
-                DesignationTextBox.Text = selectedEmployee.Designation;
-                Employees.Remove(selectedEmployee);
-
-                using (var connection = new SQLiteConnection(dbPath))
+                try
                 {
-                    connection.Open();
-                    string deleteQuery = "DELETE FROM Employees WHERE Id = @Id";
-                    using (var command = new SQLiteCommand(deleteQuery, connection))
+                    // Populate text boxes with selected employee's data
+                    EmployeeIdTextBox.Text = selectedEmployee.EmployeeId;
+                    NameTextBox.Text = selectedEmployee.Name;
+                    EmailTextBox.Text = selectedEmployee.Email;
+                    SalaryTextBox.Text = selectedEmployee.Salary;
+                    DesignationTextBox.Text = selectedEmployee.Designation;
+
+                    // Remove the selected employee from the list
+                    Employees.Remove(selectedEmployee);
+
+                    // Delete the employee from the database
+                    using (var connection = new SQLiteConnection(dbPath))
                     {
-                        command.Parameters.AddWithValue("@Id", selectedEmployee.Id);
-                        command.ExecuteNonQuery();
+                        connection.Open();
+                        string deleteQuery = "DELETE FROM Employees WHERE Id = @Id";
+                        using (var command = new SQLiteCommand(deleteQuery, connection))
+                        {
+                            command.Parameters.AddWithValue("@Id", selectedEmployee.Id);
+                            command.ExecuteNonQuery();
+                        }
                     }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show($"Error editing employee: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
                 }
             }
             else
@@ -273,18 +325,10 @@ namespace Employee_Management_System
             }
         }
 
-        private void StartClock()
-        {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
-            timer.Tick += (sender, e) => { txtClock.Text = DateTime.Now.ToString("hh:mm:ss tt"); };
-            timer.Start();
-        }
-
+        // Logout Button Click
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
     }
-
 }
