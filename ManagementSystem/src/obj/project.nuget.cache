@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "LHkqiZQPEHY=",
+  "dgSpecHash": "TPzwUMOxSpc=",
   "success": true,
-  "projectFilePath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj",
+  "projectFilePath": "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\ManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SM TRADERs\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\SM TRADERs\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",

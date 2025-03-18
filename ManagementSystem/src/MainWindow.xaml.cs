@@ -328,6 +328,8 @@ namespace Employee_Management_System
         // Logout Button Click
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
             this.Close();
         }
     }
