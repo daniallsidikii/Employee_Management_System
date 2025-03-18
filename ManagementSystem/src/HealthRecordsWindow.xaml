@@ -1,0 +1,47 @@
+<Window x:Class="Employee_Management_System.HealthRecordsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Health Records" Height="400" Width="600" WindowStartupLocation="CenterScreen">
+    
+    <!-- Main Grid -->
+    <Grid Margin="10">
+        <!-- Main StackPanel -->
+        <StackPanel>
+            <!-- Title TextBlock -->
+            <TextBlock Text="Enter Health Records" FontSize="20" FontWeight="Bold" Margin="0,0,0,20"/>
+            
+            <!-- Blood Pressure Input -->
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="Blood Pressure:" FontSize="14" Width="120"/>
+                <TextBox x:Name="txtBloodPressure" Width="150" 
+                         Text="e.g., 120/80"
+                         Foreground="Gray"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TextBox_LostFocus"/>
+            </StackPanel>
+
+            <!-- Vision Input -->
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="Vision:" FontSize="14" Width="120"/>
+                <TextBox x:Name="txtVision" Width="150"
+                         Text="e.g., 20/20"
+                         Foreground="Gray"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TextBox_LostFocus"/>
+            </StackPanel>
+
+            <!-- Last Checkup Input -->
+            <StackPanel Orientation="Horizontal" Margin="0,5,0,0">
+                <TextBlock Text="Last Checkup (YYYY-MM-DD):" FontSize="14" Width="180"/>
+                <TextBox x:Name="txtLastCheckup" Width="150"
+                         Text="YYYY-MM-DD"
+                         Foreground="Gray"
+                         GotFocus="TextBox_GotFocus"
+                         LostFocus="TextBox_LostFocus"/>
+            </StackPanel>
+
+            <!-- Save Button -->
+            <Button Content="Save" Width="100" Height="30" Margin="0,20,0,0" Background="Green" Click="Save_Click"/>
+        </StackPanel>
+    </Grid>
+</Window>
