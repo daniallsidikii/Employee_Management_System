@@ -93,39 +93,68 @@
                 <Image Source="pack://siteoforigin:,,,/Assets/cred.png" Width="200" Height="200" HorizontalAlignment="Center"/>
 
                 <TextBox x:Name="EmployeeIdTextBox" Text="Enter Employee ID" FontSize="18" FontWeight="ExtraLight" Foreground="Black"
-                         GotFocus="EmployeeIdTextBox_GotFocus" LostFocus="EmployeeIdTextBox_LostFocus" Height="45" Width="470" Margin="5"/>
+                         GotFocus="EmployeeIdTextBox_GotFocus" LostFocus="EmployeeIdTextBox_LostFocus" Height="45" Width="400" Margin="20,10,70,0"/>
                 <TextBox x:Name="NameTextBox" Text="Enter Name" FontSize="18" FontWeight="ExtraLight" Foreground="Black"
-                         GotFocus="NameTextBox_GotFocus" LostFocus="NameTextBox_LostFocus" Height="45" Width="470" Margin="5"/>
+                         GotFocus="NameTextBox_GotFocus" LostFocus="NameTextBox_LostFocus" Height="45" Width="400" Margin="20,10,70,0"/>
                 <TextBox x:Name="EmailTextBox" Text="Enter Email" FontSize="18" FontWeight="ExtraLight" Foreground="Black"
-                         GotFocus="EmailTextBox_GotFocus" LostFocus="EmailTextBox_LostFocus" Height="45" Width="470" Margin="2"/>
+                         GotFocus="EmailTextBox_GotFocus" LostFocus="EmailTextBox_LostFocus" Height="45" Width="400" Margin="20,10,70,0"/>
                 <TextBox x:Name="SalaryTextBox" Text="Enter Salary" FontSize="18" FontWeight="ExtraLight" Foreground="Black"
-                         GotFocus="SalaryTextBox_GotFocus" LostFocus="SalaryTextBox_LostFocus" Height="45" Width="470" Margin="5"/>
+                         GotFocus="SalaryTextBox_GotFocus" LostFocus="SalaryTextBox_LostFocus" Height="45" Width="400" Margin="20,10,70,0"/>
                 <TextBox x:Name="DesignationTextBox" Text="Enter Designation" FontSize="18" FontWeight="ExtraLight" Foreground="Black"
-                         GotFocus="DesignationTextBox_GotFocus" LostFocus="DesignationTextBox_LostFocus" Height="45" Width="470" Margin="5"/>
-                <Button Content="Add Employee" Click="AddEmployeeButton_Click" Margin="5, 20, 0, 0" Height="50" Width="200" FontSize="18" FontWeight="Normal" Foreground="Black" Background="#D5C7A3"/>
+                         GotFocus="DesignationTextBox_GotFocus" LostFocus="DesignationTextBox_LostFocus" Height="45" Width="400" Margin="20,10,70,0"/>
+                <Button Content="Add Employee" Click="AddEmployeeButton_Click" Margin="5, 20, 80, 0" Height="50" Width="200" FontSize="18" FontWeight="Normal" Foreground="Black" Background="#D5C7A3"/>
             </StackPanel>
 
             <!-- Employee List -->
-            <StackPanel Grid.Column="1" VerticalAlignment="Top">
-                <ListView x:Name="EmployeeListView" ItemsSource="{Binding Employees}" Height="520">
-                    <ListView.View>
-                        <GridView>
-                            <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                            <GridViewColumn Header="Employee ID" DisplayMemberBinding="{Binding EmployeeId}" Width="100"/>
-                            <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="150"/>
-                            <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="205"/>
-                            <GridViewColumn Header="Salary" DisplayMemberBinding="{Binding Salary}" Width="100"/>
-                            <GridViewColumn Header="Designation" DisplayMemberBinding="{Binding Designation}" Width="150"/>
-                        </GridView>
-                    </ListView.View>
-                </ListView>
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <Button Content="Edit" Click="EditButton_Click" Background="#D5C7A3" Height="50" Width="200"
-                            Foreground="Black" FontSize="20" FontWeight="Normal" Margin="50, 20, 0, 0"/>
-                    <Border Width="20"/>
-                    <Button Content="Delete" Click="DeleteButton_Click" Background="#D5C7A3" Margin="0, 20, 50, 0" Height="50" Width="200" FontSize="20" FontWeight="Normal" Foreground="Black"/>
+            <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="0, 0, 0, 0" >
+                <Border Background="#EFEFEF" CornerRadius="10" Padding="10" BorderBrush="Gray" BorderThickness="1">
+                    <ListView x:Name="EmployeeListView" ItemsSource="{Binding Employees}" Height="500">
+                        <ListView.Resources>
+                            <Style TargetType="GridViewColumnHeader">
+                                <Setter Property="Background" Value="#D5C7A3"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="FontSize" Value="16"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Padding" Value="10"/>
+                            </Style>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Height" Value="45"/>
+                                <Setter Property="FontSize" Value="14"/>
+                                <Setter Property="Foreground" Value="Black"/>
+                                <Setter Property="Padding" Value="5"/>
+                                <Setter Property="Background" Value="#EDE8DC"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#E6E6E6"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#D5C7A3"/>
+                                        <Setter Property="FontWeight" Value="Bold"/>
+                                    </Trigger>
+                                </Style.Triggers>
+                            </Style>
+                        </ListView.Resources>
+                        <ListView.View>
+                            <GridView>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
+                                <GridViewColumn Header="Emp ID" DisplayMemberBinding="{Binding EmployeeId}" Width="90"/>
+                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="160"/>
+                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="195"/>
+                                <GridViewColumn Header="Salary" DisplayMemberBinding="{Binding Salary}" Width="110"/>
+                                <GridViewColumn Header="Designation" DisplayMemberBinding="{Binding Designation}" Width="180"/>
+                            </GridView>
+                        </ListView.View>
+                    </ListView>
+                </Border>
+                
+                <!-- Edit & Delete Buttons -->
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="10">
+                    <Button Content="Edit" Click="EditButton_Click" Height="50" Width="200" FontSize="18" FontWeight="Normal" Foreground="Black" Background="#D5C7A3" Margin="10, 20, 10, 0"/>
+                    <Button Content="Delete" Click="DeleteButton_Click" Height="50" Width="200" FontSize="18" FontWeight="Normal" Foreground="Black" Background="#D5C7A3" Margin="10, 20, 10, 0"/>
                 </StackPanel>
             </StackPanel>
+
+
         </Grid>
     </Grid>
 </Window>

@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\ManagementSystem.csproj": {}
+    "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\ManagementSystem.csproj": {
+    "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\ManagementSystem.csproj",
+        "projectUniqueName": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj",
         "projectName": "ManagementSystem",
-        "projectPath": "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\ManagementSystem.csproj",
+        "projectPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj",
         "packagesPath": "C:\\Users\\SM TRADERs\\.nuget\\packages\\",
-        "outputPath": "C:\\daniyal\\ManagementSystem\\managementSystem\\src\\obj\\",
+        "outputPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

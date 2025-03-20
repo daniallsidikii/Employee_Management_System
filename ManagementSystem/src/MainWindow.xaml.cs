@@ -27,10 +27,15 @@ namespace Employee_Management_System
         public MainWindow()
         {
             InitializeComponent();
+            if (!System.IO.File.Exists("employees.db"))
+            {
+                MessageBox.Show("Database file not found. Please run the application from the Employee_Management_System directory.", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
             InitializeDatabase();
             LoadEmployees();  // Load employees when the app starts
             EmployeeListView.ItemsSource = Employees;
-            DataContext = this;
+            this.DataContext = this;
+
         }
 
         private void InitializeDatabase()
@@ -41,14 +46,7 @@ namespace Employee_Management_System
                 {
                     connection.Open();
 
-                    // Drop the table if it exists (for testing purposes)
-                    string dropTableQuery = "DROP TABLE IF EXISTS Employees;";
-                    using (var dropCommand = new SQLiteCommand(dropTableQuery, connection))
-                    {
-                        dropCommand.ExecuteNonQuery();
-                    }
-
-                    // Create the table with the correct schema
+                    // Create the table only if it does not exist
                     string createTableQuery = @"
                         CREATE TABLE IF NOT EXISTS Employees (
                             Id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -69,6 +67,7 @@ namespace Employee_Management_System
                 MessageBox.Show($"Error initializing database: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
 
         private void LoadEmployees()
         {
@@ -264,15 +263,32 @@ namespace Employee_Management_System
                     using (var connection = new SQLiteConnection(dbPath))
                     {
                         connection.Open();
+
+                        // Delete the selected employee
                         string deleteQuery = "DELETE FROM Employees WHERE Id = @Id";
                         using (var command = new SQLiteCommand(deleteQuery, connection))
                         {
                             command.Parameters.AddWithValue("@Id", selectedEmployee.Id);
                             command.ExecuteNonQuery();
                         }
+
+                        // Reset ID sequence ONLY if table is empty
+                        string checkQuery = "SELECT COUNT(*) FROM Employees";
+                        using (var checkCommand = new SQLiteCommand(checkQuery, connection))
+                        {
+                            long count = (long)checkCommand.ExecuteScalar();
+                            if (count == 0) // Only reset if the table is empty
+                            {
+                                string resetQuery = "DELETE FROM SQLITE_SEQUENCE WHERE name='Employees'";
+                                using (var resetCommand = new SQLiteCommand(resetQuery, connection))
+                                {
+                                    resetCommand.ExecuteNonQuery();
+                                }
+                            }
+                        }
                     }
 
-                    LoadEmployees(); // Refresh list after deletion
+                    LoadEmployees(); // Refresh the list after deletion
                 }
                 catch (Exception ex)
                 {
@@ -284,6 +300,7 @@ namespace Employee_Management_System
                 MessageBox.Show("Please select an employee to delete.", "Error", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
 
         // Edit Employee Button Click
         private void EditButton_Click(object sender, RoutedEventArgs e)
