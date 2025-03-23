@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-C:\daniyal\ManagementSystem\ManagementSystem\src\obj\Debug\net9.0-windows\
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\obj\Debug\net9.0-windows\
 ManagementSystem
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
-C:\daniyal\ManagementSystem\ManagementSystem\src\App.xaml
-31827112224
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\App.xaml
+42002366970
 31563765865
-6-71299305
-205580412471
-EmployeeDashboard.xaml;LoginWindow.xaml;MainWindow.xaml;
+7-409165437
+209355432205
+EmployeeDashboard.xaml;HealthRecordsWindow.xaml;LoginWindow.xaml;MainWindow.xaml;
 
 False
 
