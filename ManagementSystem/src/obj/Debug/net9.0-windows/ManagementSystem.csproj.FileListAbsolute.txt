@@ -92,3 +92,5 @@ C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSy
 C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\bin\Debug\net9.0-windows\MaterialDesignColors.dll
 C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\bin\Debug\net9.0-windows\MaterialDesignThemes.Wpf.dll
 C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\bin\Debug\net9.0-windows\Microsoft.Xaml.Behaviors.dll
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\obj\Debug\net9.0-windows\OhsSurveyWindow.baml
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System-1\ManagementSystem\src\obj\Debug\net9.0-windows\OhsSurveyWindow.g.cs

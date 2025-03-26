@@ -31,7 +31,7 @@ namespace Employee_Management_System
             LoadToDoList(); // Load tasks from file
         }
 
-        // Start the digital clock
+        // Clock and Session Management
         private void StartClock()
         {
             DispatcherTimer timer = new DispatcherTimer();
@@ -40,7 +40,6 @@ namespace Employee_Management_System
             timer.Start();
         }
 
-        // Reset logs for a new session
         private void ResetSessionLogs()
         {
             attendanceLogs.Clear(); // Clear session-specific logs
@@ -48,13 +47,12 @@ namespace Employee_Management_System
             hasMarkedAttendance = false;
         }
 
-        // Save logs to file
         private void SaveAttendanceLogs()
         {
             File.AppendAllLines(attendanceFile, attendanceLogs); // Append session logs to the file
         }
 
-        // Clock In functionality (only once per session)
+        // Attendance Management
         private void ClockIn_Click(object sender, RoutedEventArgs e)
         {
             if (clockInTime == null)
@@ -76,7 +74,6 @@ namespace Employee_Management_System
             }
         }
 
-        // Clock Out functionality (only once per session)
         private void ClockOut_Click(object sender, RoutedEventArgs e)
         {
             if (clockInTime != null && !hasClockedOut)
@@ -101,7 +98,6 @@ namespace Employee_Management_System
             }
         }
 
-        // Mark Attendance (only once per session)
         private void MarkAttendance_Click(object sender, RoutedEventArgs e)
         {
             if (!hasMarkedAttendance)
@@ -120,7 +116,6 @@ namespace Employee_Management_System
             }
         }
 
-        // View Attendance Logs (only for current session)
         private void ViewAttendanceLogs_Click(object sender, RoutedEventArgs e)
         {
             if (attendanceLogs.Count > 0)
@@ -134,7 +129,7 @@ namespace Employee_Management_System
             }
         }
 
-        // Open Health Records functionality
+        // Health Records
         private void OpenHealthRecords_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -148,7 +143,7 @@ namespace Employee_Management_System
             }
         }
 
-        // Initialize and start the break reminder timer
+        // Break Reminder
         private void InitializeBreakReminder()
         {
             breakReminderTimer.Interval = TimeSpan.FromMinutes(3); // Set interval to 3 minutes
@@ -156,7 +151,6 @@ namespace Employee_Management_System
             breakReminderTimer.Start();
         }
 
-        // Event handler for break reminder timer
         private void BreakReminderTimer_Tick(object? sender, EventArgs e)
         {
             var result = MessageBox.Show("Time to take a break!", "Break Reminder", MessageBoxButton.OKCancel, MessageBoxImage.Information);
@@ -176,7 +170,7 @@ namespace Employee_Management_System
             }
         }
 
-        // Load To-Do List from file
+        // To-Do List Management
         private void LoadToDoList()
         {
             if (File.Exists(todoFile))
@@ -187,13 +181,11 @@ namespace Employee_Management_System
             }
         }
 
-        // Save To-Do List to file
         private void SaveToDoList()
         {
             File.WriteAllText(todoFile, JsonConvert.SerializeObject(toDoTasks, Formatting.Indented));
         }
 
-        // Refresh ListBox display
         private void RefreshToDoList()
         {
             lstToDo.Items.Clear();
@@ -203,7 +195,6 @@ namespace Employee_Management_System
             }
         }
 
-        // Add a new task
         private void AddTask_Click(object sender, RoutedEventArgs e)
         {
             if (!string.IsNullOrWhiteSpace(txtNewTask.Text))
@@ -219,7 +210,6 @@ namespace Employee_Management_System
             }
         }
 
-        // Remove a selected task
         private void RemoveTask_Click(object sender, RoutedEventArgs e)
         {
             if (lstToDo.SelectedItem != null)
@@ -238,7 +228,6 @@ namespace Employee_Management_System
             }
         }
 
-        // Clear all tasks
         private void ClearTasks_Click(object sender, RoutedEventArgs e)
         {
             if (toDoTasks.Count > 0)
@@ -254,7 +243,14 @@ namespace Employee_Management_System
             }
         }
 
-        // Logout functionality
+        // OHS Survey
+        private void OpenOHSSurvey_Click(object sender, RoutedEventArgs e)
+        {
+            OhsSurveyWindow surveyWindow = new OhsSurveyWindow();
+            surveyWindow.ShowDialog();
+        }
+
+        // Logout
         private void Logout_Click(object sender, RoutedEventArgs e)
         {
             try

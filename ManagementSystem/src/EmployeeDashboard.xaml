@@ -47,6 +47,13 @@
                     Foreground="White" 
                     FontSize="14" 
                     Click="OpenHealthRecords_Click"/>
+            <Button Content="OHS Survey" 
+                    Margin="5" 
+                    Height="40" 
+                    Background="#3498DB" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    Click="OpenOHSSurvey_Click"/>
             <Button Content="Logout" 
                     Margin="5" 
                     Height="40" 
