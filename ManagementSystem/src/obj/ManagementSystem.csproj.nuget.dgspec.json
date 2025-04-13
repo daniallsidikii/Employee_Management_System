@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\ManagementSystem.csproj": {}
+    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\ManagementSystem.csproj": {
+    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\ManagementSystem.csproj",
+        "projectUniqueName": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
         "projectName": "ManagementSystem",
-        "projectPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\ManagementSystem.csproj",
+        "projectPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
         "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\obj\\",
+        "outputPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

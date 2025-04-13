@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "eys12hNVlqE=",
+  "dgSpecHash": "wbUlZ0cbKa8=",
   "success": true,
-  "projectFilePath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System-1\\ManagementSystem\\src\\ManagementSystem.csproj",
+  "projectFilePath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\dell\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\dell\\.nuget\\packages\\materialdesigncolors\\5.2.1\\materialdesigncolors.5.2.1.nupkg.sha512",
