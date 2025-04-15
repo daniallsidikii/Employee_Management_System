@@ -29,6 +29,7 @@ namespace Employee_Management_System
         {
             InitializeComponent();
             ResetSessionLogs(); // Clear logs for a new session
+            LoadAttendanceLogs(); // Load existing attendance logs
             InitializeBreakReminder(); // Set up the break reminder timer
             StartClock(); // Start the digital clock display
             LoadToDoList(); // Load tasks from the to-do list file
@@ -92,6 +93,17 @@ namespace Employee_Management_System
             hasClockedOut = false;
             hasMarkedAttendance = false;
         }
+
+        /// <summary>
+        /// Loads attendance logs from a JSON file.
+         private void LoadAttendanceLogs()
+{
+    if (File.Exists(attendanceFile))
+    {
+        string json = File.ReadAllText(attendanceFile);
+        attendanceLogs = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json) ?? new Dictionary<string, List<string>>();
+    }
+}
 
         /// <summary>
         /// Saves attendance logs to a JSON file.
@@ -179,23 +191,46 @@ namespace Employee_Management_System
         /// <summary>
         /// Handles the Mark Attendance button click event.
         /// </summary>
-        private void MarkAttendance_Click(object sender, RoutedEventArgs e)
+     private void MarkAttendance_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        // Pause the break reminder timer
+        breakReminderTimer.Stop();
+
+        if (!hasMarkedAttendance)
         {
-            if (!hasMarkedAttendance)
-            {
-                string log = $"Attendance marked at {DateTime.Now:hh:mm tt} on {DateTime.Now:MM/dd/yyyy}";
-                attendanceLogs[DateTime.Now.ToString("MM/dd/yyyy")].Add(log);
+            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-                MessageBox.Show("Attendance marked successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                hasMarkedAttendance = true;
-
-                SaveAttendanceLogs();
-            }
-            else
+            // Ensure the key for the current date exists in the dictionary
+            if (!attendanceLogs.ContainsKey(currentDate))
             {
-                MessageBox.Show("Attendance has already been marked today.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+                attendanceLogs[currentDate] = new List<string>();
             }
+
+            string log = $"Attendance marked at {DateTime.Now:hh:mm tt} on {currentDate}";
+            attendanceLogs[currentDate].Add(log);
+
+            MessageBox.Show("Attendance marked successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            hasMarkedAttendance = true;
+
+            SaveAttendanceLogs();
         }
+        else
+        {
+            MessageBox.Show("Attendance has already been marked today.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"An error occurred while marking attendance: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+    finally
+    {
+        // Resume the break reminder timer
+        breakReminderTimer.Start();
+    }
+}
 
         /// <summary>
         /// Displays attendance logs for the current date.
