@@ -96,6 +96,7 @@ namespace Employee_Management_System
 
         /// <summary>
         /// Loads attendance logs from a JSON file.
+        /// </summary>
          private void LoadAttendanceLogs()
 {
     if (File.Exists(attendanceFile))
