@@ -1,224 +1,271 @@
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Threading;
+using Newtonsoft.Json;
 
 namespace Employee_Management_System
 {
-    public class HealthRecord
-    {
-        public string? BloodPressure { get; set; }
-        public string? Vision { get; set; }
-        public DateTime LastCheckup { get; set; }
-    }
+    /// <summary>
+    /// Interaction logic for EmployeeDashboard.xaml
+    /// </summary>
     public partial class EmployeeDashboard : Window
     {
-        private DateTime? clockInTime; // Store clock-in time
-        private List<string> attendanceLogs = new List<string>(); // Store attendance logs
-        private HealthRecord employeeHealthRecord = new HealthRecord();
-        private DispatcherTimer breakReminderTimer = new DispatcherTimer(); // Break reminder timer
-        private int skippedBreaksCount = 0; // Track skipped breaks
+        // -------------------- Fields and Properties --------------------
+        private DateTime? clockInTime; // Stores the clock-in time
+        private bool hasClockedOut = false; // Ensures a user cannot clock out multiple times
+        private bool hasMarkedAttendance = false; // Ensures attendance is marked only once per day
+        private Dictionary<string, List<string>> attendanceLogs = new Dictionary<string, List<string>>(); // Stores attendance logs by date
+        private DispatcherTimer breakReminderTimer = new DispatcherTimer(); // Timer for break reminders
+        private int skippedBreaksCount = 0; // Tracks the number of skipped breaks
+        private readonly string attendanceFile = "AttendanceLogs.json"; // File path for attendance logs
+        private readonly string todoFile = "ToDoList.json"; // File path for storing to-do tasks
+        private List<TaskItem> toDoTasks = new List<TaskItem>(); // List of to-do tasks
 
+        // -------------------- Constructor --------------------
         public EmployeeDashboard()
         {
             InitializeComponent();
-            LoadHealthRecord();
-            InitializeBreakReminder();
-            StartClock(); // Start the digital clock
+            ResetSessionLogs(); // Clear logs for a new session
+            LoadAttendanceLogs(); // Load existing attendance logs
+            InitializeBreakReminder(); // Set up the break reminder timer
+            StartClock(); // Start the digital clock display
+            LoadToDoList(); // Load tasks from the to-do list file
         }
 
+        // -------------------- Navigation --------------------
+
+        /// <summary>
+        /// Opens the Health Records window.
+        /// </summary>
+        private void OpenHealthRecords_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                HealthRecordsWindow healthWindow = new HealthRecordsWindow();
+                healthWindow.ShowDialog(); // Open as a modal dialog
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening Health Records: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        /// <summary>
+        /// Opens the OHS Survey window.
+        /// </summary>
+        private void OpenOHSSurvey_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                OhsSurveyWindow surveyWindow = new OhsSurveyWindow();
+                surveyWindow.ShowDialog(); // Open as a modal dialog
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error opening OHS Survey: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        // -------------------- Clock and Session Management --------------------
+
+        /// <summary>
+        /// Starts the digital clock on the dashboard.
+        /// </summary>
         private void StartClock()
         {
-            DispatcherTimer timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromSeconds(1);
+            DispatcherTimer timer = new DispatcherTimer
+            {
+                Interval = TimeSpan.FromSeconds(1)
+            };
             timer.Tick += (sender, e) => { txtClock.Text = DateTime.Now.ToString("hh:mm:ss tt"); };
             timer.Start();
         }
 
-
-        // Initialize Sample Health Data
-        private void LoadHealthRecord()
+        /// <summary>
+        /// Resets session-specific logs and flags.
+        /// </summary>
+        private void ResetSessionLogs()
         {
-            employeeHealthRecord = new HealthRecord
-            {
-                BloodPressure = "120/80 mmHg",
-                Vision = "20/20",
-                LastCheckup = DateTime.Now.AddMonths(-1)
-            };
-            DisplayHealthRecord();
+            attendanceLogs.Clear();
+            hasClockedOut = false;
+            hasMarkedAttendance = false;
         }
 
-        // Display Health Records on UI
-        private void DisplayHealthRecord()
+        /// <summary>
+        /// Loads attendance logs from a JSON file.
+        /// </summary>
+         private void LoadAttendanceLogs()
+{
+    if (File.Exists(attendanceFile))
+    {
+        string json = File.ReadAllText(attendanceFile);
+        attendanceLogs = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json) ?? new Dictionary<string, List<string>>();
+    }
+}
+
+        /// <summary>
+        /// Saves attendance logs to a JSON file.
+        /// </summary>
+        private void SaveAttendanceLogs()
         {
-            txtBloodPressure.Text = employeeHealthRecord.BloodPressure;
-            txtVision.Text = employeeHealthRecord.Vision;
-            txtLastCheckup.Text = employeeHealthRecord.LastCheckup.ToShortDateString();
+            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+            if (!attendanceLogs.ContainsKey(currentDate))
+            {
+                attendanceLogs[currentDate] = new List<string>();
+            }
+
+            File.WriteAllText(attendanceFile, JsonConvert.SerializeObject(attendanceLogs, Formatting.Indented));
         }
 
-        // Save Health Records
-        private void SaveHealthRecords_Click(object sender, RoutedEventArgs e)
-        {
-            if (ValidateHealthInputs())
-            {
-                employeeHealthRecord.BloodPressure = txtBloodPressure.Text;
-                employeeHealthRecord.Vision = txtVision.Text;
-                employeeHealthRecord.LastCheckup = DateTime.Parse(txtLastCheckup.Text);
+        // -------------------- Attendance Management --------------------
 
-                MessageBox.Show("Health Records Updated.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
-                DisplayHealthRecord();
-                CheckHealthAlerts();
+        /// <summary>
+        /// Handles the Clock-In button click event.
+        /// </summary>
+       private void ClockIn_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        if (clockInTime == null)
+        {
+            clockInTime = DateTime.Now;
+            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+            // Ensure the key for the current date exists in the dictionary
+            if (!attendanceLogs.ContainsKey(currentDate))
+            {
+                attendanceLogs[currentDate] = new List<string>();
+            }
+
+            string log = $"Clocked In at {clockInTime.Value:hh:mm tt} on {currentDate}";
+            attendanceLogs[currentDate].Add(log);
+
+            lblClockInStatus.Content = log;
+            lblClockInStatus.Foreground = Brushes.LightGreen;
+            lblClockOutStatus.Content = "";
+
+            SaveAttendanceLogs();
+        }
+        else
+        {
+            lblClockInStatus.Content = "You have already Clocked-In today.";
+            lblClockInStatus.Foreground = Brushes.Yellow;
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"An error occurred while clocking in: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
+
+        /// <summary>
+        /// Handles the Clock-Out button click event.
+        /// </summary>
+        private void ClockOut_Click(object sender, RoutedEventArgs e)
+        {
+            if (clockInTime != null && !hasClockedOut)
+            {
+                DateTime clockOutTime = DateTime.Now;
+                TimeSpan workDuration = clockOutTime - clockInTime.Value;
+
+                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
+                attendanceLogs[DateTime.Now.ToString("MM/dd/yyyy")].Add(log);
+
+                lblClockOutStatus.Content = log;
+                lblClockOutStatus.Foreground = Brushes.LightBlue;
+                clockInTime = null;
+                hasClockedOut = true;
+
+                SaveAttendanceLogs();
+            }
+            else
+            {
+                lblClockOutStatus.Content = "You must Clock-In first or have already Clocked-Out.";
+                lblClockOutStatus.Foreground = Brushes.Red;
             }
         }
 
-        // Validate Health Inputs
-        private bool ValidateHealthInputs()
+        /// <summary>
+        /// Handles the Mark Attendance button click event.
+        /// </summary>
+     private void MarkAttendance_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        // Pause the break reminder timer
+        breakReminderTimer.Stop();
+
+        if (!hasMarkedAttendance)
         {
-            bool isValid = true;
+            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-            if (!DateTime.TryParse(txtLastCheckup.Text, out _))
+            // Ensure the key for the current date exists in the dictionary
+            if (!attendanceLogs.ContainsKey(currentDate))
             {
-                MessageBox.Show("Invalid date format for Last Checkup.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                isValid = false;
+                attendanceLogs[currentDate] = new List<string>();
             }
 
-            if (string.IsNullOrWhiteSpace(txtBloodPressure.Text) || string.IsNullOrWhiteSpace(txtVision.Text))
-            {
-                MessageBox.Show("Blood Pressure and Vision cannot be empty.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                isValid = false;
-            }
+            string log = $"Attendance marked at {DateTime.Now:hh:mm tt} on {currentDate}";
+            attendanceLogs[currentDate].Add(log);
 
-            // Additional validation for Blood Pressure and Vision
-            string[] bpValues = txtBloodPressure.Text.Split('/');
-            if (bpValues.Length != 2 || !int.TryParse(bpValues[0], out int systolic) || !int.TryParse(bpValues[1].Split(' ')[0], out int diastolic))
-            {
-                MessageBox.Show("Invalid Blood Pressure format.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                isValid = false;
-            }
+            MessageBox.Show("Attendance marked successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            hasMarkedAttendance = true;
 
-            if (!txtVision.Text.StartsWith("20/") || !int.TryParse(txtVision.Text.Split('/')[1], out int visionValue))
-            {
-                MessageBox.Show("Invalid Vision format.", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                isValid = false;
-            }
-
-            return isValid;
+            SaveAttendanceLogs();
         }
-
-        // Check for Health Alerts
-        private void CheckHealthAlerts()
+        else
         {
-            // Blood Pressure Alert (Systolic/Diastolic Check)
-            string[] bpValues = employeeHealthRecord.BloodPressure?.Split('/') ?? Array.Empty<string>();
-            if (bpValues.Length == 2 && int.TryParse(bpValues[0], out int systolic) && int.TryParse(bpValues[1].Split(' ')[0], out int diastolic))
-            {
-                if (systolic > 140 || diastolic > 90)
-                {
-                    MessageBox.Show("High Blood Pressure Alert!", "Health Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-                else if (systolic < 90 || diastolic < 60)
-                {
-                    MessageBox.Show("Low Blood Pressure Alert!", "Health Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
-
-            // Vision Alert (Check if vision is below 20/40)
-            if (employeeHealthRecord.Vision != null && employeeHealthRecord.Vision.StartsWith("20/") && int.TryParse(employeeHealthRecord.Vision.Split('/')[1], out int visionValue))
-            {
-                if (visionValue > 40)
-                {
-                    MessageBox.Show("Vision Below Normal! Consider an Eye Checkup.", "Health Alert", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
-            }
+            MessageBox.Show("Attendance has already been marked today.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
         }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"An error occurred while marking attendance: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+    finally
+    {
+        // Resume the break reminder timer
+        breakReminderTimer.Start();
+    }
+}
 
-        // Mark Attendance (Add to logs)
-        private void MarkAttendance_Click(object sender, RoutedEventArgs e)
-        {
-            string log = $"Attendance marked at {DateTime.Now:hh:mm tt}";
-            attendanceLogs.Add(log);
-            MessageBox.Show(log, "Attendance", MessageBoxButton.OK, MessageBoxImage.Information);
-        }
-
-        // FURQAN YOU HAVE TO HANDLE THIS CODE IN THE EMPLOYEE DASHBOARD
-
-        // Clock In - Record clock-in time
-        // private void ClockIn_Click(object sender, RoutedEventArgs e)
-        // {
-        //     if (clockInTime == null)
-        //     {
-        //         clockInTime = DateTime.Now;
-        //         string log = $"Clocked In at {clockInTime.Value:hh:mm tt}";
-        //         attendanceLogs.Add(log);
-                
-        //         // Show Clock-In message
-        //         lblClockInStatus.Content = log;
-        //         lblClockInStatus.Foreground = Brushes.LightGreen;
-
-        //         // Clear Clock-Out status when clocking in again
-        //         lblClockOutStatus.Content = "";
-        //     }
-        //     else
-        //     {
-        //         lblClockInStatus.Content = "You are already Clocked-In.";
-        //         lblClockInStatus.Foreground = Brushes.Yellow;
-        //     }
-        // }
-
-        // // Clock Out - Calculate worked time and log it
-        // private void ClockOut_Click(object sender, RoutedEventArgs e)
-        // {
-        //     if (clockInTime != null)
-        //     {
-        //         DateTime clockOutTime = DateTime.Now;
-        //         TimeSpan workDuration = clockOutTime - clockInTime.Value;
-
-        //         string log = $"Clocked Out at {clockOutTime:hh:mm tt}. \n Worked: {workDuration.TotalHours:F2} hours.";
-        //         attendanceLogs.Add(log);
-
-        //         // Show Clock-Out message separately
-        //         lblClockOutStatus.Content = log;
-        //         lblClockOutStatus.Foreground = Brushes.LightBlue;
-
-        //         clockInTime = null; // Reset for next session
-        //     }
-        //     else
-        //     {
-        //         lblClockOutStatus.Content = "You must Clock-In first!";
-        //         lblClockOutStatus.Foreground = Brushes.Red;
-        //     }
-        // }
-
-        // View Attendance Logs
+        /// <summary>
+        /// Displays attendance logs for the current date.
+        /// </summary>
         private void ViewAttendanceLogs_Click(object sender, RoutedEventArgs e)
         {
-            string records = string.Join("\n", attendanceLogs);
-            if (records == string.Empty)
+            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+            if (attendanceLogs.ContainsKey(currentDate))
             {
-                records = "No attendance records available.";
+                string logs = string.Join("\n", attendanceLogs[currentDate]);
+                MessageBox.Show(logs, $"Attendance Logs for {currentDate}", MessageBoxButton.OK, MessageBoxImage.Information);
             }
-            MessageBox.Show(records, "Attendance Records", MessageBoxButton.OK, MessageBoxImage.Information);
+            else
+            {
+                MessageBox.Show("No attendance logs available for this date.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
         }
 
-        // Logout - Redirect to Login Window
-        private void Logout_Click(object sender, RoutedEventArgs e)
-        {
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
-            this.Close();
-        }
+        // -------------------- Break Reminder --------------------
 
-        // Initialize and start the break reminder timer
+        /// <summary>
+        /// Initializes the break reminder timer.
+        /// </summary>
         private void InitializeBreakReminder()
         {
-            breakReminderTimer = new DispatcherTimer();
-            breakReminderTimer.Interval = TimeSpan.FromMinutes(3); // Set interval to 3 minutes
+            breakReminderTimer.Interval = TimeSpan.FromMinutes(3);
             breakReminderTimer.Tick += BreakReminderTimer_Tick;
             breakReminderTimer.Start();
         }
 
-        // Event handler for break reminder timer
+        /// <summary>
+        /// Handles the break reminder timer tick event.
+        /// </summary>
         private void BreakReminderTimer_Tick(object? sender, EventArgs e)
         {
             var result = MessageBox.Show("Time to take a break!", "Break Reminder", MessageBoxButton.OKCancel, MessageBoxImage.Information);
@@ -234,8 +281,162 @@ namespace Employee_Management_System
             }
             else
             {
-                skippedBreaksCount = 0; // Reset the count if the break is taken
+                skippedBreaksCount = 0;
             }
+        }
+
+        // -------------------- To-Do List Management --------------------
+
+        /// <summary>
+        /// Loads the to-do list from a JSON file.
+        /// </summary>
+        private void LoadToDoList()
+        {
+            if (File.Exists(todoFile))
+            {
+                string json = File.ReadAllText(todoFile);
+                toDoTasks = JsonConvert.DeserializeObject<List<TaskItem>>(json) ?? new List<TaskItem>();
+                RefreshToDoList();
+            }
+        }
+
+        /// <summary>
+        /// Saves the to-do list to a JSON file.
+        /// </summary>
+        private void SaveToDoList()
+        {
+            File.WriteAllText(todoFile, JsonConvert.SerializeObject(toDoTasks, Formatting.Indented));
+        }
+
+        /// <summary>
+        /// Refreshes the to-do list display.
+        /// </summary>
+        private void RefreshToDoList()
+        {
+            lstToDo.Items.Clear();
+            foreach (var task in toDoTasks)
+            {
+                string taskInfo = task.TaskDescription;
+
+                if (task.DueDate.HasValue)
+                    taskInfo += $" (Due: {task.DueDate.Value:MM/dd/yyyy})";
+
+                taskInfo += $" - Priority: {task.Priority}";
+
+                lstToDo.Items.Add(taskInfo);
+            }
+        }
+
+        /// <summary>
+        /// Adds a new task to the to-do list.
+        /// </summary>
+        private void AddTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (!string.IsNullOrWhiteSpace(txtNewTask.Text))
+            {
+                DateTime? dueDate = txtDueDate.SelectedDate;
+                string priority = txtPriority.Text.Trim();
+
+                TaskItem newTask = new TaskItem(txtNewTask.Text.Trim(), dueDate, priority);
+                toDoTasks.Add(newTask);
+
+                txtNewTask.Clear();
+                txtDueDate.SelectedDate = null;
+                txtPriority.SelectedIndex = -1;
+
+                SaveToDoList();
+                RefreshToDoList();
+            }
+            else
+            {
+                MessageBox.Show("Please enter a task.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Removes the selected task from the to-do list.
+        /// </summary>
+        private void RemoveTask_Click(object sender, RoutedEventArgs e)
+        {
+            if (lstToDo.SelectedItem != null)
+            {
+                string? selectedTask = lstToDo.SelectedItem.ToString();
+                if (!string.IsNullOrEmpty(selectedTask))
+                {
+                    TaskItem? taskToRemove = toDoTasks.Find(task => task.TaskDescription == selectedTask);
+                    if (taskToRemove != null)
+                    {
+                        toDoTasks.Remove(taskToRemove);
+                        SaveToDoList();
+                        RefreshToDoList();
+                    }
+                }
+                else
+                {
+                    MessageBox.Show("Invalid task selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                }
+            }
+            else
+            {
+                MessageBox.Show("Please select a task to remove.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+            }
+        }
+
+        /// <summary>
+        /// Clears all tasks from the to-do list.
+        /// </summary>
+        private void ClearTasks_Click(object sender, RoutedEventArgs e)
+        {
+            if (toDoTasks.Count > 0)
+            {
+                toDoTasks.Clear();
+                SaveToDoList();
+                RefreshToDoList();
+                MessageBox.Show("To-Do List Cleared!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+            else
+            {
+                MessageBox.Show("No tasks to clear.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        // -------------------- Logout --------------------
+
+        /// <summary>
+        /// Handles the Logout button click event.
+        /// </summary>
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveAttendanceLogs();
+
+                LoginWindow loginWindow = new LoginWindow();
+                loginWindow.Show();
+
+                this.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Logout Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+    }
+
+    /// <summary>
+    /// Represents a task item in the to-do list.
+    /// </summary>
+    public class TaskItem
+    {
+        public string TaskDescription { get; set; }
+        public DateTime? DueDate { get; set; }
+        public string Priority { get; set; }
+
+        public TaskItem(string taskDescription, DateTime? dueDate, string priority)
+        {
+            TaskDescription = taskDescription;
+            DueDate = dueDate;
+            Priority = priority;
         }
     }
 }

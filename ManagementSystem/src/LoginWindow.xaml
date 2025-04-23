@@ -43,51 +43,50 @@
 
         <!-- Login Panel (Kept intact with correct positioning) -->
         <Border Background="#4B4B4B" CornerRadius="10" Padding="20" Margin="10,30,10,10" Grid.Column="1">
-                
             <Border CornerRadius="20" Background="#B0B0B0" Margin="10,20,10,10" Padding="20">
                 <StackPanel Width="450" HorizontalAlignment="Center" VerticalAlignment="Center"> 
 
-                    <!-- Logo Image (Spacing maintained) -->
+                    <!-- Logo Image -->
                     <Image Source="pack://siteoforigin:,,,/Assets/login.png" 
-                           Width="80" Height="80" 
-                           Margin="0,0,0,20" 
-                           HorizontalAlignment="Center"/>
+                        Width="80" Height="80" 
+                        Margin="0,0,0,20" 
+                        HorizontalAlignment="Center"/>
 
-                    <!-- Username TextBox (Spacing and Borders Preserved) -->
+                    <!-- Email ID TextBox (Now appearing first) -->
                     <Border CornerRadius="10" Background="#494F55" BorderBrush="White" BorderThickness="1"
                             Width="300" Margin="0,10,0,0">
                         <TextBox x:Name="UsernameTextBox" 
-                                 Height="50" 
-                                 Text="Enter ID" 
-                                 FontSize="20" 
-                                 FontWeight="ExtraLight"
-                                 Foreground="White" 
-                                 GotFocus="TextBox_GotFocus" 
-                                 LostFocus="TextBox_LostFocus" 
-                                 Background="Transparent" 
-                                 BorderThickness="0" 
-                                 Padding="10" 
-                                 TextAlignment="Center"/>
+                                Height="50" 
+                                Text="Enter Email ID" 
+                                FontSize="20" 
+                                FontWeight="ExtraLight"
+                                Foreground="White" 
+                                GotFocus="TextBox_GotFocus" 
+                                LostFocus="TextBox_LostFocus" 
+                                Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="10"  
+                                TextAlignment="Center"/>
                     </Border>
 
-                    <!-- Password TextBox (Spacing and Borders Preserved) -->
+                    <!-- ID TextBox (Now appearing second) -->
                     <Border CornerRadius="10" Background="#494F55" BorderBrush="White" BorderThickness="1"
                             Width="300" Margin="0,10,0,0">
                         <TextBox x:Name="PasswordTextBox" 
-                                 Height="50" 
-                                 Text="Enter Password" 
-                                 FontSize="20" 
-                                 FontWeight="ExtraLight"
-                                 Foreground="White" 
-                                 GotFocus="PasswordTextBox_GotFocus" 
-                                 LostFocus="PasswordTextBox_LostFocus" 
-                                 Background="Transparent" 
-                                 BorderThickness="0" 
-                                 Padding="10"  
-                                 TextAlignment="Center"/>
+                                Height="50" 
+                                Text="Enter ID" 
+                                FontSize="20" 
+                                FontWeight="ExtraLight"
+                                Foreground="White" 
+                                GotFocus="PasswordTextBox_GotFocus" 
+                                LostFocus="PasswordTextBox_LostFocus" 
+                                Background="Transparent" 
+                                BorderThickness="0" 
+                                Padding="10"  
+                                TextAlignment="Center"/>
                     </Border>
 
-                    <!-- Login Button (Spacing and Alignment Preserved) -->
+                    <!-- Login Button -->
                     <Button Content="Login" 
                             Width="180" 
                             Height="50" 
@@ -98,8 +97,8 @@
                             HorizontalAlignment="Center"/>
                 </StackPanel>
             </Border>
-
         </Border>
+
     </Grid>
 </Window>
 

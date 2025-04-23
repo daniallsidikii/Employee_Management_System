@@ -8,9 +8,9 @@ namespace Employee_Management_System
         {
             base.OnStartup(e);
 
-            // Directly open MainWindow
-            LoginWindow loginWindow = new LoginWindow();
-            loginWindow.Show();
+            // Directly open LoginWindow
+            LoginWindow LoginWindow = new LoginWindow();
+            LoginWindow.Show();
         }
     }
 }

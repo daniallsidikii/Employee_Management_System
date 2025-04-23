@@ -1,29 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj": {}
+    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj": {}
   },
   "projects": {
-    "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj": {
+    "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj",
+        "projectUniqueName": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
         "projectName": "ManagementSystem",
-        "projectPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\ManagementSystem.csproj",
-        "packagesPath": "C:\\Users\\SM TRADERs\\.nuget\\packages\\",
-        "outputPath": "C:\\daniyal\\ManagementSystem\\ManagementSystem\\src\\obj\\",
+        "projectPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
+        "packagesPath": "C:\\Users\\dell\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\dell\\OneDrive\\Desktop\\Project\\Employee_Management_System\\ManagementSystem\\src\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\SM TRADERs\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
+          "C:\\Users\\dell\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0-windows"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,12 +45,20 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "dependencies": {
+            "MaterialDesignThemes": {
+              "target": "Package",
+              "version": "[5.2.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
             "System.Data.SQLite": {
               "target": "Package",
               "version": "[1.0.119, )"
@@ -72,7 +83,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.104/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.201/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

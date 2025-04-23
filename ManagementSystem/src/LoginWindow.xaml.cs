@@ -1,5 +1,6 @@
 using System.Windows;
 using System.Windows.Controls;
+using System.Data.SQLite;
 using System.Windows.Media;
 
 namespace Employee_Management_System
@@ -16,21 +17,17 @@ namespace Employee_Management_System
             string username = UsernameTextBox.Text.Trim();
             string password = PasswordTextBox.Text.Trim();
 
-            // Input validation check
-            if (string.IsNullOrWhiteSpace(username) || username == "Enter Username" || string.IsNullOrWhiteSpace(password) || password == "Enter Password")
-            {
-                MessageBox.Show("Please enter both username and password.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                return;
-            }
-
-            // Perform login logic
+            // Admin hardcoded login
             if (username == "admin" && password == "password")
             {
                 MainWindow mainWindow = new MainWindow(); // Admin Dashboard
                 mainWindow.Show();
                 this.Close();
+                return;
             }
-            else if (username == "employee" && password == "emp123")
+
+            // Check employee credentials from database
+            if (IsValidEmployee(username, password))
             {
                 EmployeeDashboard employeeDashboard = new EmployeeDashboard(); // Employee Dashboard
                 employeeDashboard.Show();
@@ -38,9 +35,37 @@ namespace Employee_Management_System
             }
             else
             {
-                MessageBox.Show("Invalid username or password.", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid Email ID or Employee ID", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private bool IsValidEmployee(string email, string employeeId)
+        {
+            string dbPath = "Data Source=employees.db"; // Database path
+
+            try
+            {
+                using (var connection = new SQLiteConnection(dbPath))
+                {
+                    connection.Open();
+                    string query = "SELECT COUNT(*) FROM Employees WHERE Email = @Email AND EmployeeId = @EmployeeId";
+
+                    using (var command = new SQLiteCommand(query, connection))
+                    {
+                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@EmployeeId", employeeId);
+
+                        int count = Convert.ToInt32(command.ExecuteScalar());
+                        return count > 0; // If count > 0, credentials exist in database
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Database Error: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                return false;
+            }
+        }
+
         
         // Handle TextBox (Username) Placeholder
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -58,7 +83,7 @@ namespace Employee_Management_System
             {
                 if (textBox.Name == "UsernameTextBox")
                 {
-                    textBox.Text = "Enter Username";
+                    textBox.Text = "Enter Email ID";
                     // textBox.Foreground = Brushes.Gray;
                 }
             }
@@ -79,7 +104,7 @@ namespace Employee_Management_System
             {
                 if (textBox.Name == "PasswordTextBox")
                 {
-                    textBox.Text = "Enter Password";
+                    textBox.Text = "Enter ID";
                     // textBox.Foreground = Brushes.Gray;
                 }
             }
