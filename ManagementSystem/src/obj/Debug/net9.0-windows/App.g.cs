@@ -44,7 +44,7 @@ namespace Employee_Management_System {
         /// </summary>
         [System.STAThreadAttribute()]
         [System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "9.0.3.0")]
+        [System.CodeDom.Compiler.GeneratedCodeAttribute("PresentationBuildTasks", "9.0.4.0")]
         public static void Main() {
             Employee_Management_System.App app = new Employee_Management_System.App();
             app.Run();

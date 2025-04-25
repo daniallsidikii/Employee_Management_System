@@ -20,9 +20,9 @@ namespace Employee_Management_System
             // Admin hardcoded login
             if (username == "admin" && password == "password")
             {
-                MainWindow mainWindow = new MainWindow(); // Admin Dashboard
-                mainWindow.Show();
+                AdminPanel adminPanel = new AdminPanel(); // Admin Dashboard
                 this.Close();
+                adminPanel.Show();
                 return;
             }
 

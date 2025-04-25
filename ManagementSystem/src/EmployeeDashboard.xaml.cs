@@ -35,6 +35,12 @@ namespace Employee_Management_System
             LoadToDoList(); // Load tasks from the to-do list file
         }
 
+        private void message_Click(object sender, RoutedEventArgs e) // This is for message
+        {
+            ChatClient clientWindow = new ChatClient();
+            clientWindow.Show();
+        }
+
         // -------------------- Navigation --------------------
 
         /// <summary>

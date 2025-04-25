@@ -29,6 +29,14 @@
                        HorizontalAlignment="Center"/>
 
             <!-- Sidebar Buttons -->
+            <Button Content="Message" 
+                    Margin="5" 
+                    Height="40" 
+                    Background="#34495E" 
+                    Foreground="White" 
+                    FontSize="14" 
+                    Click="message_Click"/>
+
             <Button Content="Mark Attendance" 
                     Margin="5" 
                     Height="40" 
