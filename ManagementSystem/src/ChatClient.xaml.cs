@@ -19,9 +19,13 @@ namespace Employee_Management_System
         private TcpClient client;
         private NetworkStream stream;
 
-        public ChatClient()
+        public string userName;
+        public ChatClient(string username)
         {
             InitializeComponent();
+            userName = username;
+
+            txtUsername.Text = userName;
         }
 
         private async void Connect_Click(object sender, RoutedEventArgs e)

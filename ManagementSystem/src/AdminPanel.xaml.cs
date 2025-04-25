@@ -7,12 +7,12 @@ namespace Employee_Management_System
 {
     public partial class AdminPanel : Window
     {
-        public string name = "Admin";
+        
         public AdminPanel()
         {
             InitializeComponent();
             
-            lblAdmin.Text = name;
+            
         }
         
         private void Button1_Click(object sender, RoutedEventArgs e)
@@ -23,7 +23,7 @@ namespace Employee_Management_System
 
         private void Button2_Click(object sender, RoutedEventArgs e)
         {
-            ChatClient clientWindow = new ChatClient();
+            ChatClient clientWindow = new ChatClient("Admin");
             clientWindow.Show();
         }
     }

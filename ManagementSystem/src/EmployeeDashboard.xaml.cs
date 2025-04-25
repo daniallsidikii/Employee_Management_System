@@ -38,13 +38,13 @@ namespace Employee_Management_System
 
             userName = username;
             lblUserName.Text = $"Logged in as: {userName}";
+            
         }
 
         private void message_Click(object sender, RoutedEventArgs e) // This is for message
         {
-            ChatClient clientWindow = new ChatClient();
+            ChatClient clientWindow = new ChatClient(userName);
             clientWindow.Show();
-        
         }
 
         // -------------------- Navigation --------------------
