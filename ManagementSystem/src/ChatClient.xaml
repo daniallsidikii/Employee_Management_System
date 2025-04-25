@@ -4,33 +4,33 @@
         Title="Chat Area" Height="750" Width="1300" WindowStartupLocation="CenterScreen"
         Background="White" Foreground="Black" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
         
-	<Grid Margin="10">
-		<Grid.RowDefinitions>
-			<RowDefinition Height="Auto"/>
-			<!-- Username -->
-			<RowDefinition Height="*"/>
-			<!-- Chat messages -->
-			<RowDefinition Height="Auto"/>
-			<!-- Message input -->
-		</Grid.RowDefinitions>
+    <Grid Margin="10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Username -->
+            <RowDefinition Height="*"/>    <!-- Chat messages -->
+            <RowDefinition Height="Auto"/> <!-- Message input -->
+        </Grid.RowDefinitions>
 
-		<!-- Username input -->
-		<StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-			<Label Content="Username:"/>
-			<TextBox x:Name="txtUsername" Width="150" Margin="5,0"/>
-			<Button Content="Connect" Click="Connect_Click" Margin="10,0"/>
-		</StackPanel>
+        <!-- Username input and Connect button -->
+        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
+            <Label Content="Username:"/>
+            <TextBox x:Name="txtUsername" Width="150" Margin="5,0"/>
+            <Button Content="Connect" Click="Connect_Click" Margin="10,0"/>
 
-		<!-- Chat message area -->
-		<ListBox x:Name="lstMessages" Grid.Row="1" />
+            <!-- ComboBox for connected users -->
+            <Label Content="Connected Users:" Margin="20,0,0,0"/>
+            <ComboBox x:Name="comboBoxUsers" Width="150" SelectionChanged="comboBoxUsers_SelectionChanged" />
+        </StackPanel>
 
-		<!-- Message input and send button -->
-		<StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-			<Label Content="To:"/>
-			<TextBox x:Name="txtTarget" Width="80" Margin="5,0"/>
-			<TextBox x:Name="txtMessage" Width="300" Margin="5,0"/>
-			<Button Content="Send" Click="btnSend_Click" Width="75" Margin="5,0"/>
-		</StackPanel>
-	</Grid>
+        <!-- Chat message area -->
+        <ListBox x:Name="lstMessages" Grid.Row="1" />
+
+        <!-- Message input and send button -->
+        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
+            <Label Content="To:"/>
+            <TextBox x:Name="txtTarget" Width="80" Margin="5,0"/>
+            <TextBox x:Name="txtMessage" Width="300" Margin="5,0"/>
+            <Button Content="Send" Click="btnSend_Click" Width="75" Margin="5,0"/>
+        </StackPanel>
+    </Grid>
 </Window>
-

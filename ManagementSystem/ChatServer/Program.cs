@@ -26,13 +26,14 @@ while (true)
         clients.TryAdd(username, client);
 
         Console.WriteLine($"{username} connected.");
+        BroadcastUserList();
 
         try
         {
             while (true)
             {
                 int bytes = stream.Read(buffer, 0, buffer.Length);
-                if (bytes ==  0) break;
+                if (bytes == 0) break;
 
                 string message = Encoding.UTF8.GetString(buffer, 0, bytes);
                 Console.WriteLine($"{username} says {message}");
@@ -56,9 +57,28 @@ while (true)
                 }
             }
         }
-        catch{ }
+        catch { }
         clients.TryRemove(username, out _);
         client.Close();
         Console.WriteLine($"{username} disconnected.");
     });
+}
+
+
+void BroadcastUserList()
+{
+    string userList = "!users " + string.Join(",", clients.Keys);
+    byte[] userListBuffer = Encoding.UTF8.GetBytes(userList);
+
+    foreach (var client in clients.Values)
+    {
+        try
+        {
+            client.GetStream().Write(userListBuffer, 0, userListBuffer.Length);
+        }
+        catch
+        {
+            // Ignore errors
+        }
+    }
 }

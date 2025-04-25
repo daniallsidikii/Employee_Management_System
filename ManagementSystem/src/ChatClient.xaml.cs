@@ -28,12 +28,21 @@ namespace Employee_Management_System
             txtUsername.Text = userName;
         }
 
+        private void comboBoxUsers_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (comboBoxUsers.SelectedItem != null)
+            {
+                txtTarget.Text = comboBoxUsers.SelectedItem.ToString();
+            }
+        }
+
+
         private async void Connect_Click(object sender, RoutedEventArgs e)
         {
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync("192.168.1.107", 5000); // Server's Ip here
+                await client.ConnectAsync("192.168.1.109", 5000); // Server's Ip here
                 stream = client.GetStream();
 
                 // Send username as first message
@@ -78,10 +87,29 @@ namespace Employee_Management_System
 
                     string msg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                    Dispatcher.Invoke(() =>
+                    if (msg.StartsWith("!users"))
                     {
-                        lstMessages.Items.Add(msg);
-                    });
+                        string userList = msg.Substring(7);
+                        var users = userList.Split(',');
+
+                        Dispatcher.Invoke(() =>
+                        {
+                            comboBoxUsers.Items.Clear();
+                            foreach (var u in users)
+                            {
+                                if (u != userName) // don't add self
+                                    comboBoxUsers.Items.Add(u);
+                            }
+                        });
+                    }
+                    else
+                    {
+                        Dispatcher.Invoke(() =>
+                        {
+                            lstMessages.Items.Add(msg);
+                        });
+                    }
+                    
                 }
             }
             catch
