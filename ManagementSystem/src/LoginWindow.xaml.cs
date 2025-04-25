@@ -29,16 +29,17 @@ namespace Employee_Management_System
             // Check employee credentials from database
             if (IsValidEmployee(username, password))
             {
-                EmployeeDashboard employeeDashboard = new EmployeeDashboard(); // Employee Dashboard
+                EmployeeDashboard employeeDashboard = new EmployeeDashboard(username); // Employee Dashboard
+                
                 employeeDashboard.Show();
                 this.Close();
             }
             else
             {
-                MessageBox.Show("Invalid Email ID or Employee ID", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show("Invalid User Name or Employee ID", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
-        private bool IsValidEmployee(string email, string employeeId)
+        private bool IsValidEmployee(string userName, string employeeId)
         {
             string dbPath = "Data Source=employees.db"; // Database path
 
@@ -47,11 +48,11 @@ namespace Employee_Management_System
                 using (var connection = new SQLiteConnection(dbPath))
                 {
                     connection.Open();
-                    string query = "SELECT COUNT(*) FROM Employees WHERE Email = @Email AND EmployeeId = @EmployeeId";
+                    string query = "SELECT COUNT(*) FROM Employees WHERE Name = @Name AND EmployeeId = @EmployeeId";
 
                     using (var command = new SQLiteCommand(query, connection))
                     {
-                        command.Parameters.AddWithValue("@Email", email);
+                        command.Parameters.AddWithValue("@Name", userName);
                         command.Parameters.AddWithValue("@EmployeeId", employeeId);
 
                         int count = Convert.ToInt32(command.ExecuteScalar());

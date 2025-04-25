@@ -24,8 +24,10 @@ namespace Employee_Management_System
         private readonly string todoFile = "ToDoList.json"; // File path for storing to-do tasks
         private List<TaskItem> toDoTasks = new List<TaskItem>(); // List of to-do tasks
 
+        public string userName;
+
         // -------------------- Constructor --------------------
-        public EmployeeDashboard()
+        public EmployeeDashboard(string username)
         {
             InitializeComponent();
             ResetSessionLogs(); // Clear logs for a new session
@@ -33,12 +35,16 @@ namespace Employee_Management_System
             InitializeBreakReminder(); // Set up the break reminder timer
             StartClock(); // Start the digital clock display
             LoadToDoList(); // Load tasks from the to-do list file
+
+            userName = username;
+            lblUserName.Text = $"Logged in as: {userName}";
         }
 
         private void message_Click(object sender, RoutedEventArgs e) // This is for message
         {
             ChatClient clientWindow = new ChatClient();
             clientWindow.Show();
+        
         }
 
         // -------------------- Navigation --------------------

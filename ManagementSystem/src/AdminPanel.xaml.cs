@@ -7,9 +7,12 @@ namespace Employee_Management_System
 {
     public partial class AdminPanel : Window
     {
+        public string name = "Admin";
         public AdminPanel()
         {
             InitializeComponent();
+            
+            lblAdmin.Text = name;
         }
         
         private void Button1_Click(object sender, RoutedEventArgs e)

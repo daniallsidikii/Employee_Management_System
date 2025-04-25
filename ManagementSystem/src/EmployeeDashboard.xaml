@@ -89,6 +89,13 @@
                                FontWeight="Bold" 
                                Foreground="White" 
                                HorizontalAlignment="Center"/>
+                    <TextBlock x:Name="lblUserName"
+                                FontSize="20"
+                                FontWeight="SemiBold"
+                                Foreground="White"
+                                Margin="20,0,0,0"
+                                VerticalAlignment="Center"
+                                Text=""/>
                     <TextBlock x:Name="txtClock" 
                                FontSize="28" 
                                FontWeight="Bold" 
