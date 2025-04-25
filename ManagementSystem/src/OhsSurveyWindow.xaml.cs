@@ -8,14 +8,17 @@ namespace Employee_Management_System
 {
     public partial class OhsSurveyWindow : Window
     {
-        // File path for storing survey responses
-        private readonly string surveyFile = "OHSSurveyResponses.json";
+        private string userName; // User name to identify the current user
 
         // Constructor
-        public OhsSurveyWindow()
+        public OhsSurveyWindow(string userName)
         {
             InitializeComponent();
+            this.userName = userName; // Initialize userName
         }
+
+        // Get the file path for storing survey responses (unique for each user)
+        private string GetSurveyFile() => $"{userName}_OHSSurveyResponses.json";
 
         // Event handler for submitting the survey
         private void SubmitSurvey_Click(object sender, RoutedEventArgs e)
@@ -39,6 +42,7 @@ namespace Employee_Management_System
             };
 
             // Load existing survey responses or initialize a new list
+            string surveyFile = GetSurveyFile();
             List<object> surveyResponses;
             if (File.Exists(surveyFile))
             {

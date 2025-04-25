@@ -15,15 +15,18 @@ namespace Employee_Management_System
 
     public partial class HealthRecordsWindow : Window
     {
-        // File path for storing health records
-        private readonly string healthRecordFile = "HealthRecord.json";
+        private string userName; // User name to identify the current user
 
         // Constructor
-        public HealthRecordsWindow()
+        public HealthRecordsWindow(string userName)
         {
             InitializeComponent();
+            this.userName = userName; // Initialize userName
             ClearFields(); // Ensure fields are empty on startup
         }
+
+        // Get the file path for storing health records (unique for each user)
+        private string GetHealthRecordFile() => $"{userName}_HealthRecord.json";
 
         // Clear all fields
         private void ClearFields()
@@ -36,6 +39,7 @@ namespace Employee_Management_System
         // Load health records from file
         private void LoadHealthRecord()
         {
+            string healthRecordFile = GetHealthRecordFile();
             if (File.Exists(healthRecordFile))
             {
                 try
@@ -82,6 +86,7 @@ namespace Employee_Management_System
                 };
 
                 // Serialize and save the health record to file
+                string healthRecordFile = GetHealthRecordFile();
                 File.WriteAllText(healthRecordFile, JsonConvert.SerializeObject(record, Formatting.Indented));
                 MessageBox.Show("Health Record Saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }

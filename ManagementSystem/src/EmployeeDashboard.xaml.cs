@@ -17,11 +17,9 @@ namespace Employee_Management_System
         private DateTime? clockInTime; // Stores the clock-in time
         private bool hasClockedOut = false; // Ensures a user cannot clock out multiple times
         private bool hasMarkedAttendance = false; // Ensures attendance is marked only once per day
-        private Dictionary<string, List<string>> attendanceLogs = new Dictionary<string, List<string>>(); // Stores attendance logs by date
+       private Dictionary<string, AttendanceData> attendanceLogs = new();
         private DispatcherTimer breakReminderTimer = new DispatcherTimer(); // Timer for break reminders
         private int skippedBreaksCount = 0; // Tracks the number of skipped breaks
-        private readonly string attendanceFile = "AttendanceLogs.json"; // File path for attendance logs
-        private readonly string todoFile = "ToDoList.json"; // File path for storing to-do tasks
         private List<TaskItem> toDoTasks = new List<TaskItem>(); // List of to-do tasks
 
         public string userName;
@@ -56,7 +54,7 @@ namespace Employee_Management_System
         {
             try
             {
-                HealthRecordsWindow healthWindow = new HealthRecordsWindow();
+                HealthRecordsWindow healthWindow = new HealthRecordsWindow(userName);
                 healthWindow.ShowDialog(); // Open as a modal dialog
             }
             catch (Exception ex)
@@ -72,7 +70,7 @@ namespace Employee_Management_System
         {
             try
             {
-                OhsSurveyWindow surveyWindow = new OhsSurveyWindow();
+                OhsSurveyWindow surveyWindow = new OhsSurveyWindow(userName);
                 surveyWindow.ShowDialog(); // Open as a modal dialog
             }
             catch (Exception ex)
@@ -111,10 +109,25 @@ namespace Employee_Management_System
         /// </summary>
          private void LoadAttendanceLogs()
 {
-    if (File.Exists(attendanceFile))
+    string userAttendanceFile = $"{userName}_AttendanceLogs.json";
+    if (File.Exists(userAttendanceFile))
     {
-        string json = File.ReadAllText(attendanceFile);
-        attendanceLogs = JsonConvert.DeserializeObject<Dictionary<string, List<string>>>(json) ?? new Dictionary<string, List<string>>();
+        string json = File.ReadAllText(userAttendanceFile);
+        attendanceLogs = JsonConvert.DeserializeObject<Dictionary<string, AttendanceData>>(json)
+                         ?? new Dictionary<string, AttendanceData>();
+
+        string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+        if (attendanceLogs.ContainsKey(currentDate))
+        {
+            // Restore state flags
+            hasMarkedAttendance = attendanceLogs[currentDate].HasMarkedAttendance;
+            hasClockedOut = attendanceLogs[currentDate].HasClockedOut;
+        }
+    }
+    else
+    {
+        attendanceLogs = new Dictionary<string, AttendanceData>();
     }
 }
 
@@ -123,17 +136,18 @@ namespace Employee_Management_System
         /// </summary>
         private void SaveAttendanceLogs()
         {
-            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-            if (!attendanceLogs.ContainsKey(currentDate))
-            {
-                attendanceLogs[currentDate] = new List<string>();
-            }
-
-            File.WriteAllText(attendanceFile, JsonConvert.SerializeObject(attendanceLogs, Formatting.Indented));
+            string userAttendanceFile = $"{userName}_AttendanceLogs.json";
+            File.WriteAllText(userAttendanceFile, JsonConvert.SerializeObject(attendanceLogs, Formatting.Indented));
         }
 
         // -------------------- Attendance Management --------------------
+        //public class
+        public class AttendanceData
+{
+    public List<string> Logs { get; set; } = new List<string>();
+    public bool HasMarkedAttendance { get; set; }
+    public bool HasClockedOut { get; set; }
+}
 
         /// <summary>
         /// Handles the Clock-In button click event.
@@ -142,19 +156,18 @@ namespace Employee_Management_System
 {
     try
     {
-        if (clockInTime == null)
+        string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+         if (clockInTime == null)
         {
-            clockInTime = DateTime.Now;
-            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
-
-            // Ensure the key for the current date exists in the dictionary
             if (!attendanceLogs.ContainsKey(currentDate))
             {
-                attendanceLogs[currentDate] = new List<string>();
+                attendanceLogs[currentDate] = new AttendanceData();
             }
 
+            clockInTime = DateTime.Now;
+
             string log = $"Clocked In at {clockInTime.Value:hh:mm tt} on {currentDate}";
-            attendanceLogs[currentDate].Add(log);
+            attendanceLogs[currentDate].Logs.Add(log);
 
             lblClockInStatus.Content = log;
             lblClockInStatus.Foreground = Brushes.LightGreen;
@@ -178,56 +191,69 @@ namespace Employee_Management_System
         /// Handles the Clock-Out button click event.
         /// </summary>
         private void ClockOut_Click(object sender, RoutedEventArgs e)
+{
+    try
+    {
+        string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+
+        if (clockInTime != null && !hasClockedOut)
         {
-            if (clockInTime != null && !hasClockedOut)
-            {
-                DateTime clockOutTime = DateTime.Now;
-                TimeSpan workDuration = clockOutTime - clockInTime.Value;
+            DateTime clockOutTime = DateTime.Now;
+            TimeSpan workDuration = clockOutTime - clockInTime.Value;
 
-                string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
-                attendanceLogs[DateTime.Now.ToString("MM/dd/yyyy")].Add(log);
+            string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
+            attendanceLogs[currentDate].Logs.Add(log);
 
-                lblClockOutStatus.Content = log;
-                lblClockOutStatus.Foreground = Brushes.LightBlue;
-                clockInTime = null;
-                hasClockedOut = true;
+            lblClockOutStatus.Content = log;
+            lblClockOutStatus.Foreground = Brushes.LightBlue;
 
-                SaveAttendanceLogs();
-            }
-            else
-            {
-                lblClockOutStatus.Content = "You must Clock-In first or have already Clocked-Out.";
-                lblClockOutStatus.Foreground = Brushes.Red;
-            }
+            // Reset clock-in and set clock-out flag
+            clockInTime = null;
+            hasClockedOut = true;
+            attendanceLogs[currentDate].HasClockedOut = true;
+
+            SaveAttendanceLogs();
         }
+        else
+        {
+            lblClockOutStatus.Content = "You must Clock-In first or have already Clocked-Out.";
+            lblClockOutStatus.Foreground = Brushes.Red;
+        }
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"An error occurred while clocking out: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
+
 
         /// <summary>
         /// Handles the Mark Attendance button click event.
         /// </summary>
-     private void MarkAttendance_Click(object sender, RoutedEventArgs e)
+        private void MarkAttendance_Click(object sender, RoutedEventArgs e)
 {
     try
     {
-        // Pause the break reminder timer
-        breakReminderTimer.Stop();
+        string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
 
-        if (!hasMarkedAttendance)
+        if (!attendanceLogs.ContainsKey(currentDate))
         {
-            string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+            attendanceLogs[currentDate] = new AttendanceData();
+        }
 
-            // Ensure the key for the current date exists in the dictionary
-            if (!attendanceLogs.ContainsKey(currentDate))
-            {
-                attendanceLogs[currentDate] = new List<string>();
-            }
+        if (!attendanceLogs[currentDate].HasMarkedAttendance)
+        {
+            breakReminderTimer.Stop();
 
             string log = $"Attendance marked at {DateTime.Now:hh:mm tt} on {currentDate}";
-            attendanceLogs[currentDate].Add(log);
+            attendanceLogs[currentDate].Logs.Add(log);
+            attendanceLogs[currentDate].HasMarkedAttendance = true;
 
-            MessageBox.Show("Attendance marked successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             hasMarkedAttendance = true;
 
             SaveAttendanceLogs();
+
+            MessageBox.Show("Attendance marked successfully.", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
         }
         else
         {
@@ -240,10 +266,10 @@ namespace Employee_Management_System
     }
     finally
     {
-        // Resume the break reminder timer
         breakReminderTimer.Start();
     }
 }
+
 
         /// <summary>
         /// Displays attendance logs for the current date.
@@ -262,7 +288,7 @@ namespace Employee_Management_System
                 MessageBox.Show("No attendance logs available for this date.", "Info", MessageBoxButton.OK, MessageBoxImage.Information);
             }
         }
-
+        
         // -------------------- Break Reminder --------------------
 
         /// <summary>
@@ -304,11 +330,16 @@ namespace Employee_Management_System
         /// </summary>
         private void LoadToDoList()
         {
-            if (File.Exists(todoFile))
+            string  userToDoFile = $"{userName}_ToDoList.json";
+            if (File.Exists(userToDoFile))
             {
-                string json = File.ReadAllText(todoFile);
+                string json = File.ReadAllText(userToDoFile);
                 toDoTasks = JsonConvert.DeserializeObject<List<TaskItem>>(json) ?? new List<TaskItem>();
                 RefreshToDoList();
+            }
+            else
+            {
+                toDoTasks = new List<TaskItem>();
             }
         }
 
@@ -317,7 +348,8 @@ namespace Employee_Management_System
         /// </summary>
         private void SaveToDoList()
         {
-            File.WriteAllText(todoFile, JsonConvert.SerializeObject(toDoTasks, Formatting.Indented));
+            string userToDoFile = $"{userName}_ToDoList.json";
+            File.WriteAllText(userToDoFile, JsonConvert.SerializeObject(toDoTasks, Formatting.Indented));
         }
 
         /// <summary>
