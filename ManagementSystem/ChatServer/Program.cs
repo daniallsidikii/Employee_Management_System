@@ -61,6 +61,7 @@ while (true)
         clients.TryRemove(username, out _);
         client.Close();
         Console.WriteLine($"{username} disconnected.");
+        BroadcastUserList();
     });
 }
 

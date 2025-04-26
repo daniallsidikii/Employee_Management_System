@@ -1,36 +1,59 @@
 <Window x:Class="Employee_Management_System.ChatClient"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Chat Area" Height="750" Width="1300" WindowStartupLocation="CenterScreen"
-        Background="White" Foreground="Black" WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
-        
+        Title="Chat Area" Height="750" Width="513"
+        WindowStartupLocation="CenterScreen"
+        Background="White" Foreground="Black"
+        WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
+
     <Grid Margin="10">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Username -->
-            <RowDefinition Height="*"/>    <!-- Chat messages -->
-            <RowDefinition Height="Auto"/> <!-- Message input -->
+            <RowDefinition Height="Auto"/>
+            <!-- Header -->
+            <RowDefinition Height="Auto"/>
+            <!-- Username & Connect -->
+            <RowDefinition Height="*"/>
+            <!-- Chat messages -->
+            <RowDefinition Height="Auto"/>
+            <!-- "To" input or ComboBox -->
+            <RowDefinition Height="Auto"/>
+            <!-- Message input -->
         </Grid.RowDefinitions>
 
-        <!-- Username input and Connect button -->
-        <StackPanel Orientation="Horizontal" Margin="0,0,0,10">
-            <Label Content="Username:"/>
-            <TextBox x:Name="txtUsername" Width="150" Margin="5,0"/>
-            <Button Content="Connect" Click="Connect_Click" Margin="10,0"/>
+        <!-- Header -->
+        <Label x:Name="headingLabel" Content="OFFICE CHAT"
+               Grid.Row="0"
+               HorizontalAlignment="Center"
+               FontSize="24" Background="Black"
+               Foreground="White" FontWeight="Bold"
+               Padding="10"/>
 
-            <!-- ComboBox for connected users -->
-            <Label Content="Connected Users:" Margin="20,0,0,0"/>
-            <ComboBox x:Name="comboBoxUsers" Width="150" SelectionChanged="comboBoxUsers_SelectionChanged" />
+        <!-- Username and Connect button -->
+        <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
+            <Label Content="Username:" VerticalAlignment="Center"/>
+            <TextBox x:Name="txtUsername" Width="100" Margin="5,0"/>
+            <Button Content="Connect" Click="Connect_Click" Margin="10,0"/>
         </StackPanel>
 
-        <!-- Chat message area -->
-        <ListBox x:Name="lstMessages" Grid.Row="1" />
+        <!-- Chat messages -->
+        <ListBox x:Name="lstMessages" Grid.Row="2" Background="#FF3B87B7" Margin="0,10"/>
 
-        <!-- Message input and send button -->
-        <StackPanel Grid.Row="2" Orientation="Horizontal" Margin="0,10,0,0">
-            <Label Content="To:"/>
-            <TextBox x:Name="txtTarget" Width="80" Margin="5,0"/>
-            <TextBox x:Name="txtMessage" Width="300" Margin="5,0"/>
-            <Button Content="Send" Click="btnSend_Click" Width="75" Margin="5,0"/>
+        <!-- "To" input (text box or combo box) -->
+        <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5">
+            <Label Content="To:" VerticalAlignment="Center"/>
+            <!-- You can use either one of the following: -->
+
+            <!-- If you want free text input for recipient -->
+            <TextBox x:Name="txtTarget" Width="150" Margin="5,0"/>
+
+            <!-- OR if you want a dropdown of users -->
+            <ComboBox x:Name="comboBoxUsers" Width="150" Margin="5,0" SelectionChanged="comboBoxUsers_SelectionChanged"/> 
+        </StackPanel>
+
+        <!-- Message input -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,0">
+            <TextBox x:Name="txtMessage" Width="350" Height="30" Margin="0,0,10,0"/>
+            <Button Content="Send" Click="btnSend_Click" Width="75" Height="30"/>
         </StackPanel>
     </Grid>
 </Window>

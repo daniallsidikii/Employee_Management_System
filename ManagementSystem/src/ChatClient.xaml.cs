@@ -42,7 +42,7 @@ namespace Employee_Management_System
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync("192.168.1.109", 5000); // Server's Ip here
+                await client.ConnectAsync("192.168.1.101", 5000); // Server's Ip here
                 stream = client.GetStream();
 
                 // Send username as first message
