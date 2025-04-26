@@ -1,7 +1,8 @@
 <Window x:Class="Employee_Management_System.ChatClient"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+  
+       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Chat Area" Height="750" Width="513"
+        Title="Chat Area" Height="550" Width="338"
         WindowStartupLocation="CenterScreen"
         Background="White" Foreground="Black"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
@@ -21,39 +22,108 @@
         </Grid.RowDefinitions>
 
         <!-- Header -->
-        <Label x:Name="headingLabel" Content="OFFICE CHAT"
+        <Label x:Name="headingLabel" Content="&#x9;CHAT"
                Grid.Row="0"
                HorizontalAlignment="Center"
-               FontSize="24" Background="Black"
+               FontSize="24" Background="#FF007CFF"
                Foreground="White" FontWeight="Bold"
-               Padding="10"/>
+               Padding="10" Margin="0,0,0,36" Grid.RowSpan="2" Width="493" Cursor="Cross" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top">
+            <Label.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform X="0"/>
+                </TransformGroup>
+            </Label.RenderTransform>
+        </Label>
 
         <!-- Username and Connect button -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-            <Label Content="Username:" VerticalAlignment="Center"/>
-            <TextBox x:Name="txtUsername" Width="100" Margin="5,0"/>
-            <Button Content="Connect" Click="Connect_Click" Margin="10,0"/>
+            <Label Content="Username:" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Background="#FFE01111" Foreground="White">
+                <Label.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="397" Y="47"/>
+                    </TransformGroup>
+                </Label.RenderTransform>
+            </Label>
+            <TextBox x:Name="txtUsername" Width="100" Margin="5,0" RenderTransformOrigin="0.5,0.5" >
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="310"/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
+            <Button Content="Connect" Click="Connect_Click" Margin="10,0" RenderTransformOrigin="0.5,0.5" Width="120" Height="37" Background="White" Foreground="#FF007CFF" FontSize="20" >
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-9" Y="-28"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
         </StackPanel>
 
         <!-- Chat messages -->
-        <ListBox x:Name="lstMessages" Grid.Row="2" Background="#FF3B87B7" Margin="0,10"/>
+        <ListBox x:Name="lstMessages" Grid.Row="2" Background="White" Margin="0,10"/>
 
         <!-- "To" input (text box or combo box) -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5">
             <Label Content="To:" VerticalAlignment="Center"/>
-            <!-- You can use either one of the following: -->
+           
 
-            <!-- If you want free text input for recipient -->
-            <TextBox x:Name="txtTarget" Width="150" Margin="5,0"/>
+            
+            <TextBox x:Name="txtTarget" Width="150" Margin="5,0" RenderTransformOrigin="0.5,0.5">
+                <TextBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="505"/>
+                    </TransformGroup>
+                </TextBox.RenderTransform>
+            </TextBox>
 
-            <!-- OR if you want a dropdown of users -->
-            <ComboBox x:Name="comboBoxUsers" Width="150" Margin="5,0" SelectionChanged="comboBoxUsers_SelectionChanged"/> 
+            
+            <ComboBox x:Name="comboBoxUsers" Width="113" Margin="5,0" SelectionChanged="comboBoxUsers_SelectionChanged" RenderTransformOrigin="0.5,0.5" Foreground="#FFF05151">
+                <ComboBox.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="-160"/>
+                    </TransformGroup>
+                </ComboBox.RenderTransform>
+                <ComboBox.Background>
+                    <LinearGradientBrush EndPoint="0,1">
+                        <GradientStop Color="#FFF0F0F0"/>
+                        <GradientStop Color="#FF007CFF" Offset="1"/>
+                    </LinearGradientBrush>
+                </ComboBox.Background>
+            </ComboBox>
         </StackPanel>
 
         <!-- Message input -->
         <StackPanel Grid.Row="4" Orientation="Horizontal" Margin="0,10,0,0">
-            <TextBox x:Name="txtMessage" Width="350" Height="30" Margin="0,0,10,0"/>
-            <Button Content="Send" Click="btnSend_Click" Width="75" Height="30"/>
+            <TextBox x:Name="txtMessage" Width="233" Height="30" Margin="0,0,10,0"/>
+            <Button Content="Send" Click="btnSend_Click" Width="75" Height="30" RenderTransformOrigin="0.5,0.5">
+                <Button.RenderTransform>
+                    <TransformGroup>
+                        <ScaleTransform/>
+                        <SkewTransform/>
+                        <RotateTransform/>
+                        <TranslateTransform X="0"/>
+                    </TransformGroup>
+                </Button.RenderTransform>
+            </Button>
         </StackPanel>
     </Grid>
 </Window>

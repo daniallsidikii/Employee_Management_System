@@ -1,1 +1,10 @@
-{}
+{
+  "04/26/2025": {
+    "Logs": [
+      "Clocked In at 12:12 PM on 04/26/2025",
+      "Attendance marked at 12:12 PM on 04/26/2025"
+    ],
+    "HasMarkedAttendance": true,
+    "HasClockedOut": false
+  }
+}
