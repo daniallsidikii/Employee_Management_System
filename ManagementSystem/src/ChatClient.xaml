@@ -1,11 +1,12 @@
 <Window x:Class="Employee_Management_System.ChatClient"
-  
+
+
        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Chat Area" Height="550" Width="338"
+        Title="Chat Area" Height="550" Width="351"
         WindowStartupLocation="CenterScreen"
         Background="White" Foreground="Black"
-        WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
+        WindowStyle="SingleBorderWindow" ResizeMode="NoResize">
 
     <Grid Margin="10">
         <Grid.RowDefinitions>
@@ -40,33 +41,33 @@
 
         <!-- Username and Connect button -->
         <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,5">
-            <Label Content="Username:" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Background="#FFE01111" Foreground="White">
+            <Label Content="Username:" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5" Background="#FFE01111" Foreground="White" IsEnabled="False">
                 <Label.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform X="397" Y="47"/>
+                        <TranslateTransform X="400" Y="-28"/>
                     </TransformGroup>
                 </Label.RenderTransform>
             </Label>
-            <TextBox x:Name="txtUsername" Width="100" Margin="5,0" RenderTransformOrigin="0.5,0.5" >
+            <TextBox x:Name="txtUsername" Width="100" Margin="5,0" RenderTransformOrigin="0.5,0.5" Height="30" IsReadOnlyCaretVisible="True" Background="#FFFF0404" Foreground="White" FontSize="18" HorizontalContentAlignment="Center" >
                 <TextBox.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform X="310"/>
+                        <TranslateTransform X="100" Y="-28"/>
                     </TransformGroup>
                 </TextBox.RenderTransform>
             </TextBox>
-            <Button Content="Connect" Click="Connect_Click" Margin="10,0" RenderTransformOrigin="0.5,0.5" Width="120" Height="37" Background="White" Foreground="#FF007CFF" FontSize="20" >
+            <Button Content="Connect" Click="Connect_Click" Margin="10,0" RenderTransformOrigin="0.5,0.5" Width="82" Height="32" Background="White" Foreground="#FF007CFF" FontSize="20" >
                 <Button.RenderTransform>
                     <TransformGroup>
                         <ScaleTransform/>
                         <SkewTransform/>
                         <RotateTransform/>
-                        <TranslateTransform X="-9" Y="-28"/>
+                        <TranslateTransform X="5" Y="14"/>
                     </TransformGroup>
                 </Button.RenderTransform>
             </Button>
@@ -78,9 +79,9 @@
         <!-- "To" input (text box or combo box) -->
         <StackPanel Grid.Row="3" Orientation="Horizontal" Margin="0,5">
             <Label Content="To:" VerticalAlignment="Center"/>
-           
 
-            
+
+
             <TextBox x:Name="txtTarget" Width="150" Margin="5,0" RenderTransformOrigin="0.5,0.5">
                 <TextBox.RenderTransform>
                     <TransformGroup>
@@ -92,7 +93,7 @@
                 </TextBox.RenderTransform>
             </TextBox>
 
-            
+
             <ComboBox x:Name="comboBoxUsers" Width="113" Margin="5,0" SelectionChanged="comboBoxUsers_SelectionChanged" RenderTransformOrigin="0.5,0.5" Foreground="#FFF05151">
                 <ComboBox.RenderTransform>
                     <TransformGroup>
