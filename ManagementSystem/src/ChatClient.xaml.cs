@@ -42,7 +42,7 @@ namespace Employee_Management_System
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync("192.168.1.101", 5000); // Server's Ip here
+                await client.ConnectAsync("192.168.1.108", 5000); // Server's Ip here
                 stream = client.GetStream();
 
                 // Send username as first message
@@ -51,6 +51,9 @@ namespace Employee_Management_System
                 await stream.WriteAsync(usernameBytes, 0, usernameBytes.Length);
 
                 lstMessages.Items.Add("Connected to server as " + username);
+
+                
+                
                 ReceiveMessages(); // Start receiving in background
             }
             catch (Exception ex)
@@ -66,12 +69,15 @@ namespace Employee_Management_System
             string message = txtMessage.Text.Trim();
             string target = txtTarget.Text.Trim();
 
+
             if (!string.IsNullOrEmpty(target))
                 message = $"@{target} {message}";
 
             byte[] msgBuffer = Encoding.UTF8.GetBytes(message);
             await stream.WriteAsync(msgBuffer, 0, msgBuffer.Length);
             txtMessage.Clear();
+
+            // lstMessages.Items.Add(target + message); // to update sender listbox also
         }
 
         private async void ReceiveMessages()
@@ -95,11 +101,16 @@ namespace Employee_Management_System
                         Dispatcher.Invoke(() =>
                         {
                             comboBoxUsers.Items.Clear();
+
+
+                            // Add "Everyone" first
+                            comboBoxUsers.Items.Add("Everyone");
                             foreach (var u in users)
                             {
                                 if (u != userName) // don't add self
                                     comboBoxUsers.Items.Add(u);
                             }
+                            comboBoxUsers.SelectedIndex = 0; // Select "Everyone" by default
                         });
                     }
                     else
