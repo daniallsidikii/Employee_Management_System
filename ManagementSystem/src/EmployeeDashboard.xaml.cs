@@ -28,15 +28,13 @@ namespace Employee_Management_System
         public EmployeeDashboard(string username)
         {
             InitializeComponent();
-            ResetSessionLogs(); // Clear logs for a new session
+           
+            userName = username;
+            lblUserName.Text = $"Logged in as: {userName}";
             LoadAttendanceLogs(); // Load existing attendance logs
             InitializeBreakReminder(); // Set up the break reminder timer
             StartClock(); // Start the digital clock display
             LoadToDoList(); // Load tasks from the to-do list file
-
-            userName = username;
-            lblUserName.Text = $"Logged in as: {userName}";
-            
         }
 
         private void message_Click(object sender, RoutedEventArgs e) // This is for message
@@ -95,16 +93,6 @@ namespace Employee_Management_System
         }
 
         /// <summary>
-        /// Resets session-specific logs and flags.
-        /// </summary>
-        private void ResetSessionLogs()
-        {
-            attendanceLogs.Clear();
-            hasClockedOut = false;
-            hasMarkedAttendance = false;
-        }
-
-        /// <summary>
         /// Loads attendance logs from a JSON file.
         /// </summary>
          private void LoadAttendanceLogs()
@@ -120,9 +108,10 @@ namespace Employee_Management_System
 
         if (attendanceLogs.ContainsKey(currentDate))
         {
-            // Restore state flags
-            hasMarkedAttendance = attendanceLogs[currentDate].HasMarkedAttendance;
-            hasClockedOut = attendanceLogs[currentDate].HasClockedOut;
+            var todayLog = attendanceLogs[currentDate];
+            hasMarkedAttendance = todayLog.HasMarkedAttendance;
+            hasClockedOut = todayLog.HasClockedOut;
+            clockInTime = todayLog.ClockInTime;
         }
     }
     else
@@ -131,14 +120,28 @@ namespace Employee_Management_System
     }
 }
 
+
         /// <summary>
         /// Saves attendance logs to a JSON file.
         /// </summary>
         private void SaveAttendanceLogs()
-        {
-            string userAttendanceFile = $"{userName}_AttendanceLogs.json";
-            File.WriteAllText(userAttendanceFile, JsonConvert.SerializeObject(attendanceLogs, Formatting.Indented));
-        }
+{
+    try
+    {
+        string userAttendanceFile = $"{userName}_AttendanceLogs.json";
+
+        // Load the existing logs before saving (preserves old data)
+        Dictionary<string, AttendanceData> currentLogs = new Dictionary<string, AttendanceData>(attendanceLogs);
+
+        // Save the updated attendance logs
+        File.WriteAllText(userAttendanceFile, JsonConvert.SerializeObject(currentLogs, Formatting.Indented));
+    }
+    catch (Exception ex)
+    {
+        MessageBox.Show($"Failed to save attendance logs: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+    }
+}
+
 
         // -------------------- Attendance Management --------------------
         //public class
@@ -147,6 +150,16 @@ namespace Employee_Management_System
     public List<string> Logs { get; set; } = new List<string>();
     public bool HasMarkedAttendance { get; set; }
     public bool HasClockedOut { get; set; }
+    public DateTime? ClockInTime { get; set; } // Persist clock-in time
+    public TimeSpan? WorkDuration { get; set; } // Optional: Track worked hours
+}
+
+    private AttendanceData GetOrCreateTodayLog()
+{
+    string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+    if (!attendanceLogs.ContainsKey(currentDate))
+        attendanceLogs[currentDate] = new AttendanceData();
+    return attendanceLogs[currentDate];
 }
 
         /// <summary>
@@ -157,17 +170,15 @@ namespace Employee_Management_System
     try
     {
         string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
-         if (clockInTime == null)
-        {
-            if (!attendanceLogs.ContainsKey(currentDate))
-            {
-                attendanceLogs[currentDate] = new AttendanceData();
-            }
+        var todayLog = GetOrCreateTodayLog();
 
+        if (clockInTime == null && todayLog.ClockInTime == null)
+        {
             clockInTime = DateTime.Now;
+            todayLog.ClockInTime = clockInTime;
 
             string log = $"Clocked In at {clockInTime.Value:hh:mm tt} on {currentDate}";
-            attendanceLogs[currentDate].Logs.Add(log);
+            todayLog.Logs.Add(log);
 
             lblClockInStatus.Content = log;
             lblClockInStatus.Foreground = Brushes.LightGreen;
@@ -187,6 +198,7 @@ namespace Employee_Management_System
     }
 }
 
+
         /// <summary>
         /// Handles the Clock-Out button click event.
         /// </summary>
@@ -195,6 +207,7 @@ namespace Employee_Management_System
     try
     {
         string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+        var todayLog = GetOrCreateTodayLog();
 
         if (clockInTime != null && !hasClockedOut)
         {
@@ -202,15 +215,17 @@ namespace Employee_Management_System
             TimeSpan workDuration = clockOutTime - clockInTime.Value;
 
             string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
-            attendanceLogs[currentDate].Logs.Add(log);
+            todayLog.Logs.Add(log);
 
             lblClockOutStatus.Content = log;
             lblClockOutStatus.Foreground = Brushes.LightBlue;
 
-            // Reset clock-in and set clock-out flag
+            // Reset clock-in and mark as clocked out
             clockInTime = null;
+            todayLog.ClockInTime = null;
             hasClockedOut = true;
-            attendanceLogs[currentDate].HasClockedOut = true;
+            todayLog.HasClockedOut = true;
+            todayLog.WorkDuration = workDuration;
 
             SaveAttendanceLogs();
         }
@@ -227,6 +242,7 @@ namespace Employee_Management_System
 }
 
 
+
         /// <summary>
         /// Handles the Mark Attendance button click event.
         /// </summary>
@@ -235,20 +251,15 @@ namespace Employee_Management_System
     try
     {
         string currentDate = DateTime.Now.ToString("MM/dd/yyyy");
+        var todayLog = GetOrCreateTodayLog();
 
-        if (!attendanceLogs.ContainsKey(currentDate))
-        {
-            attendanceLogs[currentDate] = new AttendanceData();
-        }
-
-        if (!attendanceLogs[currentDate].HasMarkedAttendance)
+        if (!todayLog.HasMarkedAttendance)
         {
             breakReminderTimer.Stop();
 
             string log = $"Attendance marked at {DateTime.Now:hh:mm tt} on {currentDate}";
-            attendanceLogs[currentDate].Logs.Add(log);
-            attendanceLogs[currentDate].HasMarkedAttendance = true;
-
+            todayLog.Logs.Add(log);
+            todayLog.HasMarkedAttendance = true;
             hasMarkedAttendance = true;
 
             SaveAttendanceLogs();
@@ -270,7 +281,6 @@ namespace Employee_Management_System
     }
 }
 
-
         /// <summary>
         /// Displays attendance logs for the current date.
         /// </summary>
@@ -280,7 +290,7 @@ namespace Employee_Management_System
 
             if (attendanceLogs.ContainsKey(currentDate))
             {
-                string logs = string.Join("\n", attendanceLogs[currentDate]);
+                string logs = string.Join("\n", attendanceLogs[currentDate].Logs);
                 MessageBox.Show(logs, $"Attendance Logs for {currentDate}", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             else
