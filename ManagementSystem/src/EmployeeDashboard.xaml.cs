@@ -411,31 +411,46 @@ namespace Employee_Management_System
         /// Removes the selected task from the to-do list.
         /// </summary>
         private void RemoveTask_Click(object sender, RoutedEventArgs e)
+{
+    if (lstToDo.SelectedItem != null)
+    {
+        string? selectedTask = lstToDo.SelectedItem.ToString();
+        if (!string.IsNullOrEmpty(selectedTask))
         {
-            if (lstToDo.SelectedItem != null)
+            // Find the task by matching the displayed string
+            TaskItem? taskToRemove = toDoTasks.Find(task =>
             {
-                string? selectedTask = lstToDo.SelectedItem.ToString();
-                if (!string.IsNullOrEmpty(selectedTask))
-                {
-                    TaskItem? taskToRemove = toDoTasks.Find(task => task.TaskDescription == selectedTask);
-                    if (taskToRemove != null)
-                    {
-                        toDoTasks.Remove(taskToRemove);
-                        SaveToDoList();
-                        RefreshToDoList();
-                    }
-                }
-                else
-                {
-                    MessageBox.Show("Invalid task selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
-                }
+                string taskInfo = task.TaskDescription;
+
+                if (task.DueDate.HasValue)
+                    taskInfo += $" (Due: {task.DueDate.Value:MM/dd/yyyy})";
+
+                taskInfo += $" - Priority: {task.Priority}";
+
+                return taskInfo == selectedTask;
+            });
+
+            if (taskToRemove != null)
+            {
+                toDoTasks.Remove(taskToRemove);
+                SaveToDoList();
+                RefreshToDoList();
             }
             else
             {
-                MessageBox.Show("Please select a task to remove.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Task not found.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
-
+        else
+        {
+            MessageBox.Show("Invalid task selected.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+        }
+    }
+    else
+    {
+        MessageBox.Show("Please select a task to remove.", "Warning", MessageBoxButton.OK, MessageBoxImage.Warning);
+    }
+}
         /// <summary>
         /// Clears all tasks from the to-do list.
         /// </summary>
