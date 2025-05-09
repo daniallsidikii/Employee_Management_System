@@ -27,8 +27,16 @@ namespace Employee_Management_System
             ChatClient clientWindow = new ChatClient("Admin");
             clientWindow.Show();
         }
-
+        private void Button3_Click(object sender, RoutedEventArgs e)
+        {
+            AdminAttendanceWindow attendanceWindow = new AdminAttendanceWindow();
+            attendanceWindow.Show();
+        }
         
-      
+        private void Button4_Click(object sender, RoutedEventArgs e)
+        {
+            AdminHealthWindow healthWindow = new AdminHealthWindow();
+            healthWindow.Show();
+        }
     }
 }

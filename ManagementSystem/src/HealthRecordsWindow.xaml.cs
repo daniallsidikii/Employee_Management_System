@@ -26,7 +26,14 @@ namespace Employee_Management_System
         }
 
         // Get the file path for storing health records (unique for each user)
-        private string GetHealthRecordFile() => $"{userName}_HealthRecord.json";
+        private string GetHealthRecordFile()
+         {
+           string folder = "HealthRecords";
+            if (!Directory.Exists(folder))
+                 Directory.CreateDirectory(folder);
+            return Path.Combine(folder, $"{userName}_HealthRecord.json");
+        }
+
 
         // Clear all fields
         private void ClearFields()
