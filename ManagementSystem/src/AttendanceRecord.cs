@@ -1,10 +1,27 @@
-namespace Employee_Management_System
+public class AttendanceRecord
 {
-    // This class represents a single attendance record.
-    public class AttendanceRecord
+    public string? Username { get; set; }
+    public string? Date { get; set; } // still useful for display
+    public string? Log { get; set; }
+    // New property: LogType (e.g., "Clock In", "Clock Out", "Other")
+    public string? LogType { get; set; }
+
+    // New property: LogMessage (e.g., the detailed log message)
+    public string? LogMessage { get; set;}
+
+    // Safe date parsing using the correct format
+    public DateTime ParsedDate
+{
+    get
     {
-        public string? Username { get; set; } // The username of the employee
-        public string? Date { get; set; } // The date of the attendance record
-        public string? Log { get; set; } // The log details of the attendance
+        DateTime.TryParseExact(
+            Date,
+            "MM/dd/yyyy",
+            System.Globalization.CultureInfo.InvariantCulture,
+            System.Globalization.DateTimeStyles.None,
+            out DateTime parsed);
+        return parsed;
     }
+}
+
 }
