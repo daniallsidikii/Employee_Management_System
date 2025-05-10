@@ -42,7 +42,7 @@ namespace Employee_Management_System
             try
             {
                 client = new TcpClient();
-                await client.ConnectAsync("192.168.1.108", 5000); // Server's Ip here
+                await client.ConnectAsync("192.168.100.24", 5000); // Server's Ip here
                 stream = client.GetStream();
 
                 // Send username as first message
@@ -79,6 +79,14 @@ namespace Employee_Management_System
 
             // lstMessages.Items.Add(target + message); // to update sender listbox also
         }
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                btnSend_Click(sender, new RoutedEventArgs());
+            }
+        }
+
 
         private async void ReceiveMessages()
         {

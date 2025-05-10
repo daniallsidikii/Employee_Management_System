@@ -39,6 +39,14 @@ namespace Employee_Management_System
                 MessageBox.Show("Invalid User Name or Employee ID", "Login Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+        private void Window_KeyDown(object sender, System.Windows.Input.KeyEventArgs e)
+        {
+            if (e.Key == System.Windows.Input.Key.Enter)
+            {
+                btnLogin_Click(sender, new RoutedEventArgs());
+            }
+        }
+
         private bool IsValidEmployee(string userName, string employeeId)
         {
             string dbPath = "Data Source=employees.db"; // Database path

@@ -10,5 +10,7 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/login.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/cred.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/logout.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/adminpannel.gif")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/emaillogo.png")]
 
 

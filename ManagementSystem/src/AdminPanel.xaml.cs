@@ -27,7 +27,17 @@ namespace Employee_Management_System
             ChatClient clientWindow = new ChatClient("Admin");
             clientWindow.Show();
         }
-
+        private void Button5_Click(object sender, RoutedEventArgs e)
+        {
+            var emailWindow = new SendEmailWindow();
+            emailWindow.ShowDialog();
+        }
+        private void Logout_Click(object sender, RoutedEventArgs e)
+        {
+            LoginWindow loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
         
       
     }

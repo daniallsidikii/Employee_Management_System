@@ -1,1 +1,13 @@
-{}
+{
+  "05/10/2025": {
+    "Logs": [
+      "Clocked In at 12:13 AM on 05/10/2025",
+      "Clocked Out at 12:13 AM. Worked: 0.00 hours.",
+      "Clocked In at 12:13 AM on 05/10/2025"
+    ],
+    "HasMarkedAttendance": false,
+    "HasClockedOut": true,
+    "ClockInTime": "2025-05-10T00:13:10.033466+05:00",
+    "WorkDuration": "00:00:00.5834997"
+  }
+}

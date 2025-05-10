@@ -1,0 +1,125 @@
+<Window x:Class="Employee_Management_System.SendEmailWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Send Email"
+        Height="750"
+        Width="700"
+        Left="118"
+        Top="33"
+        WindowStartupLocation="Manual"
+        Background="#2C3E50">
+    <Window.Resources>
+        <Style TargetType="Button" x:Key="PrimaryButton">
+            <Setter Property="Background" Value="#4CA1AF"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Height" Value="48"/>
+            <Setter Property="Width" Value="170"/>
+            <Setter Property="Padding" Value="6"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" Background="{TemplateBinding Background}" CornerRadius="14">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#5FB2C9"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+    </Window.Resources>
+
+    <Grid Margin="30">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/> <!-- Logo Row -->
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <!-- LOGO -->
+        <StackPanel Grid.Row="0" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,0,0,30" VerticalAlignment="Center" >
+            <Image Source="pack://siteoforigin:,,,/Assets/EmailLogo.png" Height="80" Width="80" Margin="0,0,10,0"/>
+            <TextBlock Text="Email"
+                    FontSize="28"
+                    FontWeight="Bold"
+                    Foreground="White"
+                    VerticalAlignment="Center"/>
+        </StackPanel>
+
+
+        <!-- TO EMAIL -->
+        <StackPanel Grid.Row="1" Margin="0,0,0,20">
+            <TextBlock Text="To:" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="Auto"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="ToTextBox"
+                            Grid.Column="0"
+                            Padding="10"
+                            FontSize="14"
+                            BorderThickness="0"
+                            Background="Transparent"
+                            VerticalContentAlignment="Center"/>
+                    <TextBlock Text="@gmail.com"
+                            Grid.Column="1"
+                            Margin="5,0,10,0"
+                            VerticalAlignment="Center"
+                            FontSize="14"
+                            Foreground="Gray"/>
+                </Grid>
+            </Border>
+        </StackPanel>
+
+        <!-- SUBJECT -->
+        <StackPanel Grid.Row="2" Margin="0,0,0,20">
+            <TextBlock Text="Subject:" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
+                <TextBox x:Name="SubjectTextBox"
+                        Padding="10"
+                        FontSize="14"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        VerticalContentAlignment="Center"
+                        Height="40"/>
+            </Border>
+        </StackPanel>
+
+        <!-- BODY -->
+        <StackPanel Grid.Row="3" Margin="0,0,0,20">
+            <TextBlock Text="Compose Email" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
+                <TextBox x:Name="BodyTextBox"
+                        AcceptsReturn="True"
+                        TextWrapping="Wrap"
+                        VerticalScrollBarVisibility="Auto"
+                        Padding="10"
+                        FontSize="14"
+                        BorderThickness="0"
+                        Background="Transparent"
+                        Height="200"/>
+            </Border>
+        </StackPanel>
+
+        <!-- SEND BUTTON -->
+        <StackPanel Grid.Row="4" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,0,0,50">
+            <Button Content="Send Email"
+                    Style="{StaticResource PrimaryButton}"
+                    Click="Button5_Click"/>
+        </StackPanel>
+    </Grid>
+
+</Window>
+
+

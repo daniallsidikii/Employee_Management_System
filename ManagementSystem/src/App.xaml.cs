@@ -11,6 +11,7 @@ namespace Employee_Management_System
             // Directly open LoginWindow
             LoginWindow LoginWindow = new LoginWindow();
             LoginWindow.Show();
+            
         }
     }
 }
