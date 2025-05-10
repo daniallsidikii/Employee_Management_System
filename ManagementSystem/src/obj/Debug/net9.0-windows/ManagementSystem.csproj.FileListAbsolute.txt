@@ -314,3 +314,11 @@ C:\Users\DELL\OneDrive\Desktop\Oops Project\Employee_Management_System\Managemen
 C:\Users\DELL\OneDrive\Desktop\Oops Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.pdb
 C:\Users\DELL\OneDrive\Desktop\Oops Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.genruntimeconfig.cache
 C:\Users\DELL\OneDrive\Desktop\Oops Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ref\ManagementSystem.dll
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminPanel.baml
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ChatClient.baml
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminPanel.g.cs
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ChatClient.g.cs
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminAttendanceWindow.baml
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminAttendanceWindow.g.cs
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminHealthWindow.baml
+C:\Users\dell\OneDrive\Desktop\Project\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminHealthWindow.g.cs
