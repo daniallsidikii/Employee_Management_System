@@ -91,16 +91,30 @@ namespace Employee_Management_System
             timer.Tick += (sender, e) => { txtClock.Text = DateTime.Now.ToString("hh:mm:ss tt"); };
             timer.Start();
         }
+        
+        // -------------------- Attendance File Management --------------------
+         private string GetAttendanceFilePath()
+{
+    // Go up from /bin/Debug/... to project root
+    string projectRoot = Directory.GetParent(AppDomain.CurrentDomain.BaseDirectory)!.Parent!.Parent!.Parent!.FullName;
 
+    string folderPath = Path.Combine(projectRoot, "Attendance");
+
+    if (!Directory.Exists(folderPath))
+        Directory.CreateDirectory(folderPath);
+
+    return Path.Combine(folderPath, $"{userName}_AttendanceLogs.json");
+}
         /// <summary>
         /// Loads attendance logs from a JSON file.
         /// </summary>
          private void LoadAttendanceLogs()
 {
-    string userAttendanceFile = $"{userName}_AttendanceLogs.json";
-    if (File.Exists(userAttendanceFile))
+    string filePath = GetAttendanceFilePath();
+
+    if (File.Exists(filePath))
     {
-        string json = File.ReadAllText(userAttendanceFile);
+        string json = File.ReadAllText(filePath);
         attendanceLogs = JsonConvert.DeserializeObject<Dictionary<string, AttendanceData>>(json)
                          ?? new Dictionary<string, AttendanceData>();
 
@@ -128,13 +142,12 @@ namespace Employee_Management_System
 {
     try
     {
-        string userAttendanceFile = $"{userName}_AttendanceLogs.json";
+        string filePath = GetAttendanceFilePath();
 
-        // Load the existing logs before saving (preserves old data)
         Dictionary<string, AttendanceData> currentLogs = new Dictionary<string, AttendanceData>(attendanceLogs);
 
-        // Save the updated attendance logs
-        File.WriteAllText(userAttendanceFile, JsonConvert.SerializeObject(currentLogs, Formatting.Indented));
+        string json = JsonConvert.SerializeObject(currentLogs, Formatting.Indented);
+        File.WriteAllText(filePath, json);
     }
     catch (Exception ex)
     {
@@ -142,18 +155,7 @@ namespace Employee_Management_System
     }
 }
 
-
         // -------------------- Attendance Management --------------------
-        //public class
-        public class AttendanceData
-{
-    public List<string> Logs { get; set; } = new List<string>();
-    public bool HasMarkedAttendance { get; set; }
-    public bool HasClockedOut { get; set; }
-    public DateTime? ClockInTime { get; set; } // Persist clock-in time
-    public TimeSpan? WorkDuration { get; set; } // Optional: Track worked hours
-}
-
     private AttendanceData GetOrCreateTodayLog()
 {
     string currentDate = DateTime.Now.ToString("MM/dd/yyyy");

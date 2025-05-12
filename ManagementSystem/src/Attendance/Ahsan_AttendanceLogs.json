@@ -1,0 +1,11 @@
+{
+  "05/09/2025": {
+    "Logs": [
+      "Attendance marked at 06:59 am on 05/09/2025"
+    ],
+    "HasMarkedAttendance": true,
+    "HasClockedOut": false,
+    "ClockInTime": null,
+    "WorkDuration": null
+  }
+}

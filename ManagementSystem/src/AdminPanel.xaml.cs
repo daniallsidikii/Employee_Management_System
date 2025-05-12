@@ -37,8 +37,16 @@ namespace Employee_Management_System
             LoginWindow loginWindow = new LoginWindow();
             loginWindow.Show();
             this.Close();
+        }        private void Button3_Click(object sender, RoutedEventArgs e)
+        {
+            AdminAttendanceWindow attendanceWindow = new AdminAttendanceWindow();
+            attendanceWindow.Show();
         }
         
-      
+        private void Button4_Click(object sender, RoutedEventArgs e)
+        {
+            AdminHealthWindow healthWindow = new AdminHealthWindow();
+            healthWindow.Show();
+        }
     }
 }
