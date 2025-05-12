@@ -96,11 +96,13 @@
                 <Button Name="button3"
                         FontSize="16"
                         Content="Check Attendance"
+                        Click="Button3_Click"
                         Style="{StaticResource ModernButtonStyle}" />
 
                 <Button Name="button4"
                         FontSize="16"
                         Content="Health Records"
+                        Click="Button4_Click"
                         Style="{StaticResource ModernButtonStyle}" />
 
                 <Button Name="button5"
