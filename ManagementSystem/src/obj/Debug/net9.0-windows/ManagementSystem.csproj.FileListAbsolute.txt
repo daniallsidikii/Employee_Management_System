@@ -444,3 +444,5 @@ C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.pdb
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.genruntimeconfig.cache
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ref\ManagementSystem.dll
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\FileLogo.png
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\SendLogo.png

@@ -35,6 +35,12 @@
       <Content Include="Assets\EmailLogo.png">
           <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       </Content>
+      <Content Include="Assets\FileLogo.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
+      <Content Include="Assets\SendLogo.png">
+          <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </Content>
   </ItemGroup>
 
 

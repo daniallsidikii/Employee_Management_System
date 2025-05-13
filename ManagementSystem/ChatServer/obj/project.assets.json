@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\daniyal\\Employee_Management_System\\ManagementSystem\\chatServer\\ChatServer.csproj",
+      "projectUniqueName": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
       "projectName": "ChatServer",
-      "projectPath": "C:\\daniyal\\Employee_Management_System\\ManagementSystem\\chatServer\\ChatServer.csproj",
+      "projectPath": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
       "packagesPath": "C:\\Users\\SM TRADERs\\.nuget\\packages\\",
-      "outputPath": "C:\\daniyal\\Employee_Management_System\\ManagementSystem\\chatServer\\obj\\",
+      "outputPath": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
