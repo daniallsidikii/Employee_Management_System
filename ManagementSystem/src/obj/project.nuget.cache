@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ixTY8A5lXtc=",
+  "dgSpecHash": "oCIVm2A+3d0=",
   "success": true,
-  "projectFilePath": "C:\\daniyal\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
+  "projectFilePath": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\src\\ManagementSystem.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\SM TRADERs\\.nuget\\packages\\entityframework\\6.4.4\\entityframework.6.4.4.nupkg.sha512",
     "C:\\Users\\SM TRADERs\\.nuget\\packages\\materialdesigncolors\\5.2.1\\materialdesigncolors.5.2.1.nupkg.sha512",

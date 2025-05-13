@@ -1,16 +1,18 @@
 using System;
+using System.Data.SQLite;
 using System.IO;
 using System.Windows;
-using Newtonsoft.Json;
 
 namespace Employee_Management_System
 {
     // Class to represent a health record
     public class HealthRecord
     {
-        public string? BloodPressure { get; set; } // Blood pressure value
-        public string? Vision { get; set; } // Vision value
-        public DateTime LastCheckup { get; set; } // Last checkup date
+        public int Id { get; set; } // Primary Key for the database
+        public string Username { get; set; } // To uniquely identify each user
+        public string BloodPressure { get; set; }
+        public string Vision { get; set; }
+        public DateTime LastCheckup { get; set; }
     }
 
     public partial class HealthRecordsWindow : Window
@@ -22,18 +24,42 @@ namespace Employee_Management_System
         {
             InitializeComponent();
             this.userName = userName; // Initialize userName
+            CreateDatabase(); // Ensure the database and table are created
             ClearFields(); // Ensure fields are empty on startup
+        }
+
+        // Create SQLite database and table
+        private void CreateDatabase()
+        {
+            string connectionString = "Data Source=healthRecords.db;Version=3;";
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                string createTableQuery = @"CREATE TABLE IF NOT EXISTS HealthRecords (
+                                                Id INTEGER PRIMARY KEY AUTOINCREMENT, 
+                                                Username TEXT NOT NULL, 
+                                                BloodPressure TEXT, 
+                                                Vision TEXT, 
+                                                LastCheckup DATE)";
+                
+                using (var command = new SQLiteCommand(createTableQuery, connection))
+                {
+                    command.ExecuteNonQuery();
+                }
+
+                connection.Close();
+            }
         }
 
         // Get the file path for storing health records (unique for each user)
         private string GetHealthRecordFile()
-         {
-           string folder = "HealthRecords";
+        {
+            string folder = "HealthRecords";
             if (!Directory.Exists(folder))
-                 Directory.CreateDirectory(folder);
+                Directory.CreateDirectory(folder);
             return Path.Combine(folder, $"{userName}_HealthRecord.json");
         }
-
 
         // Clear all fields
         private void ClearFields()
@@ -43,38 +69,8 @@ namespace Employee_Management_System
             dpLastCheckup.SelectedDate = null;
         }
 
-        // Load health records from file
-        private void LoadHealthRecord()
-        {
-            string healthRecordFile = GetHealthRecordFile();
-            if (File.Exists(healthRecordFile))
-            {
-                try
-                {
-                    // Read and deserialize the health record
-                    string json = File.ReadAllText(healthRecordFile);
-                    HealthRecord record = JsonConvert.DeserializeObject<HealthRecord>(json) ?? new HealthRecord();
-
-                    // Refresh UI fields
-                    txtBloodPressure.Text = record.BloodPressure ?? string.Empty;
-                    txtVision.Text = record.Vision ?? string.Empty;
-                    dpLastCheckup.SelectedDate = record.LastCheckup != DateTime.MinValue ? record.LastCheckup : (DateTime?)null;
-
-                    MessageBox.Show("Health Records Loaded Successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-                }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Error loading health records: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
-                }
-            }
-            else
-            {
-                MessageBox.Show("No health records found!", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
-            }
-        }
-
-        // Save health records to file
-        private void SaveHealthRecords_Click(object sender, RoutedEventArgs e)
+        // Save health records to database
+        private void SaveHealthRecordToDatabase()
         {
             if (dpLastCheckup.SelectedDate == null)
             {
@@ -87,26 +83,87 @@ namespace Employee_Management_System
                 // Create a new health record object
                 HealthRecord record = new HealthRecord
                 {
+                    Username = userName,  // Assuming the username is passed to the constructor
                     BloodPressure = txtBloodPressure.Text,
                     Vision = txtVision.Text,
                     LastCheckup = dpLastCheckup.SelectedDate.Value
                 };
 
-                // Serialize and save the health record to file
-                string healthRecordFile = GetHealthRecordFile();
-                File.WriteAllText(healthRecordFile, JsonConvert.SerializeObject(record, Formatting.Indented));
+                string connectionString = "Data Source=healthRecords.db;Version=3;";
+                using (var connection = new SQLiteConnection(connectionString))
+                {
+                    connection.Open();
+
+                    // Prepare an SQL command to insert the record
+                    string insertQuery = "INSERT INTO HealthRecords (Username, BloodPressure, Vision, LastCheckup) VALUES (@Username, @BloodPressure, @Vision, @LastCheckup)";
+
+                    using (var command = new SQLiteCommand(insertQuery, connection))
+                    {
+                        command.Parameters.AddWithValue("@Username", record.Username);
+                        command.Parameters.AddWithValue("@BloodPressure", record.BloodPressure);
+                        command.Parameters.AddWithValue("@Vision", record.Vision);
+                        command.Parameters.AddWithValue("@LastCheckup", record.LastCheckup);
+
+                        command.ExecuteNonQuery();
+                    }
+
+                    connection.Close();
+                }
+
                 MessageBox.Show("Health Record Saved!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error saving health records: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+                MessageBox.Show($"Error saving health record: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
 
-        // Refresh health records by reloading from file
+        // Load health record from database
+        private void LoadHealthRecordFromDatabase()
+        {
+            string connectionString = "Data Source=healthRecords.db;Version=3;";
+            using (var connection = new SQLiteConnection(connectionString))
+            {
+                connection.Open();
+
+                // Prepare the SQL query to load the health record by username
+                string selectQuery = "SELECT BloodPressure, Vision, LastCheckup FROM HealthRecords WHERE Username = @Username LIMIT 1";
+
+                using (var command = new SQLiteCommand(selectQuery, connection))
+                {
+                    command.Parameters.AddWithValue("@Username", userName);
+
+                    using (var reader = command.ExecuteReader())
+                    {
+                        if (reader.Read())
+                        {
+                            txtBloodPressure.Text = reader["BloodPressure"].ToString();
+                            txtVision.Text = reader["Vision"].ToString();
+                            dpLastCheckup.SelectedDate = reader["LastCheckup"] != DBNull.Value ? (DateTime?)reader["LastCheckup"] : null;
+
+                            MessageBox.Show("Health Records Loaded Successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                        }
+                        else
+                        {
+                            MessageBox.Show("No health records found for this user.", "Info", MessageBoxButton.OK, MessageBoxImage.Warning);
+                        }
+                    }
+                }
+
+                connection.Close();
+            }
+        }
+
+        // Save button click event handler
+        private void SaveHealthRecords_Click(object sender, RoutedEventArgs e)
+        {
+            SaveHealthRecordToDatabase();
+        }
+
+        // Load button click event handler
         private void LoadHealthRecords_Click(object sender, RoutedEventArgs e)
         {
-            LoadHealthRecord();
+            LoadHealthRecordFromDatabase();
         }
     }
 }

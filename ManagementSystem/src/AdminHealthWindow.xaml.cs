@@ -1,60 +1,65 @@
+using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Windows;
-using Newtonsoft.Json;
+using System.Data.SQLite;
+using Employee_Management_System.Models; // Assuming HealthRecordDisplay is in the Models folder
 
 namespace Employee_Management_System
 {
     public partial class AdminHealthWindow : Window
     {
+        private const string connectionString = "Data Source=healthrecords.db;Version=3;"; // Change database path if needed
+
         public AdminHealthWindow()
         {
             InitializeComponent();
             LoadAllHealthRecords();
         }
 
+        // Method to load all health records from the database
         private void LoadAllHealthRecords()
         {
-            string healthFolder = "HealthRecords";
             List<HealthRecordDisplay> records = new List<HealthRecordDisplay>();
 
-            if (!Directory.Exists(healthFolder))
+            try
             {
-                Directory.CreateDirectory(healthFolder);
-                MessageBox.Show("HealthRecords folder was missing and has been created. Please add health records.");
-                return;
-            }
-
-            foreach (var file in Directory.GetFiles(healthFolder, "*_HealthRecord.json"))
-            {
-                string username = Path.GetFileNameWithoutExtension(file).Replace("_HealthRecord", "");
-
-                try
+                using (SQLiteConnection conn = new SQLiteConnection(connectionString))
                 {
-                    string json = File.ReadAllText(file);
-                    var record = JsonConvert.DeserializeObject<HealthRecordDisplay>(json);
+                    conn.Open();
+                    string query = "SELECT Username, BloodPressure, Vision, LastCheckup FROM HealthRecords ORDER BY LastCheckup DESC";
+                    SQLiteCommand cmd = new SQLiteCommand(query, conn);
 
-                    if (record != null)
+                    using (SQLiteDataReader reader = cmd.ExecuteReader())
                     {
-                        record.Username = username;
-                        records.Add(record);
+                        while (reader.Read())
+                        {
+                            records.Add(new HealthRecordDisplay
+                            {
+                                Username = reader["Username"].ToString(),
+                                BloodPressure = reader["BloodPressure"].ToString(),
+                                Vision = reader["Vision"].ToString(),
+                                LastCheckup = Convert.ToDateTime(reader["LastCheckup"])
+                            });
+                        }
                     }
                 }
-                catch (Exception ex)
-                {
-                    MessageBox.Show($"Failed to read {file}:\n{ex.Message}");
-                }
-            }
 
-            HealthGrid.ItemsSource = records.OrderByDescending(r => r.LastCheckup).ToList();
+                HealthGrid.ItemsSource = records;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error loading health records: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
         }
 
+        // Method to refresh health records
         private void Refresh_Click(object sender, RoutedEventArgs e)
         {
             LoadAllHealthRecords();
         }
 
+        // Method to close the window
         private void Close_Click(object sender, RoutedEventArgs e)
         {
             this.Close();
