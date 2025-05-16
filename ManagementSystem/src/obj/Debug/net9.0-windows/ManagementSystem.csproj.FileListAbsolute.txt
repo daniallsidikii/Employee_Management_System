@@ -382,6 +382,8 @@ C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\logout.png
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\AdminPannel.gif
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\EmailLogo.png
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\FileLogo.png
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\SendLogo.png
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\App.config
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\ManagementSystem.exe
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\ManagementSystem.dll.config
@@ -412,7 +414,6 @@ C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminAttendanceWindow.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminHealthWindow.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\AdminPanel.baml
-C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ChatClient.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\EmployeeDashboard.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\HealthRecordsWindow.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\LoginWindow.baml
@@ -432,6 +433,7 @@ C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\App.g.cs
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem_Content.g.cs
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem_MarkupCompile.cache
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ChatClient.baml
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.g.resources
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.GeneratedMSBuildEditorConfig.editorconfig
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.AssemblyInfoInputs.cache
@@ -444,5 +446,4 @@ C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.pdb
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ManagementSystem.genruntimeconfig.cache
 C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\ref\ManagementSystem.dll
-C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\FileLogo.png
-C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\bin\Debug\net9.0-windows\Assets\SendLogo.png
+C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\GeneratedInternalTypeHelper.g.cs

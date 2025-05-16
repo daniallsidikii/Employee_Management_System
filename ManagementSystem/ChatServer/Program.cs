@@ -16,7 +16,7 @@ while (true)
     _ = Task.Run(() =>
     {
         NetworkStream stream = client.GetStream();
-        byte[] buffer = new byte[8192]; // Large buffer for file data
+        byte[] buffer = new byte[8192];
 
         int nameLen = stream.Read(buffer, 0, buffer.Length);
         string username = Encoding.UTF8.GetString(buffer, 0, nameLen);
@@ -32,12 +32,14 @@ while (true)
                 int bytes = stream.Read(buffer, 0, buffer.Length);
                 if (bytes == 0) break;
 
-                // Check if it's a file transfer
-                string headerCheck = Encoding.UTF8.GetString(buffer, 0, Math.Min(bytes, 6));
-                if (headerCheck.StartsWith("!file|"))
+                string message = Encoding.UTF8.GetString(buffer, 0, bytes);
+                Console.WriteLine($"Received from {username}: {message}");
+
+                // === Handle file transfer ===
+                if (message.StartsWith("!file|"))
                 {
                     int newlineIndex = Array.IndexOf(buffer, (byte)'\n');
-                    if (newlineIndex == -1) continue; // Invalid or incomplete header
+                    if (newlineIndex == -1) continue; // incomplete header, skip
 
                     string header = Encoding.UTF8.GetString(buffer, 0, newlineIndex);
                     string[] parts = header.Split('|');
@@ -75,20 +77,14 @@ while (true)
                             }
                             catch
                             {
-                                // Handle individual failures silently
+                                // Ignore failures silently
                             }
                         }
                     }
 
-                    // Optional: Confirm to sender
-                    byte[] confirmMsg = Encoding.UTF8.GetBytes($"[File broadcasted] {fileName}");
-                    client.GetStream().Write(confirmMsg, 0, confirmMsg.Length);
-                    continue;
+                    continue; // skip normal message processing for file
                 }
-
-                // Otherwise, treat it as text
-                string message = Encoding.UTF8.GetString(buffer, 0, bytes);
-                Console.WriteLine($"Received from {username}: {message}");
+                // === End file transfer ===
 
                 if (message.StartsWith("@Everyone "))
                 {
@@ -105,7 +101,6 @@ while (true)
                             catch { }
                         }
                     }
-
                     byte[] senderMsg = Encoding.UTF8.GetBytes($"[Everyone] You to Everyone: {actualMsg}");
                     stream.Write(senderMsg, 0, senderMsg.Length);
                 }
@@ -130,16 +125,11 @@ while (true)
                 }
                 else
                 {
-                    // Optionally handle unformatted messages
                     Console.WriteLine("Unrecognized message format.");
                 }
-
             }
         }
-        catch
-        {
-            // Do nothing on error
-        }
+        catch { }
 
         clients.TryRemove(username, out _);
         client.Close();
@@ -152,7 +142,6 @@ void BroadcastUserList()
 {
     string userList = "!users " + string.Join(",", clients.Keys);
     byte[] userListBuffer = Encoding.UTF8.GetBytes(userList);
-
     foreach (var client in clients.Values)
     {
         try

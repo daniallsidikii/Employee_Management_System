@@ -44,8 +44,7 @@ namespace Employee_Management_System
                 byte[] usernameBytes = Encoding.UTF8.GetBytes(username);
                 await stream.WriteAsync(usernameBytes, 0, usernameBytes.Length);
 
-                lstMessages.Items.Add("Connected to server as " + username);
-
+                AddMessage("Connected to server as " + username, false);
                 ReceiveMessages(); // Start background receiving
             }
             catch (Exception ex)
@@ -63,19 +62,25 @@ namespace Employee_Management_System
 
             if (string.IsNullOrEmpty(message)) return;
 
-            // Format message for private or group chat
+            // Prepare message format based on target user
             if (!string.IsNullOrEmpty(target) && target != "Everyone")
             {
-                message = $"@{target} {message}"; // Private message
+                message = $"@{target} {message}"; // Private message format
             }
             else
             {
-                message = $"@Everyone {message}"; // Group broadcast
+                message = $"@Everyone {message}"; // Broadcast message format
             }
 
             byte[] msgBuffer = Encoding.UTF8.GetBytes(message);
-            await stream.WriteAsync(msgBuffer, 0, msgBuffer.Length);
+            await client.GetStream().WriteAsync(msgBuffer, 0, msgBuffer.Length);
 
+            // Show the sent message immediately on the client UI (right-aligned)
+            string displayMsg = (target == "Everyone" || string.IsNullOrEmpty(target)) ?
+                $"[Everyone] You to Everyone: {txtMessage.Text.Trim()}" :
+                $"[Private] You to {target}: {txtMessage.Text.Trim()}";
+
+            AddMessage(displayMsg, true);  // true = right-aligned (sent message style)
             txtMessage.Clear();
         }
 
@@ -90,18 +95,19 @@ namespace Employee_Management_System
 
         private async void ReceiveMessages()
         {
-            byte[] buffer = new byte[4096];
+            byte[] buffer = new byte[8192];  // Larger buffer for files etc.
 
             try
             {
                 while (true)
                 {
                     int bytesRead = await stream.ReadAsync(buffer, 0, buffer.Length);
-                    if (bytesRead == 0) break;
+                    if (bytesRead == 0) break;  // Disconnected
 
                     string msg = Encoding.UTF8.GetString(buffer, 0, bytesRead);
 
-                    if (msg.StartsWith("!users"))
+                    // Handle user list update command
+                    if (msg.StartsWith("!users "))
                     {
                         string userList = msg.Substring(7);
                         var users = userList.Split(',');
@@ -118,14 +124,15 @@ namespace Employee_Management_System
                             comboBoxUsers.SelectedIndex = 0;
                         });
                     }
+                    // Handle file transfer
                     else if (msg.StartsWith("!file|"))
                     {
                         int newlineIndex = msg.IndexOf('\n');
-                        if (newlineIndex == -1) return; // incomplete header
+                        if (newlineIndex == -1) continue; // Incomplete header, wait for next read
 
                         string header = msg.Substring(0, newlineIndex);
                         string[] parts = header.Split('|');
-                        if (parts.Length < 4) return;
+                        if (parts.Length < 4) continue;
 
                         string fileName = parts[1];
                         int fileSize = int.Parse(parts[2]);
@@ -147,75 +154,76 @@ namespace Employee_Management_System
                             alreadyRead += read;
                         }
 
-                        string saveFolder;
-                        // Determine the appropriate save folder based on the OS
-                        if (Environment.OSVersion.Platform == PlatformID.Win32NT)
-                        {
-                            // For Windows, get the Downloads folder path
-                            saveFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                        }
-                        else if (Environment.OSVersion.Platform == PlatformID.Unix || Environment.OSVersion.Platform == PlatformID.MacOSX)
-                        {
-                            // For macOS/Linux, the Downloads folder is usually under the home directory
-                            saveFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
-                        }
-                        else
-                        {
-                            // Default to the application's directory for other platforms
-                            saveFolder = "ReceivedFiles";
-                        }
-
-                        Directory.CreateDirectory(saveFolder); // Ensure the Downloads folder exists
-
+                        string saveFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.UserProfile), "Downloads");
+                        Directory.CreateDirectory(saveFolder);
                         string savePath = Path.Combine(saveFolder, fileName);
                         File.WriteAllBytes(savePath, fileData);
 
                         Dispatcher.Invoke(() =>
-                        {
-                            lstMessages.Items.Add($"[File received from {senderName}] {fileName} saved to {savePath}");
-                        });
+                            AddMessage($"[File received from {senderName}] {fileName} saved to {savePath}", false));
                     }
-
+                    // Handle regular chat messages
                     else
                     {
-                        Dispatcher.Invoke(() =>
+                        // Ignore own echoed messages from server to prevent duplicates
+                        if (!msg.StartsWith($"[Everyone] You to Everyone:") &&
+                            !msg.StartsWith($"[Private] You to ") &&
+                            !msg.Contains($"You to "))
                         {
-                            lstMessages.Items.Add(msg);
-                        });
+                            Dispatcher.Invoke(() => AddMessage(msg, false));
+                        }
                     }
                 }
             }
             catch
             {
-                Dispatcher.Invoke(() =>
-                {
-                    lstMessages.Items.Add("Disconnected from server.");
-                });
+                Dispatcher.Invoke(() => AddMessage("Disconnected from server.", false));
             }
         }
+
+
+        private void AddMessage(string message, bool isSentByMe)
+        {
+            Dispatcher.Invoke(() =>
+            {
+                ListBoxItem item = new ListBoxItem();
+                item.Content = message;
+
+                // Apply custom style from XAML
+                item.Style = isSentByMe
+                    ? (Style)this.Resources["SentMessageStyle"]
+                    : (Style)this.Resources["ReceivedMessageStyle"];
+
+                lstMessages.Items.Add(item);
+                lstMessages.ScrollIntoView(item);
+            });
+        }
+
         private async void SendFile_Click(object sender, RoutedEventArgs e)
         {
             if (client == null || !client.Connected) return;
 
-            var dialog = new Microsoft.Win32.OpenFileDialog();
+            var dialog = new OpenFileDialog();
             if (dialog.ShowDialog() == true)
             {
                 string filePath = dialog.FileName;
-                string fileName = System.IO.Path.GetFileName(filePath);
+                string fileName = Path.GetFileName(filePath);
                 byte[] fileBytes = File.ReadAllBytes(filePath);
                 int fileSize = fileBytes.Length;
 
                 string header = $"!file|{fileName}|{fileSize}|{userName}\n";
                 byte[] headerBytes = Encoding.UTF8.GetBytes(header);
 
-                // Send header
                 await stream.WriteAsync(headerBytes, 0, headerBytes.Length);
-
-                // Send file content
                 await stream.WriteAsync(fileBytes, 0, fileBytes.Length);
 
-                lstMessages.Items.Add($"[File sent] {fileName} ({fileSize} bytes)");
+                AddMessage($"[File sent] {fileName} ({fileSize} bytes)", true);
             }
         }
     }
 }
+
+
+
+
+

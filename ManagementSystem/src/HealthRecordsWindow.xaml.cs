@@ -9,9 +9,9 @@ namespace Employee_Management_System
     public class HealthRecord
     {
         public int Id { get; set; } // Primary Key for the database
-        public string Username { get; set; } // To uniquely identify each user
-        public string BloodPressure { get; set; }
-        public string Vision { get; set; }
+        public string? Username { get; set; } // To uniquely identify each user
+        public string? BloodPressure { get; set; }
+        public string? Vision { get; set; }
         public DateTime LastCheckup { get; set; }
     }
 
