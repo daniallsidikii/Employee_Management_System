@@ -48,5 +48,11 @@ namespace Employee_Management_System
             AdminHealthWindow healthWindow = new AdminHealthWindow();
             healthWindow.Show();
         }
+
+        private void ViewEmployeeSurvey_Click(object sender, RoutedEventArgs e)
+        {
+            var surveyWindow = new EmployeeSurveyReportWindow();
+            surveyWindow.ShowDialog();
+        }
     }
 }

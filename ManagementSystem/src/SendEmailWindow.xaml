@@ -7,7 +7,7 @@
         Left="118"
         Top="33"
         WindowStartupLocation="Manual"
-        Background="White"
+        Background="#efebe6"
         Foreground="Black">
     <Window.Resources>
         <Style TargetType="Button" x:Key="PrimaryButton">
@@ -60,7 +60,7 @@
 
         <!-- TO EMAIL -->
         <StackPanel Grid.Row="1" Margin="0,0,0,20">
-            <TextBlock Text="To:" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <TextBlock Text="To:" FontWeight="Bold" FontSize="16" Foreground="Black" Margin="0,0,0,5"/>
             <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -86,7 +86,7 @@
 
         <!-- SUBJECT -->
         <StackPanel Grid.Row="2" Margin="0,0,0,20">
-            <TextBlock Text="Subject:" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <TextBlock Text="Subject:" FontWeight="Bold" FontSize="16" Foreground="Black" Margin="0,0,0,5"/>
             <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
                 <TextBox x:Name="SubjectTextBox"
                         Padding="10"
@@ -100,7 +100,7 @@
 
         <!-- BODY -->
         <StackPanel Grid.Row="3" Margin="0,0,0,20">
-            <TextBlock Text="Compose Email" FontWeight="Bold" FontSize="16" Foreground="White" Margin="0,0,0,5"/>
+            <TextBlock Text="Compose Email" FontWeight="Bold" FontSize="16" Foreground="Black" Margin="0,0,0,5"/>
             <Border BorderBrush="#D3D3D3" BorderThickness="1" CornerRadius="8" Background="White">
                 <TextBox x:Name="BodyTextBox"
                         AcceptsReturn="True"

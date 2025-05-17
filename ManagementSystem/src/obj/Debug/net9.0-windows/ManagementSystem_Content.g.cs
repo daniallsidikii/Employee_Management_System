@@ -14,5 +14,6 @@
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/emaillogo.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/filelogo.png")]
 [assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/sendlogo.png")]
+[assembly: System.Windows.Resources.AssemblyAssociatedContentFileAttribute("assets/searchlogo.png")]
 
 

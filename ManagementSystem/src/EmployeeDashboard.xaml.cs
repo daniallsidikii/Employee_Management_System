@@ -182,15 +182,15 @@ namespace Employee_Management_System
             string log = $"Clocked In at {clockInTime.Value:hh:mm tt} on {currentDate}";
             todayLog.Logs.Add(log);
 
-            lblClockInStatus.Content = log;
+            lblClockInStatus.Text = log;
             lblClockInStatus.Foreground = Brushes.LightGreen;
-            lblClockOutStatus.Content = "";
+            lblClockOutStatus.Text = "";
 
             SaveAttendanceLogs();
         }
         else
         {
-            lblClockInStatus.Content = "You have already Clocked-In today.";
+            lblClockInStatus.Text = "You have already Clocked-In today.";
             lblClockInStatus.Foreground = Brushes.Yellow;
         }
     }
@@ -219,7 +219,7 @@ namespace Employee_Management_System
             string log = $"Clocked Out at {clockOutTime:hh:mm tt}. Worked: {workDuration.TotalHours:F2} hours.";
             todayLog.Logs.Add(log);
 
-            lblClockOutStatus.Content = log;
+            lblClockOutStatus.Text = log;
             lblClockOutStatus.Foreground = Brushes.LightBlue;
 
             // Reset clock-in and mark as clocked out
@@ -233,7 +233,7 @@ namespace Employee_Management_System
         }
         else
         {
-            lblClockOutStatus.Content = "You must Clock-In first or have already Clocked-Out.";
+            lblClockOutStatus.Text = "You must Clock-In first or have already Clocked-Out.";
             lblClockOutStatus.Foreground = Brushes.Red;
         }
     }

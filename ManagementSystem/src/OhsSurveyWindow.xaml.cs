@@ -1,68 +1,78 @@
 using System;
-using System.Collections.Generic;
-using System.IO;
+using System.Data.SQLite;
 using System.Windows;
-using Newtonsoft.Json;
+using System.Windows.Controls;
 
 namespace Employee_Management_System
 {
     public partial class OhsSurveyWindow : Window
     {
-        private string userName; // User name to identify the current user
+        private string userName;
+        private string dbPath = "Data Source=employees.db";
 
-        // Constructor
         public OhsSurveyWindow(string userName)
         {
             InitializeComponent();
-            this.userName = userName; // Initialize userName
-        }
+            this.userName = userName;
+        } 
 
-        // Get the file path for storing survey responses (unique for each user)
-        private string GetSurveyFile() => $"{userName}_OHSSurveyResponses.json";
-
-        // Event handler for submitting the survey
         private void SubmitSurvey_Click(object sender, RoutedEventArgs e)
         {
-            // Validate that all questions are answered
-            if (string.IsNullOrWhiteSpace(cmbHazards.Text) ||
-                string.IsNullOrWhiteSpace(cmbBreaks.Text) ||
-                string.IsNullOrWhiteSpace(cmbComfort.Text))
+            // Validate all ComboBoxes are selected
+            if (cmbHazards.SelectedItem == null ||
+                cmbBreaks.SelectedItem == null ||
+                cmbComfort.SelectedItem == null ||
+                cmbErgonomics.SelectedItem == null ||
+                cmbSafety.SelectedItem == null ||
+                cmbTraining.SelectedItem == null ||
+                cmbStress.SelectedItem == null ||
+                cmbEmergency.SelectedItem == null ||
+                cmbHygiene.SelectedItem == null)
             {
-                MessageBox.Show("Please answer all the questions before submitting the survey.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
+                MessageBox.Show("Please answer all the questions before submitting.", "Validation Error", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
             }
 
-            // Create a response object with survey data
-            var response = new
+            try
             {
-                Date = DateTime.Now.ToString("MM/dd/yyyy hh:mm tt"),
-                Hazards = cmbHazards.Text,
-                Breaks = cmbBreaks.Text,
-                Comfort = cmbComfort.Text
-            };
+                using (SQLiteConnection conn = new SQLiteConnection(dbPath))
+                {
+                    conn.Open();
 
-            // Load existing survey responses or initialize a new list
-            string surveyFile = GetSurveyFile();
-            List<object> surveyResponses;
-            if (File.Exists(surveyFile))
-            {
-                string json = File.ReadAllText(surveyFile);
-                surveyResponses = JsonConvert.DeserializeObject<List<object>>(json) ?? new List<object>();
+                    string insertQuery = @"
+                    INSERT INTO OhsSurveyResponses 
+                    (UserName, DateSubmitted, Hazards, Breaks, Comfort, Ergonomics, Safety, Training, Stress, Emergency, Hygiene, Suggestions) 
+                    VALUES 
+                    (@UserName, @DateSubmitted, @Hazards, @Breaks, @Comfort, @Ergonomics, @Safety, @Training, @Stress, @Emergency, @Hygiene, @Suggestions);";
+
+                    using (SQLiteCommand cmd = new SQLiteCommand(insertQuery, conn))
+                    {
+                        cmd.Parameters.AddWithValue("@UserName", userName);
+                        cmd.Parameters.AddWithValue("@DateSubmitted", DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"));
+                        cmd.Parameters.AddWithValue("@Hazards", (cmbHazards.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Breaks", (cmbBreaks.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Comfort", (cmbComfort.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Ergonomics", (cmbErgonomics.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Safety", (cmbSafety.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Training", (cmbTraining.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Stress", (cmbStress.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Emergency", (cmbEmergency.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Hygiene", (cmbHygiene.SelectedItem as ComboBoxItem).Content.ToString());
+                        cmd.Parameters.AddWithValue("@Suggestions", txtSuggestions.Text.Trim());
+
+                        cmd.ExecuteNonQuery();
+                    }
+
+                    conn.Close();
+                }
+
+                MessageBox.Show("Survey submitted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
+                this.Close();
             }
-            else
+            catch (Exception ex)
             {
-                surveyResponses = new List<object>();
+                MessageBox.Show($"An error occurred: {ex.Message}", "Database Error", MessageBoxButton.OK, MessageBoxImage.Error);
             }
-
-            // Add the new response to the list
-            surveyResponses.Add(response);
-
-            // Save the updated list back to the file
-            File.WriteAllText(surveyFile, JsonConvert.SerializeObject(surveyResponses, Formatting.Indented));
-
-            // Show success message and close the window
-            MessageBox.Show("Survey submitted successfully!", "Success", MessageBoxButton.OK, MessageBoxImage.Information);
-            this.Close();
         }
     }
 }

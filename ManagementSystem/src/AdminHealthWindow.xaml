@@ -1,15 +1,27 @@
 <Window x:Class="Employee_Management_System.AdminHealthWindow"       
-         
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="All Health Records" Height="750" Width="1300"
-        Background="White" Foreground="White" WindowStartupLocation="CenterScreen"
-        Padding="15">
+        Title="All Health Records" Height="750"
+        Width="700"
+        Background="#efebe6" Foreground="White" WindowStartupLocation="Manual"
+        WindowStyle="SingleBorderWindow" Left="118"
+        Top="33"
+        ResizeMode="NoResize">
+
+    <Window.Resources>
+        <!-- Drop Shadow Effect -->
+        <DropShadowEffect x:Key="DropShadowEffect" BlurRadius="10" ShadowDepth="3" Opacity="0.2" Color="Black"/>
+        
+        <!-- Window Background Brush -->
+        <LinearGradientBrush x:Key="WindowBackground" StartPoint="0,0" EndPoint="0,1">
+            <GradientStop Color="#efebe6" Offset="0"/>
+            <GradientStop Color="#dfdbd5" Offset="1"/>
+        </LinearGradientBrush>
+    </Window.Resources>
 
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="173*"/>
-            <ColumnDefinition Width="1127*"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -17,145 +29,202 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-
-        <!-- Header -->
-        <Border Grid.Row="0" Padding="15" CornerRadius="8" Margin="0,0,0,15" Grid.ColumnSpan="2">
+        <!-- Header with improved styling -->
+        <Border Height="80" VerticalAlignment="Top" CornerRadius="0,0,15,15">
             <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,1">
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
                     <GradientStop Color="#2C3E50" Offset="0"/>
                     <GradientStop Color="#4CA1AF" Offset="1"/>
                 </LinearGradientBrush>
             </Border.Background>
-            <TextBlock Text="Employee Health Records" 
-                       FontSize="26" FontWeight="Bold" 
-                       HorizontalAlignment="Center" 
-                       Foreground="White"/>
+
+            <DockPanel HorizontalAlignment="Center" VerticalAlignment="Center">
+                <TextBlock Text="Employee Health Records"
+                           FontSize="30"
+                           FontWeight="Bold"
+                           FontFamily="Segoe UI"
+                           Foreground="White"
+                           VerticalAlignment="Center"
+                           Margin="10,0"/>
+            </DockPanel>
         </Border>
 
-        <!-- DataGrid -->
-        <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="10" Margin="0,0,0,15" Grid.ColumnSpan="2">
-            <DataGrid x:Name="HealthGrid"
-                    AutoGenerateColumns="False"
-                    Background="White"
-                    Foreground="#FF4CA1AF"
-                    GridLinesVisibility="Horizontal"
-                    RowBackground="#FF4CA1AF"
-                    AlternatingRowBackground="#2C2C2C"
-                    HorizontalGridLinesBrush="#444444"
-                    VerticalGridLinesBrush="#444444"
-                    BorderBrush="#444444"
-                    BorderThickness="1"
-                    IsReadOnly="True"
-                    SelectionMode="Single"
-                    SelectionUnit="FullRow"
-                    RowHeight="40"
-                    Margin="0">
+        <!-- Main Content Area -->
+        <Border Grid.Row="1" CornerRadius="8" Padding="0" Margin="0,0,0,15" 
+                Background="#efebe6" BorderBrush="#dfdbd5" BorderThickness="1"
+                Effect="{StaticResource DropShadowEffect}">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
 
-                <!-- Centered Header Style -->
-                <DataGrid.ColumnHeaderStyle>
-                    <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="HorizontalContentAlignment" Value="Center"/>
-                        <Setter Property="FontWeight" Value="Bold"/>
-                        <Setter Property="Background" Value="#2C3E50"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="Padding" Value="10"/>
-                    </Style>
-                </DataGrid.ColumnHeaderStyle>
+                <!-- DataGrid with improved styling -->
+                <Border Grid.Row="0" CornerRadius="8" Padding="10" Margin="10">
+                    <DataGrid x:Name="HealthGrid"
+                              AutoGenerateColumns="False"
+                              Background="#efebe6"
+                              Foreground="#2C3E50"
+                              GridLinesVisibility="Horizontal"
+                              RowBackground="#efebe6"
+                              AlternatingRowBackground="#dfdbd5"
+                              HorizontalGridLinesBrush="#a7a7a7"
+                              VerticalGridLinesBrush="#a7a7a7"
+                              BorderBrush="#a7a7a7"
+                              BorderThickness="1"
+                              IsReadOnly="True"
+                              SelectionMode="Single"
+                              SelectionUnit="FullRow"
+                              RowHeight="40"
+                              Margin="0"
+                              CanUserResizeRows="False">
 
-                <!-- Columns: Username, BloodPressure, Vision, LastCheckup -->
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
+                        <!-- Centered Header Style -->
+                        <DataGrid.ColumnHeaderStyle>
+                            <Style TargetType="DataGridColumnHeader">
+                                <Setter Property="HorizontalContentAlignment" Value="Center"/>
+                                <Setter Property="FontWeight" Value="Bold"/>
+                                <Setter Property="Background" Value="#4CA1AF"/>
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter Property="Padding" Value="15,10"/>
+                                <Setter Property="BorderBrush" Value="#3a7d8a"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,2"/>
+                                <Setter Property="FontSize" Value="14"/>
                             </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                        </DataGrid.ColumnHeaderStyle>
 
-                    <DataGridTextColumn Header="Blood Pressure" Binding="{Binding BloodPressure}" Width="*">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
+                        <!-- Columns -->
+                        <DataGrid.Columns>
+                            <DataGridTextColumn Header="Username" Binding="{Binding Username}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Blood Pressure" Binding="{Binding BloodPressure}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Vision" Binding="{Binding Vision}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+
+                            <DataGridTextColumn Header="Last Checkup" Binding="{Binding LastCheckup, StringFormat='{}{0:MM/dd/yyyy}'}" Width="*">
+                                <DataGridTextColumn.ElementStyle>
+                                    <Style TargetType="TextBlock">
+                                        <Setter Property="HorizontalAlignment" Value="Center"/>
+                                        <Setter Property="VerticalAlignment" Value="Center"/>
+                                        <Setter Property="TextAlignment" Value="Center"/>
+                                        <Setter Property="Padding" Value="5"/>
+                                        <Setter Property="FontSize" Value="13"/>
+                                    </Style>
+                                </DataGridTextColumn.ElementStyle>
+                            </DataGridTextColumn>
+                        </DataGrid.Columns>
+
+                        <!-- Row styling -->
+                        <DataGrid.Resources>
+                            <Style TargetType="DataGridRow">
+                                <Setter Property="Background" Value="#efebe6"/>
+                                <Setter Property="Foreground" Value="#2C3E50"/>
+                                <Setter Property="BorderBrush" Value="#dfdbd5"/>
+                                <Setter Property="BorderThickness" Value="0,0,0,1"/>
+                                <Style.Triggers>
+                                    <Trigger Property="IsMouseOver" Value="True">
+                                        <Setter Property="Background" Value="#dfdbd5"/>
+                                        <Setter Property="FontWeight" Value="SemiBold"/>
+                                    </Trigger>
+                                    <Trigger Property="IsSelected" Value="True">
+                                        <Setter Property="Background" Value="#4CA1AF"/>
+                                        <Setter Property="Foreground" Value="White"/>
+                                    </Trigger>
+                                </Style.Triggers>
                             </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                        </DataGrid.Resources>
+                    </DataGrid>
+                </Border>
 
-                    <DataGridTextColumn Header="Vision" Binding="{Binding Vision}" Width="*">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
+                <!-- Footer Buttons with improved styling -->
+                <Border Grid.Row="1" Background="Transparent" Padding="15" CornerRadius="8" Margin="10">
+                    <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
+                        <!-- Refresh Button -->
+                        <Button Content="Refresh" Width="140" Height="45" Margin="0,0,15,0"
+                                Background="#2C3E50" Foreground="White" FontWeight="Bold" FontSize="14"
+                                BorderBrush="#1a252f" BorderThickness="1" Click="Refresh_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            CornerRadius="20" Padding="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#1a252f"/>
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#2C3E50"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#0d1318"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
 
-                    <DataGridTextColumn Header="Last Checkup" Binding="{Binding LastCheckup, StringFormat='{}{0:MM/dd/yyyy}'}" Width="*">
-                        <DataGridTextColumn.ElementStyle>
-                            <Style TargetType="TextBlock">
-                                <Setter Property="HorizontalAlignment" Value="Center"/>
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                                <Setter Property="TextAlignment" Value="Center"/>
-                            </Style>
-                        </DataGridTextColumn.ElementStyle>
-                    </DataGridTextColumn>
-                </DataGrid.Columns>
-
-                <!-- Row styling -->
-                <DataGrid.Resources>
-                    <Style TargetType="DataGridRow">
-                        <Setter Property="Background" Value="#1A1A1A"/>
-                        <Setter Property="Foreground" Value="White"/>
-                        <Setter Property="BorderBrush" Value="#2C3E50"/>
-                        <Setter Property="BorderThickness" Value="0,0,0,1"/>
-                    </Style>
-                </DataGrid.Resources>
-            </DataGrid>
-
-
-
-
-        </Border>
-
-        <!-- Footer Buttons -->
-        <Border Grid.Row="1" Background="White" Padding="15" CornerRadius="8" Grid.ColumnSpan="2" Margin="0,488,0,56">
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" Margin="0">
-
-                <!-- Refresh Button -->
-                <Button Content="Refresh" Width="120" Height="40" Margin="0,0,10,0"
-                        Background="#2C3E50" Foreground="White" FontWeight="Bold"
-                        BorderBrush="#2C3E50" BorderThickness="1" Click="Refresh_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="1" CornerRadius="20" Padding="10">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-
-                <!-- Close Button -->
-                <Button Content="Close" Width="120" Height="40"
-                        Background="#E74C3C" Foreground="White" FontWeight="Bold"
-                        BorderBrush="#E74C3C" BorderThickness="1" Click="Close_Click">
-                    <Button.Template>
-                        <ControlTemplate TargetType="Button">
-                            <Border Background="{TemplateBinding Background}" BorderBrush="{TemplateBinding BorderBrush}" 
-                                    BorderThickness="1" CornerRadius="20" Padding="10">
-                                <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
-                            </Border>
-                        </ControlTemplate>
-                    </Button.Template>
-                </Button>
-            </StackPanel>
+                        <!-- Close Button -->
+                        <Button Content="Close" Width="140" Height="45"
+                                Background="#E74C3C" Foreground="White" FontWeight="Bold" FontSize="14"
+                                BorderBrush="#c0392b" BorderThickness="1" Click="Close_Click">
+                            <Button.Template>
+                                <ControlTemplate TargetType="Button">
+                                    <Border x:Name="border" Background="{TemplateBinding Background}" 
+                                            BorderBrush="{TemplateBinding BorderBrush}" 
+                                            BorderThickness="{TemplateBinding BorderThickness}" 
+                                            CornerRadius="20" Padding="10">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                    <ControlTemplate.Triggers>
+                                        <Trigger Property="IsMouseOver" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#c0392b"/>
+                                            <Setter TargetName="border" Property="BorderBrush" Value="#E74C3C"/>
+                                        </Trigger>
+                                        <Trigger Property="IsPressed" Value="True">
+                                            <Setter TargetName="border" Property="Background" Value="#992d22"/>
+                                        </Trigger>
+                                    </ControlTemplate.Triggers>
+                                </ControlTemplate>
+                            </Button.Template>
+                        </Button>
+                    </StackPanel>
+                </Border>
+            </Grid>
         </Border>
     </Grid>
 </Window>
+
 
 
 

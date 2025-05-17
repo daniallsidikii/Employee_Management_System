@@ -3,229 +3,162 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         Title="Employee Dashboard"
-        Height="650"
-        Width="1350"
+        Height="750" Width="1300"
         WindowStartupLocation="CenterScreen"
-        WindowStyle="SingleBorderWindow"
-        ResizeMode="CanResize"
-        Background="#F5F5F5">
+        Background="#efebe6">
 
-    <!-- Main Grid Layout -->
+    <Window.Resources>
+        <!-- Styles (Same as before but polished where needed) -->
+        <Style x:Key="ModernButtonStyle" TargetType="Button">
+            <Setter Property="FontFamily" Value="Segoe UI"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="5"/>
+            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="#4CA1AF"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Height" Value="45"/>
+            <Setter Property="Width" Value="180"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect Color="Black" BlurRadius="6" ShadowDepth="2"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border Background="{TemplateBinding Background}" CornerRadius="8" Padding="{TemplateBinding Padding}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#3B8D99"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="ActionButtonStyle" TargetType="Button" BasedOn="{StaticResource ModernButtonStyle}">
+            <Setter Property="FontSize" Value="16"/>
+            <Setter Property="Margin" Value="5,10,5,0"/>
+        </Style>
+    </Window.Resources>
+
     <Grid>
-        <!-- Define two columns: Sidebar and Main Content -->
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="250"/> <!-- Sidebar width -->
-            <ColumnDefinition Width="*"/>  <!-- Main content takes remaining space -->
+            <ColumnDefinition Width="250"/>
+            <ColumnDefinition Width="*"/>
         </Grid.ColumnDefinitions>
 
-        <!-- Sidebar Panel -->
-        <StackPanel Grid.Column="0" Background="#2C3E50" Width="250" VerticalAlignment="Stretch" Margin="10">
-            <!-- Dashboard Title -->
-            <TextBlock Text="Employee Dashboard" 
-                       FontSize="20" 
-                       FontWeight="Bold" 
-                       Foreground="White" 
-                       Margin="10,20,10,20" 
-                       HorizontalAlignment="Center"/>
+        <!-- Sidebar -->
+        <Border Grid.Column="0" Margin="10" CornerRadius="10">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                    <GradientStop Color="#2C3E50" Offset="0"/>
+                    <GradientStop Color="#4CA1AF" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+            <StackPanel>
+                <TextBlock Text="Employee Dashboard" FontSize="20" FontWeight="Bold" Foreground="White"
+                           Margin="10,20,10,30" HorizontalAlignment="Center"/>
 
-            <!-- Sidebar Buttons -->
-            <Button Content="Message" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#34495E" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="message_Click"/>
+                <Button Content="📩 Message" Style="{StaticResource ModernButtonStyle}" Click="message_Click"/>
+                <Button Content="📍 Mark Attendance" Style="{StaticResource ModernButtonStyle}" Click="MarkAttendance_Click"/>
+                <Button Content="📖 View Logs" Style="{StaticResource ModernButtonStyle}" Click="ViewAttendanceLogs_Click"/>
+                <Button Content="🩺 Health Records" Style="{StaticResource ModernButtonStyle}" Click="OpenHealthRecords_Click"/>
+                <Button Content="🧾 OHS Survey" Style="{StaticResource ModernButtonStyle}" Background="#3498DB" Click="OpenOHSSurvey_Click"/>
+                <Button Content="🚪 Logout" Style="{StaticResource ModernButtonStyle}" Background="#E74C3C" Click="Logout_Click"/>
+            </StackPanel>
+        </Border>
 
-            <Button Content="Mark Attendance" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#34495E" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="MarkAttendance_Click"/>
-            <Button Content="View Attendance Logs" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#34495E" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="ViewAttendanceLogs_Click"/>
-            <Button Content="Health Records" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#34495E" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="OpenHealthRecords_Click"/>
-            <Button Content="OHS Survey" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#3498DB" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="OpenOHSSurvey_Click"/>
-            <Button Content="Logout" 
-                    Margin="5" 
-                    Height="40" 
-                    Background="#E74C3C" 
-                    Foreground="White" 
-                    FontSize="14" 
-                    Click="Logout_Click"/>
-        </StackPanel>
-
-        <!-- Main Content Area -->
+        <!-- Main Panel -->
         <Grid Grid.Column="1" Margin="10">
             <Grid.RowDefinitions>
-                <RowDefinition Height="Auto"/> <!-- Header -->
-                <RowDefinition Height="*"/>   <!-- Main Content -->
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
 
-            <!-- Welcome Header Section -->
-            <Border Grid.Row="0" BorderBrush="#34495E" BorderThickness="2" Padding="10" CornerRadius="5" Background="#34495E" Margin="0,0,0,10">
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
-                    <TextBlock Text="Welcome to Employee Dashboard" 
-                               FontSize="28" 
-                               FontWeight="Bold" 
-                               Foreground="White" 
-                               HorizontalAlignment="Center"/>
-                    <TextBlock x:Name="lblUserName"
-                                FontSize="20"
-                                FontWeight="SemiBold"
-                                Foreground="White"
-                                Margin="20,0,0,0"
-                                VerticalAlignment="Center"
-                                Text=""/>
-                    <TextBlock x:Name="txtClock" 
-                               FontSize="28" 
-                               FontWeight="Bold" 
-                               Foreground="White" 
-                               HorizontalAlignment="Right" 
-                               Margin="30,0,0,0"/>
-                </StackPanel>
+            <!-- Header -->
+            <Border Grid.Row="0" CornerRadius="8" Padding="20" Margin="0,0,0,15">
+                <Border.Background>
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                        <GradientStop Color="#2C3E50" Offset="0"/>
+                        <GradientStop Color="#4CA1AF" Offset="1"/>
+                    </LinearGradientBrush>
+                </Border.Background>
+                <DockPanel>
+                    <TextBlock Text="Welcome to Employee Dashboard" FontSize="28" FontWeight="Bold"
+                               Foreground="White" DockPanel.Dock="Left"/>
+                    <TextBlock x:Name="lblUserName" FontSize="20" FontWeight="SemiBold" Foreground="White"
+                               Margin="20,0,0,0" VerticalAlignment="Center"/>
+                    <TextBlock x:Name="txtClock" FontSize="28" FontWeight="Bold" Foreground="White"
+                               Margin="20,0,0,0" DockPanel.Dock="Right"/>
+                </DockPanel>
             </Border>
 
-            <!-- Main Content Section -->
+            <!-- Body Grid -->
             <Grid Grid.Row="1">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*"/> <!-- To-Do List -->
-                    <ColumnDefinition Width="300"/> <!-- Attendance Status -->
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="350"/>
                 </Grid.ColumnDefinitions>
 
-                <!-- To-Do List Section -->
-                <GroupBox Header="📝 To-Do List" FontSize="16" Padding="10" Margin="10" Background="White" BorderBrush="#34495E" BorderThickness="2">
-                    <StackPanel>
-                        <!-- List of tasks -->
-                        <ListBox Name="lstToDo" Height="200" Margin="5" Background="#ECF0F1" BorderBrush="#BDC3C7" BorderThickness="1"/>
-                        
-                        <!-- Add Task Section -->
+                <!-- TO-DO SECTION -->
+                <GroupBox Header="📝 Tasks and Priorities" FontSize="18" Margin="10"
+                          Background="White" BorderBrush="#4CA1AF" BorderThickness="2">
+                    <StackPanel Margin="10">
+                        <!-- Task List -->
+                        <ListBox Name="lstToDo" Height="350" Margin="5" Background="White"
+                                 BorderBrush="#BDC3C7" BorderThickness="1" Foreground="#2C3E50">
+                            <!-- Sample item format:
+                            <ListBoxItem Content="Finish report (Due: 2025-05-20, Priority: High)"/> -->
+                        </ListBox>
+
+                        <!-- Add New Task Fields -->
                         <StackPanel Orientation="Horizontal" Margin="5">
-                            <TextBox Name="txtNewTask" Width="200" Margin="5" ToolTip="Enter a task..." Background="#FFFFFF" BorderBrush="#BDC3C7" BorderThickness="1"/>
-                            <Button Content="➕ Add" 
-                                    Width="80" 
-                                    Click="AddTask_Click" 
-                                    Background="#27AE60" 
-                                    Foreground="White" 
-                                    FontWeight="Bold"/>
+                            <TextBox Name="txtNewTask" Width="315" ToolTip="Enter a task" Margin="5"
+                                     BorderBrush="#4CA1AF" Background="White" Foreground="#2C3E50"/>
+                            <DatePicker Name="txtDueDate" Width="150" Margin="5"/>
+                            <ComboBox Name="txtPriority" Width="100" Margin="5" Background="White" BorderBrush="#4CA1AF">
+                                <ComboBoxItem Content="Low"/>
+                                <ComboBoxItem Content="Medium"/>
+                                <ComboBoxItem Content="High"/>
+                            </ComboBox>
                         </StackPanel>
 
-                        <!-- Remove and Clear Buttons -->
-                        <StackPanel Orientation="Horizontal" Margin="5">
-                            <Button Content="❌ Remove" 
-                                    Width="100" 
-                                    Click="RemoveTask_Click" 
-                                    Background="#E74C3C" 
-                                    Foreground="White" 
-                                    FontWeight="Bold"/>
-                            <Button Content="🗑 Clear All" 
-                                    Width="100" 
-                                    Click="ClearTasks_Click" 
-                                    Background="#95A5A6" 
-                                    Foreground="White" 
-                                    FontWeight="Bold"/>
-                        </StackPanel>
-
-                        <!-- Add Task Section with Due Date and Priority -->
-                        <StackPanel Orientation="Vertical" Margin="5">
-                            <!-- Due Date Input -->
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <Label Content="Due Date:" VerticalAlignment="Center" Margin="5,0"/>
-                                <DatePicker Name="txtDueDate" Width="150" Margin="5"/>
-                            </StackPanel>
-
-                            <!-- Priority Input -->
-                            <StackPanel Orientation="Horizontal" Margin="0,5">
-                                <Label Content="Priority:" VerticalAlignment="Center" Margin="5,0"/>
-                                <ComboBox Name="txtPriority" Width="150" Margin="5">
-                                    <ComboBoxItem Content="Low"/>
-                                    <ComboBoxItem Content="Medium"/>
-                                    <ComboBoxItem Content="High"/>
-                                </ComboBox>
-                            </StackPanel>
+                        <!-- Add/Remove Buttons -->
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Left" Margin="5">
+                            <Button Content="➕ Add" Width="90" Background="#27AE60" Click="AddTask_Click"
+                                    Style="{StaticResource ModernButtonStyle}"/>
+                            <Button Content="❌ Remove" Width="100" Background="#E74C3C" Click="RemoveTask_Click"
+                                    Style="{StaticResource ModernButtonStyle}"/>
+                            <Button Content="🗑 Clear All" Width="105" Background="#95A5A6" Click="ClearTasks_Click"
+                                    Style="{StaticResource ModernButtonStyle}"/>
                         </StackPanel>
                     </StackPanel>
                 </GroupBox>
 
-                <!-- Attendance Status Section -->
-                <StackPanel Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Top" Margin="10">
-                    <TextBlock Text="Attendance Status:" 
-                               FontSize="18" 
-                               FontWeight="Bold" 
-                               Margin="0,0,0,10"
-                               Foreground="Black"
-                               TextAlignment="Center"/>
+                <!-- Attendance/Clock Section -->
+                <StackPanel Grid.Column="1" VerticalAlignment="Top" Margin="10, 50" Background="#FFFFFF">
+                    <TextBlock Text="⏰ Clock Status" FontSize="20" FontWeight="Bold"
+                               Foreground="#2C3E50" Margin="0,0,0,10" TextAlignment="Center"/>
 
-                    <!-- Fixed Size Container for Status Labels -->
-                    <Border Width="250" Height="70" Background="Transparent">
-                        <StackPanel>
-                            <!-- Clock-In Status Label -->
-                            <Label x:Name="lblClockInStatus" 
-                                   Content="" 
-                                   FontSize="16" 
-                                   Foreground="Black" 
-                                   Background="Transparent" 
-                                   HorizontalAlignment="Center"
-                                   HorizontalContentAlignment="Center"
-                                   FontWeight="Bold"
-                                   Width="250"/>
+                    <!-- Status Display -->
+                    <TextBlock x:Name="lblClockInStatus" FontSize="14" FontWeight="SemiBold"
+                               Foreground="#0D4715" Margin="0,5" TextAlignment="Center"/>
+                    <TextBlock x:Name="lblClockOutStatus" FontSize="12" FontWeight="SemiBold"
+                               Foreground="Red" Margin="0,5" TextAlignment="Center"/>
 
-                            <!-- Clock-Out Status Label -->
-                            <Label x:Name="lblClockOutStatus" 
-                                   Content="" 
-                                   FontSize="14" 
-                                   Foreground="Black" 
-                                   Background="Transparent" 
-                                   HorizontalAlignment="Center"
-                                   HorizontalContentAlignment="Center"
-                                   FontWeight="Bold"
-                                   Width="400"
-                                   Height="50"
-                                   Padding="5"
-                                   MaxWidth="250"
-                                   MaxHeight="50"/>
-                        </StackPanel>
-                    </Border>
-
-                    <!-- Clock In Button -->
-                    <Button Content="Clock In" 
-                            Width="160" 
-                            Height="45" 
-                            Background="LightGreen" 
-                            Foreground="Black" 
-                            FontSize="14" 
-                            FontWeight="Bold" 
-                            Click="ClockIn_Click"/>
-
-                    <!-- Clock Out Button -->
-                    <Button Content="Clock Out" 
-                            Width="160" 
-                            Height="45" 
-                            Background="LightCoral" 
-                            Foreground="Black" 
-                            FontSize="14" 
-                            FontWeight="Bold" 
-                            Margin="0,10,0,0" 
-                            Click="ClockOut_Click"/>
+                    <!-- Buttons -->
+                    <Button Content="✔ Clock In" Style="{StaticResource ActionButtonStyle}"
+                            Background="#27AE60" Click="ClockIn_Click"/>
+                    <Button Content="🕔 Clock Out" Style="{StaticResource ActionButtonStyle}"
+                            Background="#E74C3C" Click="ClockOut_Click"/>
                 </StackPanel>
             </Grid>
         </Grid>

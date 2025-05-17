@@ -9,10 +9,11 @@ namespace Employee_Management_System
             base.OnStartup(e);
 
             // Directly open LoginWindow
-            LoginWindow LoginWindow = new LoginWindow();
-            LoginWindow.Show();
-            // AdminPanel adminPanel = new AdminPanel();
-            // adminPanel.Show();
+            // LoginWindow LoginWindow = new LoginWindow();
+            // LoginWindow.Show();
+            AdminPanel adminPanel = new AdminPanel();
+            adminPanel.Show();
+
         }
     }
 }

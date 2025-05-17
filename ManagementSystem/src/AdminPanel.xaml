@@ -4,7 +4,7 @@
         xmlns:wpfAnimatedGif="http://wpfanimatedgif.codeplex.com"
         Title="Admin Panel" Height="750" Width="1300"
         WindowStartupLocation="CenterScreen"
-        Background="White" Foreground="White"
+        Background=" #efebe6" Foreground="White"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <Window.Resources>
@@ -116,9 +116,14 @@
                         Content="Open Chat"
                         Click="Button2_Click"
                         Style="{StaticResource ModernButtonStyle}" />
+
+                <Button Content="Survey Report" 
+                        Click="ViewEmployeeSurvey_Click"
+                        FontSize="16"
+                        Style="{StaticResource ModernButtonStyle}"/>
                 </WrapPanel>
 
-        <Grid Width="500" Height="475" Margin="0,150,500,20" HorizontalAlignment="Center">
+        <Grid Width="500" Height="475" Margin="0,65,500,20" HorizontalAlignment="Center">
         <Rectangle RadiusX="30" RadiusY="30" Width="500" Height="475">
                 <Rectangle.Fill>
                 <VisualBrush Stretch="Fill">

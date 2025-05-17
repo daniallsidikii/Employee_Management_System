@@ -1,0 +1,25 @@
+{
+  "05/17/2025": {
+    "Logs": [
+      "Attendance marked at 04:55 PM on 05/17/2025",
+      "Clocked In at 05:01 PM on 05/17/2025",
+      "Clocked Out at 05:01 PM. Worked: 0.00 hours.",
+      "Clocked In at 05:28 PM on 05/17/2025"
+    ],
+    "HasMarkedAttendance": true,
+    "HasClockedOut": true,
+    "ClockInTime": "2025-05-17T17:28:16.6862337+05:00",
+    "WorkDuration": "00:00:01.4452928"
+  },
+  "05/18/2025": {
+    "Logs": [
+      "Attendance marked at 12:34 AM on 05/18/2025",
+      "Clocked In at 12:34 AM on 05/18/2025",
+      "Clocked Out at 12:34 AM. Worked: 0.00 hours."
+    ],
+    "HasMarkedAttendance": true,
+    "HasClockedOut": true,
+    "ClockInTime": null,
+    "WorkDuration": "00:00:00.9384811"
+  }
+}
