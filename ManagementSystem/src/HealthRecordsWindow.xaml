@@ -1,7 +1,7 @@
 <Window x:Class="Employee_Management_System.HealthRecordsWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Health Records" Height="350" Width="400">
+        Title="Health Records" Height="350" Width="400" Background="White">
     <Grid Margin="10">
         <StackPanel>
             <TextBlock Text="Blood Pressure" Margin="0,10,0,5"/>

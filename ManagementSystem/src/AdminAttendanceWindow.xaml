@@ -1,8 +1,9 @@
 <Window x:Class="Employee_Management_System.AdminAttendanceWindow"
+
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         Title="All Attendance Records" Height="750" Width="1300"
-        Background="#121212" Foreground="White"
+        Background="White" Foreground="White"
         WindowStartupLocation="CenterScreen">
 
     <!-- Button Style -->
@@ -69,24 +70,25 @@
 
         <!-- Left: Attendance Grid -->
         <Border Grid.Row="1" Grid.Column="0"
-                Background="#1E1E1E" BorderBrush="#4CA1AF" BorderThickness="0"
+                Background="#FF396878" BorderBrush="#4CA1AF" BorderThickness="0"
                 CornerRadius="10" Padding="10">
             <DataGrid x:Name="AttendanceGrid"
                       AutoGenerateColumns="False"
                       IsReadOnly="True"
                       CanUserAddRows="False"
-                      Background="#1E1E1E"
-                      Foreground="White"
+                      Background="White"
+                      Foreground="#FF4CA1AF"
                       GridLinesVisibility="Horizontal"
-                      AlternatingRowBackground="#2A2A2A"
-                      RowBackground="#1E1E1E"
+                      AlternatingRowBackground="White"
+                      RowBackground="White"
+                      
                       FontSize="14"
                       RowHeight="35"
                       HeadersVisibility="Column"
                       ColumnHeaderHeight="35">
                 <DataGrid.ColumnHeaderStyle>
                     <Style TargetType="DataGridColumnHeader">
-                        <Setter Property="Background" Value="#4CA1AF"/>
+                        <Setter Property="Background" Value="#FF4CA1AF"/>
                         <Setter Property="Foreground" Value="White"/>
                         <Setter Property="FontWeight" Value="Bold"/>
                         <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -104,25 +106,25 @@
         </Border>
 
         <!-- Right: Filters and Buttons -->
-        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="20,0,0,0" VerticalAlignment="Stretch">
+        <StackPanel Grid.Row="1" Grid.Column="1" Orientation="Vertical" Margin="20,92,0,132">
             <!-- Filters -->
-            <GroupBox Header="Filter Options" Foreground="White" FontWeight="Bold" Padding="10" Margin="0,0,0,15"
-                      BorderBrush="#4CA1AF" Background="#1E1E1E" BorderThickness="1" FontSize="14">
+            <GroupBox Header="Filter Options" Foreground="#FF4CA1AF" Padding="10" Margin="0,0,0,15"
+                      BorderBrush="#4CA1AF" Background="White" BorderThickness="1" FontSize="14" FontWeight="Bold">
                 <StackPanel Orientation="Vertical" Margin="0,5">
                     <!-- Log Type Filter -->
                     <TreeView x:Name="LogTypeTreeView"
                               SelectedItemChanged="LogTypeTreeView_SelectedItemChanged"
-                              Background="#2C3E50"
+                              Background="#FF4CA1AF"
                               Foreground="White"
                               BorderBrush="#4CA1AF"
                               BorderThickness="1"
                               Padding="10"
                               FontSize="14"
                               Height="150">
-                        <TreeViewItem Header="All Logs" IsExpanded="True">
-                            <TreeViewItem Header="Clock In"/>
-                            <TreeViewItem Header="Clock Out"/>
-                            <TreeViewItem Header="Attendance"/>
+                        <TreeViewItem Header="All Logs" IsExpanded="True" Foreground="White">
+                            <TreeViewItem Header="Clock In" Foreground="White"/>
+                            <TreeViewItem Header="Clock Out" Foreground="White"/>
+                            <TreeViewItem Header="Attendance" Foreground="White"/>
                         </TreeViewItem>
                     </TreeView>
 
@@ -165,9 +167,9 @@
             </GroupBox>
 
             <!-- Action Buttons -->
-            <GroupBox Header="Actions" Foreground="White" FontWeight="Bold"
-                      Padding="10" Margin="0,0,0,0" Background="#1E1E1E"
-                      BorderBrush="#4CA1AF" BorderThickness="1" FontSize="14">
+            <GroupBox Header="Actions" Foreground="#FF4CA1AF" FontWeight="Bold"
+                      Padding="10" Margin="0,0,0,0" Background="White"
+                      BorderBrush="#4CA1AF" BorderThickness="1" FontSize="14" Height="86">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
                     <Button Content="🔄 Refresh"
                             Width="120"
@@ -185,3 +187,4 @@
         </StackPanel>
     </Grid>
 </Window>
+

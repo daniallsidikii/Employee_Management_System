@@ -7,7 +7,8 @@
         Left="118"
         Top="33"
         WindowStartupLocation="Manual"
-        Background="#2C3E50">
+        Background="White"
+        Foreground="Black">
     <Window.Resources>
         <Style TargetType="Button" x:Key="PrimaryButton">
             <Setter Property="Background" Value="#4CA1AF"/>
@@ -38,7 +39,8 @@
 
     <Grid Margin="30">
         <Grid.RowDefinitions>
-            <RowDefinition Height="Auto"/> <!-- Logo Row -->
+            <RowDefinition Height="Auto"/>
+            <!-- Logo Row -->
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
@@ -51,7 +53,7 @@
             <TextBlock Text="Email"
                     FontSize="28"
                     FontWeight="Bold"
-                    Foreground="White"
+                    Foreground="#FF4CA1AF"
                     VerticalAlignment="Center"/>
         </StackPanel>
 
@@ -71,7 +73,7 @@
                             FontSize="14"
                             BorderThickness="0"
                             Background="Transparent"
-                            VerticalContentAlignment="Center"/>
+                            VerticalContentAlignment="Center" Foreground="#FF4CA1AF"/>
                     <TextBlock Text="@gmail.com"
                             Grid.Column="1"
                             Margin="5,0,10,0"
@@ -92,7 +94,7 @@
                         BorderThickness="0"
                         Background="Transparent"
                         VerticalContentAlignment="Center"
-                        Height="40"/>
+                        Height="40" Foreground="#FF4CA1AF"/>
             </Border>
         </StackPanel>
 
@@ -108,7 +110,7 @@
                         FontSize="14"
                         BorderThickness="0"
                         Background="Transparent"
-                        Height="200"/>
+                        Height="200" Foreground="#FF4CA1AF"/>
             </Border>
         </StackPanel>
 
@@ -121,5 +123,6 @@
     </Grid>
 
 </Window>
+
 
 

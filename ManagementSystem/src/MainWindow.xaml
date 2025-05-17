@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Employee_Management_System.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Employee Management System" Height="750" Width="1300" WindowStartupLocation="CenterScreen" Background="#121212">
+        Title="Employee Management System" Height="750" Width="1300" WindowStartupLocation="CenterScreen" Background="White">
 
     <Window.Resources>
         <!-- Enhanced Style for TextBox -->

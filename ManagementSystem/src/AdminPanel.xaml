@@ -4,7 +4,7 @@
         xmlns:wpfAnimatedGif="http://wpfanimatedgif.codeplex.com"
         Title="Admin Panel" Height="750" Width="1300"
         WindowStartupLocation="CenterScreen"
-        Background="#121212" Foreground="White"
+        Background="White" Foreground="White"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <Window.Resources>

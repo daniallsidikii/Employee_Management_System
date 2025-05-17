@@ -1,29 +1,32 @@
 {
   "format": 1,
   "restore": {
-    "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj": {}
+    "C:\\Users\\DELL\\OneDrive\\Desktop\\New\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj": {}
   },
   "projects": {
-    "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj": {
+    "C:\\Users\\DELL\\OneDrive\\Desktop\\New\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
+        "projectUniqueName": "C:\\Users\\DELL\\OneDrive\\Desktop\\New\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
         "projectName": "ChatServer",
-        "projectPath": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
-        "packagesPath": "C:\\Users\\SM TRADERs\\.nuget\\packages\\",
-        "outputPath": "C:\\daniyal\\EMS\\Employee_Management_System\\ManagementSystem\\ChatServer\\obj\\",
+        "projectPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\New\\Employee_Management_System\\ManagementSystem\\ChatServer\\ChatServer.csproj",
+        "packagesPath": "C:\\Users\\DELL\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\DELL\\OneDrive\\Desktop\\New\\Employee_Management_System\\ManagementSystem\\ChatServer\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\SM TRADERs\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config"
+          "C:\\Users\\DELL\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -42,7 +45,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.100"
+        "SdkAnalysisLevel": "9.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -63,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.106/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.204/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

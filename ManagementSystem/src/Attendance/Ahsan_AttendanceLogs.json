@@ -7,5 +7,15 @@
     "HasClockedOut": false,
     "ClockInTime": null,
     "WorkDuration": null
+  },
+  "05/17/2025": {
+    "Logs": [
+      "Attendance marked at 09:03 AM on 05/17/2025",
+      "Clocked In at 12:21 PM on 05/17/2025"
+    ],
+    "HasMarkedAttendance": true,
+    "HasClockedOut": false,
+    "ClockInTime": "2025-05-17T12:21:39.5803729+05:00",
+    "WorkDuration": null
   }
 }

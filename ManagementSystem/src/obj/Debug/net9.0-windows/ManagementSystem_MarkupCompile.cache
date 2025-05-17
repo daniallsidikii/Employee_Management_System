@@ -4,16 +4,16 @@
 winexe
 C#
 .cs
-C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\
+C:\Users\DELL\OneDrive\Desktop\New\Employee_Management_System\ManagementSystem\src\obj\Debug\net9.0-windows\
 ManagementSystem
 none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
-C:\daniyal\EMS\Employee_Management_System\ManagementSystem\src\App.xaml
+C:\Users\DELL\OneDrive\Desktop\New\Employee_Management_System\ManagementSystem\src\App.xaml
 10665109265
 7-1815358091
 16-326352255
-210-905950625
+210483256626
 AdminAttendanceWindow.xaml;AdminHealthWindow.xaml;AdminPanel.xaml;ChatClient.xaml;EmployeeDashboard.xaml;HealthRecordsWindow.xaml;LoginWindow.xaml;MainWindow.xaml;OhsSurveyWindow.xaml;SendEmailWindow.xaml;
 
 False
