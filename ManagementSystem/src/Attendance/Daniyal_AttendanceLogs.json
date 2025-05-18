@@ -15,11 +15,12 @@
     "Logs": [
       "Attendance marked at 12:34 AM on 05/18/2025",
       "Clocked In at 12:34 AM on 05/18/2025",
-      "Clocked Out at 12:34 AM. Worked: 0.00 hours."
+      "Clocked Out at 12:34 AM. Worked: 0.00 hours.",
+      "Clocked In at 09:28 PM on 05/18/2025"
     ],
     "HasMarkedAttendance": true,
     "HasClockedOut": true,
-    "ClockInTime": null,
+    "ClockInTime": "2025-05-18T21:28:09.0061259+05:00",
     "WorkDuration": "00:00:00.9384811"
   }
 }

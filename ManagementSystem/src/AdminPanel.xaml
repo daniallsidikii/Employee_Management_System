@@ -4,7 +4,7 @@
         xmlns:wpfAnimatedGif="http://wpfanimatedgif.codeplex.com"
         Title="Admin Panel" Height="750" Width="1300"
         WindowStartupLocation="CenterScreen"
-        Background=" #efebe6" Foreground="White"
+        Background="#efebe6" Foreground="White"
         WindowStyle="SingleBorderWindow" ResizeMode="CanResize">
 
     <Window.Resources>
@@ -79,7 +79,7 @@
         </Border>
 
         <!-- Buttons Panel -->
-        <WrapPanel Margin="60,200,100,40"
+        <WrapPanel Margin="40,200,140,40"
                 Width="420" 
                 HorizontalAlignment="Right"
                 VerticalAlignment="Top"
@@ -121,24 +121,10 @@
                         Click="ViewEmployeeSurvey_Click"
                         FontSize="16"
                         Style="{StaticResource ModernButtonStyle}"/>
-                </WrapPanel>
-
-        <Grid Width="500" Height="475" Margin="0,65,500,20" HorizontalAlignment="Center">
-        <Rectangle RadiusX="30" RadiusY="30" Width="500" Height="475">
-                <Rectangle.Fill>
-                <VisualBrush Stretch="Fill">
-                        <VisualBrush.Visual>
-                        <Viewbox Width="500" Height="475">
-                                <Image x:Name="myGif"
-                                Width="500" Height="475"
-                                wpfAnimatedGif:ImageBehavior.AnimatedSource="pack://siteoforigin:,,,/Assets/AdminPannel.gif"/>
-                        </Viewbox>
-                        </VisualBrush.Visual>
-                </VisualBrush>
-                </Rectangle.Fill>
-        </Rectangle>
-        </Grid>
-
+        </WrapPanel>
+        <StackPanel Orientation="Horizontal">
+                <Image Source="pack://siteoforigin:,,,/Assets/AdminLogo.png" Width="300" Height="300" Margin="250,0,5,0"/>
+        </StackPanel>
+        
     </Grid>
 </Window>
-

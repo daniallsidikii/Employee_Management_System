@@ -2,6 +2,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Data.SQLite;
 using System.Windows.Media;
+using System.Windows.Input;
 
 namespace Employee_Management_System
 {
@@ -10,9 +11,9 @@ namespace Employee_Management_System
         public LoginWindow()
         {
             InitializeComponent();
-            
+
         }
-        
+
         private void btnLogin_Click(object sender, RoutedEventArgs e)
         {
             string username = UsernameTextBox.Text.Trim();
@@ -31,7 +32,7 @@ namespace Employee_Management_System
             if (IsValidEmployee(username, password))
             {
                 EmployeeDashboard employeeDashboard = new EmployeeDashboard(username); // Employee Dashboard
-                
+
                 employeeDashboard.Show();
                 this.Close();
             }
@@ -76,7 +77,7 @@ namespace Employee_Management_System
             }
         }
 
-        
+
         // Handle TextBox (Username) Placeholder
         private void TextBox_GotFocus(object sender, RoutedEventArgs e)
         {
@@ -119,5 +120,11 @@ namespace Employee_Management_System
                 }
             }
         }
+        private void ForgotPassword_Click(object sender, MouseButtonEventArgs e)
+        {
+            ForgotPasswordWindow window = new ForgotPasswordWindow();
+            window.ShowDialog();
+        }
+
     }
 }

@@ -10,11 +10,11 @@ none
 false
 TRACE;DEBUG;NET;NET9_0;NETCOREAPP
 C:\daniyal\Employee_Management_System\ManagementSystem\src\App.xaml
-11-525743109
-8-1629055314
-17-1099915867
-2171603256627
-AdminAttendanceWindow.xaml;AdminHealthWindow.xaml;AdminPanel.xaml;ChatClient.xaml;EmployeeDashboard.xaml;EmployeeSurveyReportWindow.xaml;HealthRecordsWindow.xaml;LoginWindow.xaml;MainWindow.xaml;OhsSurveyWindow.xaml;SendEmailWindow.xaml;
+12-2051874630
+102059598083
+18760402085
+209701456860
+AdminAttendanceWindow.xaml;AdminHealthWindow.xaml;AdminPanel.xaml;ChatClient.xaml;EmployeeDashboard.xaml;EmployeeSurveyReportWindow.xaml;ForgotPasswordWindow.xaml;HealthRecordsWindow.xaml;LoginWindow.xaml;MainWindow.xaml;OhsSurveyWindow.xaml;SendEmailWindow.xaml;
 
 False
 

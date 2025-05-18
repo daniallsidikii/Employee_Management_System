@@ -48,21 +48,13 @@
         "net9.0-windows7.0": {
           "targetAlias": "net9.0-windows",
           "dependencies": {
-            "LiveChartsCore.SkiaSharpView.WPF": {
+            "Microsoft.Data.Sqlite.Core": {
               "target": "Package",
-              "version": "[2.0.0-beta.90, )"
-            },
-            "MaterialDesignThemes": {
-              "target": "Package",
-              "version": "[5.2.1, )"
+              "version": "[7.0.0, )"
             },
             "Newtonsoft.Json": {
               "target": "Package",
               "version": "[13.0.3, )"
-            },
-            "SkiaSharp": {
-              "target": "Package",
-              "version": "[3.119.0, )"
             },
             "System.Data.SQLite": {
               "target": "Package",

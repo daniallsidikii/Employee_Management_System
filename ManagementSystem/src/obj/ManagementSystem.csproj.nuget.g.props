@@ -19,7 +19,5 @@
   <PropertyGroup Condition=" '$(ExcludeRestorePackageImports)' != 'true' ">
     <PkgEntityFramework Condition=" '$(PkgEntityFramework)' == '' ">C:\Users\SM TRADERs\.nuget\packages\entityframework\6.4.4</PkgEntityFramework>
     <PkgSystem_Data_SQLite_EF6 Condition=" '$(PkgSystem_Data_SQLite_EF6)' == '' ">C:\Users\SM TRADERs\.nuget\packages\system.data.sqlite.ef6\1.0.119</PkgSystem_Data_SQLite_EF6>
-    <PkgMicrosoft_Xaml_Behaviors_Wpf Condition=" '$(PkgMicrosoft_Xaml_Behaviors_Wpf)' == '' ">C:\Users\SM TRADERs\.nuget\packages\microsoft.xaml.behaviors.wpf\1.1.39</PkgMicrosoft_Xaml_Behaviors_Wpf>
-    <PkgMaterialDesignThemes Condition=" '$(PkgMaterialDesignThemes)' == '' ">C:\Users\SM TRADERs\.nuget\packages\materialdesignthemes\5.2.1</PkgMaterialDesignThemes>
   </PropertyGroup>
 </Project>

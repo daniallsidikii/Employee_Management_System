@@ -9,7 +9,7 @@ namespace Employee_Management_System
 {
     public partial class AdminPanel : Window
     {
-       
+
 
         public AdminPanel()
         {
@@ -56,3 +56,9 @@ namespace Employee_Management_System
         }
     }
 }
+
+
+
+
+
+

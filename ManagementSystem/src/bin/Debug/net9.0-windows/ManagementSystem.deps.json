@@ -8,10 +8,8 @@
     ".NETCoreApp,Version=v9.0": {
       "ManagementSystem/1.0.0": {
         "dependencies": {
-          "LiveChartsCore.SkiaSharpView.WPF": "2.0.0-beta.90",
-          "MaterialDesignThemes": "5.2.1",
+          "Microsoft.Data.Sqlite.Core": "7.0.0",
           "Newtonsoft.Json": "13.0.3",
-          "SkiaSharp": "3.119.0",
           "System.Data.SQLite": "1.0.119",
           "WpfAnimatedGif": "2.0.2"
         },
@@ -38,62 +36,18 @@
           }
         }
       },
-      "LiveChartsCore/2.0.0-beta.90": {
-        "dependencies": {
-          "Newtonsoft.Json": "13.0.3"
-        },
-        "runtime": {
-          "lib/net6.0/LiveChartsCore.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
-          }
-        }
-      },
-      "LiveChartsCore.SkiaSharpView/2.0.0-beta.90": {
-        "dependencies": {
-          "LiveChartsCore": "2.0.0-beta.90",
-          "SkiaSharp": "3.119.0"
-        },
-        "runtime": {
-          "lib/net6.0/LiveChartsCore.SkiaSharpView.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
-          }
-        }
-      },
-      "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.90": {
-        "dependencies": {
-          "LiveChartsCore.SkiaSharpView": "2.0.0-beta.90",
-          "SkiaSharp.Views.WPF": "2.88.0-preview.155"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/LiveChartsCore.SkiaSharpView.WPF.dll": {
-            "assemblyVersion": "2.0.0.0",
-            "fileVersion": "2.0.0.0"
-          }
-        }
-      },
-      "MaterialDesignColors/5.2.1": {
-        "runtime": {
-          "lib/net8.0/MaterialDesignColors.dll": {
-            "assemblyVersion": "5.2.1.0",
-            "fileVersion": "5.2.1.0"
-          }
-        }
-      },
-      "MaterialDesignThemes/5.2.1": {
-        "dependencies": {
-          "MaterialDesignColors": "5.2.1",
-          "Microsoft.Xaml.Behaviors.Wpf": "1.1.39"
-        },
-        "runtime": {
-          "lib/net8.0/MaterialDesignThemes.Wpf.dll": {
-            "assemblyVersion": "5.2.1.0",
-            "fileVersion": "5.2.1.0"
-          }
-        }
-      },
       "Microsoft.CSharp/4.7.0": {},
+      "Microsoft.Data.Sqlite.Core/7.0.0": {
+        "dependencies": {
+          "SQLitePCLRaw.core": "2.1.2"
+        },
+        "runtime": {
+          "lib/net6.0/Microsoft.Data.Sqlite.dll": {
+            "assemblyVersion": "7.0.0.0",
+            "fileVersion": "7.0.22.51807"
+          }
+        }
+      },
       "Microsoft.NETCore.Platforms/3.1.0": {},
       "Microsoft.Win32.Registry/4.7.0": {
         "dependencies": {
@@ -104,14 +58,6 @@
       "Microsoft.Win32.SystemEvents/4.7.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0"
-        }
-      },
-      "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
-        "runtime": {
-          "lib/net5.0-windows7.0/Microsoft.Xaml.Behaviors.dll": {
-            "assemblyVersion": "1.1.0.0",
-            "fileVersion": "1.1.39.4716"
-          }
         }
       },
       "Newtonsoft.Json/13.0.3": {
@@ -156,67 +102,14 @@
           }
         }
       },
-      "SkiaSharp/3.119.0": {
+      "SQLitePCLRaw.core/2.1.2": {
         "dependencies": {
-          "SkiaSharp.NativeAssets.Win32": "3.119.0",
-          "SkiaSharp.NativeAssets.macOS": "3.119.0"
+          "System.Memory": "4.5.3"
         },
         "runtime": {
-          "lib/net8.0/SkiaSharp.dll": {
-            "assemblyVersion": "3.119.0.0",
-            "fileVersion": "3.119.0.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.macOS/3.119.0": {
-        "runtimeTargets": {
-          "runtimes/osx/native/libSkiaSharp.dylib": {
-            "rid": "osx",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.NativeAssets.Win32/3.119.0": {
-        "runtimeTargets": {
-          "runtimes/win-arm64/native/libSkiaSharp.dll": {
-            "rid": "win-arm64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x64/native/libSkiaSharp.dll": {
-            "rid": "win-x64",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          },
-          "runtimes/win-x86/native/libSkiaSharp.dll": {
-            "rid": "win-x86",
-            "assetType": "native",
-            "fileVersion": "0.0.0.0"
-          }
-        }
-      },
-      "SkiaSharp.Views.Desktop.Common/2.88.0-preview.155": {
-        "dependencies": {
-          "SkiaSharp": "3.119.0",
-          "System.Drawing.Common": "4.7.0"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.Desktop.Common.dll": {
-            "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.0.0"
-          }
-        }
-      },
-      "SkiaSharp.Views.WPF/2.88.0-preview.155": {
-        "dependencies": {
-          "SkiaSharp": "3.119.0",
-          "SkiaSharp.Views.Desktop.Common": "2.88.0-preview.155"
-        },
-        "runtime": {
-          "lib/netcoreapp3.1/SkiaSharp.Views.WPF.dll": {
-            "assemblyVersion": "2.88.0.0",
-            "fileVersion": "2.88.0.0"
+          "lib/netstandard2.0/SQLitePCLRaw.core.dll": {
+            "assemblyVersion": "2.1.2.1721",
+            "fileVersion": "2.1.2.1721"
           }
         }
       },
@@ -313,6 +206,7 @@
           "Microsoft.Win32.SystemEvents": "4.7.0"
         }
       },
+      "System.Memory/4.5.3": {},
       "System.Security.AccessControl/4.7.0": {
         "dependencies": {
           "Microsoft.NETCore.Platforms": "3.1.0",
@@ -355,47 +249,19 @@
       "path": "entityframework/6.4.4",
       "hashPath": "entityframework.6.4.4.nupkg.sha512"
     },
-    "LiveChartsCore/2.0.0-beta.90": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-yBJQC2uC7q3dEK4c9eo8Niggltnurat4NntA0FCzlXj8cEpqpQiivOzW+dyaOJhh0SBXp9wH739/WnnWhx4k/g==",
-      "path": "livechartscore/2.0.0-beta.90",
-      "hashPath": "livechartscore.2.0.0-beta.90.nupkg.sha512"
-    },
-    "LiveChartsCore.SkiaSharpView/2.0.0-beta.90": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-csbXoxUGIw2Zm18ozV7k0E1DY3hk6HVzjxHnQMrAGfgH5nDSxzytDMSu6Ao9yh8EL4/3hLnleEHUfEodmytfow==",
-      "path": "livechartscore.skiasharpview/2.0.0-beta.90",
-      "hashPath": "livechartscore.skiasharpview.2.0.0-beta.90.nupkg.sha512"
-    },
-    "LiveChartsCore.SkiaSharpView.WPF/2.0.0-beta.90": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-Ea5lHDNLA5VzhEIhIi3yk6/5rLOd1AwHxMOt4TWRo27vnD29CaIRvvm+eGk+tMqLb7gjiifMoFtDBiXgFNUXNg==",
-      "path": "livechartscore.skiasharpview.wpf/2.0.0-beta.90",
-      "hashPath": "livechartscore.skiasharpview.wpf.2.0.0-beta.90.nupkg.sha512"
-    },
-    "MaterialDesignColors/5.2.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-D0HW6E2/kzsnEWCh1KDG/K09Fpkvs9mR3n91Y8YSOsEAoQmGZbVAj58ssyAxGTiIPj2zB4ZVnwxkizwO35/v8A==",
-      "path": "materialdesigncolors/5.2.1",
-      "hashPath": "materialdesigncolors.5.2.1.nupkg.sha512"
-    },
-    "MaterialDesignThemes/5.2.1": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-x8JDqNHJcTLLxIoVts3w7AbSq5Zo0FXTw89XqPN7+n0EKqLXFwWsywiUn08HDyTGAmZVJqbQsWKxKWCI8qfWsQ==",
-      "path": "materialdesignthemes/5.2.1",
-      "hashPath": "materialdesignthemes.5.2.1.nupkg.sha512"
-    },
     "Microsoft.CSharp/4.7.0": {
       "type": "package",
       "serviceable": true,
       "sha512": "sha512-pTj+D3uJWyN3My70i2Hqo+OXixq3Os2D1nJ2x92FFo6sk8fYS1m1WLNTs0Dc1uPaViH0YvEEwvzddQ7y4rhXmA==",
       "path": "microsoft.csharp/4.7.0",
       "hashPath": "microsoft.csharp.4.7.0.nupkg.sha512"
+    },
+    "Microsoft.Data.Sqlite.Core/7.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-WC7SANtaFTmQ/WPyhrE96h88MrH28C7kTBenDf5Eo+IR6CbWM0Uw2pR2++tyYr3qe/zSIsIYroEupB1mLg/adw==",
+      "path": "microsoft.data.sqlite.core/7.0.0",
+      "hashPath": "microsoft.data.sqlite.core.7.0.0.nupkg.sha512"
     },
     "Microsoft.NETCore.Platforms/3.1.0": {
       "type": "package",
@@ -417,13 +283,6 @@
       "sha512": "sha512-mtVirZr++rq+XCDITMUdnETD59XoeMxSpLRIII7JRI6Yj0LEDiO1pPn0ktlnIj12Ix8bfvQqQDMMIF9wC98oCA==",
       "path": "microsoft.win32.systemevents/4.7.0",
       "hashPath": "microsoft.win32.systemevents.4.7.0.nupkg.sha512"
-    },
-    "Microsoft.Xaml.Behaviors.Wpf/1.1.39": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-8PZKqw9QOcu42xk8puY4P1+EXHL9YGOR9b7qhaYx5cILHul456H073tj99vyPcCt0W0781T9RwHqkx507ZyUpQ==",
-      "path": "microsoft.xaml.behaviors.wpf/1.1.39",
-      "hashPath": "microsoft.xaml.behaviors.wpf.1.1.39.nupkg.sha512"
     },
     "Newtonsoft.Json/13.0.3": {
       "type": "package",
@@ -460,40 +319,12 @@
       "path": "runtime.win-x86.runtime.native.system.data.sqlclient.sni/4.4.0",
       "hashPath": "runtime.win-x86.runtime.native.system.data.sqlclient.sni.4.4.0.nupkg.sha512"
     },
-    "SkiaSharp/3.119.0": {
+    "SQLitePCLRaw.core/2.1.2": {
       "type": "package",
       "serviceable": true,
-      "sha512": "sha512-gR9yVoOta2Mc1Rxt15LD65AckfHMfwjIs/3kkD59C9bT2nYYISsE6uz3t4aMPNHA6CgsIL0Ssn+jE5OVilZ1yw==",
-      "path": "skiasharp/3.119.0",
-      "hashPath": "skiasharp.3.119.0.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.macOS/3.119.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-YE1vNn0Nyw2PWtv7hw1PYkKJO0itFiQp9vSqGppZUKzQJqwp28a2jgdCMPfYtOiR8KCnDgZqQoynqJRRaE2ZVg==",
-      "path": "skiasharp.nativeassets.macos/3.119.0",
-      "hashPath": "skiasharp.nativeassets.macos.3.119.0.nupkg.sha512"
-    },
-    "SkiaSharp.NativeAssets.Win32/3.119.0": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-IwC9yx36lOdXVT2DjgmWHl1qkVspfj8ctd4+li8CNnvqdfaTolXCOh6TLznURcPAvzatx9K/tLOB7zT6T8EA9w==",
-      "path": "skiasharp.nativeassets.win32/3.119.0",
-      "hashPath": "skiasharp.nativeassets.win32.3.119.0.nupkg.sha512"
-    },
-    "SkiaSharp.Views.Desktop.Common/2.88.0-preview.155": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-ZE6mpUt9oWu3PtNdoLLHbhfr/pImInzLsV4H2URQPXkKn3MERXdFRmCluSUX3LW6u0c8U7SO1vXA35rTDi4T2w==",
-      "path": "skiasharp.views.desktop.common/2.88.0-preview.155",
-      "hashPath": "skiasharp.views.desktop.common.2.88.0-preview.155.nupkg.sha512"
-    },
-    "SkiaSharp.Views.WPF/2.88.0-preview.155": {
-      "type": "package",
-      "serviceable": true,
-      "sha512": "sha512-wmRmaf/RJYQrK4UuWvFu5K5geZ5UIJpy+bOPZ8i9cyDGxqcjv+1O+HYOyO333+dIU82NBtDhkd0cLZyxfNSc4A==",
-      "path": "skiasharp.views.wpf/2.88.0-preview.155",
-      "hashPath": "skiasharp.views.wpf.2.88.0-preview.155.nupkg.sha512"
+      "sha512": "sha512-A8EBepVqY2lnAp3a8jnhbgzF2tlj2S3HcJQGANTYg/TbYbKa8Z5cM1h74An/vy0svhfzT7tVY0sFmUglLgv+2g==",
+      "path": "sqlitepclraw.core/2.1.2",
+      "hashPath": "sqlitepclraw.core.2.1.2.nupkg.sha512"
     },
     "Stub.System.Data.SQLite.Core.NetStandard/1.0.119": {
       "type": "package",
@@ -557,6 +388,13 @@
       "sha512": "sha512-v+XbyYHaZjDfn0ENmJEV1VYLgGgCTx1gnfOBcppowbpOAriglYgGCvFCPr2EEZyBvXlpxbEsTwkOlInl107ahA==",
       "path": "system.drawing.common/4.7.0",
       "hashPath": "system.drawing.common.4.7.0.nupkg.sha512"
+    },
+    "System.Memory/4.5.3": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-3oDzvc/zzetpTKWMShs1AADwZjQ/36HnsufHRPcOjyRAAMLDlu2iD33MBI2opxnezcVUtXyqDXXjoFMOU9c7SA==",
+      "path": "system.memory/4.5.3",
+      "hashPath": "system.memory.4.5.3.nupkg.sha512"
     },
     "System.Security.AccessControl/4.7.0": {
       "type": "package",

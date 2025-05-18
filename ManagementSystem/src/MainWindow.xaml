@@ -1,48 +1,69 @@
 ﻿<Window x:Class="Employee_Management_System.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Employee Management System" Height="750" Width="1300" WindowStartupLocation="CenterScreen" Background="White">
+        Title="Employee Management System" 
+        Height="780" Width="1300" 
+        WindowStartupLocation="CenterScreen" 
+        Background="#efebe6">
 
     <Window.Resources>
-        <!-- Enhanced Style for TextBox -->
-        <Style TargetType="TextBox">
+        <!-- Modern TextBox Style -->
+        <Style TargetType="TextBox" x:Key="ModernTextBox">
             <Setter Property="Background" Value="White"/>
-            <Setter Property="Foreground" Value="#333"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="Height" Value="40"/>
-            <Setter Property="Width" Value="485"/>
-            <Setter Property="Padding" Value="10,5"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="Width" Value="350"/>
+            <Setter Property="Padding" Value="4,4,4,4"/>
             <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="BorderBrush" Value="#BDC3C7"/>
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="TextBox">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="12"
-                                BorderBrush="#ccc"
-                                BorderThickness="1">
-                            <ScrollViewer x:Name="PART_ContentHost"
-                                          Margin="{TemplateBinding Padding}"/>
+                                CornerRadius="8"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                SnapsToDevicePixels="True">
+                            <Grid>
+                                <ScrollViewer x:Name="PART_ContentHost"
+                                            Padding="{TemplateBinding Padding}"/>
+                                <TextBlock x:Name="placeholderText"
+                                        Text="{TemplateBinding Tag}"
+                                        Foreground="#95A5A6"
+                                        Visibility="Collapsed"
+                                        Margin="12,8,0,0"
+                                        VerticalAlignment="Center"/>
+                            </Grid>
                         </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="Text" Value="">
+                                <Setter TargetName="placeholderText" Property="Visibility" Value="Visible"/>
+                            </Trigger>
+                            <Trigger Property="IsFocused" Value="True">
+                                <Setter Property="BorderBrush" Value="#4CA1AF"/>
+                                <Setter TargetName="border" Property="BorderThickness" Value="2"/>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#F8F9FA"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
                     </ControlTemplate>
+
                 </Setter.Value>
             </Setter>
-            <Style.Triggers>
-                <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#f9f9f9"/>
-                </Trigger>
-            </Style.Triggers>
         </Style>
 
-        <!-- Enhanced Style for Button -->
-        <Style TargetType="Button">
+        <!-- Modern Button Style -->
+        <Style TargetType="Button" x:Key="ModernButton">
             <Setter Property="Background" Value="#4CA1AF"/>
             <Setter Property="Foreground" Value="White"/>
-            <Setter Property="FontSize" Value="16"/>
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="Height" Value="48"/>
-            <Setter Property="Width" Value="170"/>
-            <Setter Property="Padding" Value="6"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="MinWidth" Value="120"/>
+            <Setter Property="Padding" Value="16,8"/>
             <Setter Property="BorderThickness" Value="0"/>
             <Setter Property="Cursor" Value="Hand"/>
             <Setter Property="Template">
@@ -50,20 +71,68 @@
                     <ControlTemplate TargetType="Button">
                         <Border x:Name="border"
                                 Background="{TemplateBinding Background}"
-                                CornerRadius="14"
-                                BorderBrush="#4CA1AF"
-                                BorderThickness="1">
+                                CornerRadius="8"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
                             <ContentPresenter HorizontalAlignment="Center"
-                                              VerticalAlignment="Center"/>
+                                              VerticalAlignment="Center"
+                                              Margin="{TemplateBinding Padding}"/>
                         </Border>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
             <Style.Triggers>
                 <Trigger Property="IsMouseOver" Value="True">
-                    <Setter Property="Background" Value="#5FB2C9"/>
+                    <Setter Property="Background" Value="#3D8B99"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#2C7A8B"/>
                 </Trigger>
             </Style.Triggers>
+        </Style>
+
+        <!-- Danger Button Style -->
+        <Style TargetType="Button" x:Key="DangerButton" BasedOn="{StaticResource ModernButton}">
+            <Setter Property="Background" Value="#E74C3C"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#D62C1A"/>
+                </Trigger>
+                <Trigger Property="IsPressed" Value="True">
+                    <Setter Property="Background" Value="#B82B1C"/>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <!-- ListView Style -->
+        <Style TargetType="ListViewItem" x:Key="ModernListViewItem">
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Background" Value="White"/>
+            <Setter Property="Foreground" Value="#2C3E50"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Padding" Value="8"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ListViewItem">
+                        <Border x:Name="Border" 
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}"
+                                CornerRadius="4">
+                            <GridViewRowPresenter VerticalAlignment="{TemplateBinding VerticalContentAlignment}"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#ECF0F1"/>
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter Property="Background" Value="#D6EAF8"/>
+                                <Setter Property="Foreground" Value="#2C3E50"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
         </Style>
     </Window.Resources>
 
@@ -73,104 +142,172 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
-        <!-- Header -->
-        <Border Height="120" VerticalAlignment="Top" CornerRadius="0,0,15,15">
-            <Border.Background>
-                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
-                    <GradientStop Color="#2C3E50" Offset="0"/>
-                    <GradientStop Color="#4CA1AF" Offset="1"/>
-                </LinearGradientBrush>
-            </Border.Background>
-
+        <!-- Modern Header -->
+        <Border Grid.Row="0" Height="100" Background="#2C3E50">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"/>
                     <ColumnDefinition Width="Auto"/>
                 </Grid.ColumnDefinitions>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Column="0">
-                    <TextBlock Text="Employee Management"
-                               FontSize="42"
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center">
+                    <TextBlock Text="EMPLOYEE MANAGEMENT SYSTEM"
+                               FontSize="26"
                                FontWeight="Bold"
                                FontFamily="Segoe UI"
                                Foreground="White"
                                VerticalAlignment="Center"/>
                     <TextBlock x:Name="lblAdmin"
-                               FontSize="18"
-                               FontWeight="SemiBold"
-                               Foreground="#D3D3D3"
-                               Margin="20,0,0,0"
+                               FontSize="14"
+                               FontWeight="Medium"
+                               Foreground="#BDC3C7"
+                               Margin="20,4,0,0"
                                VerticalAlignment="Center"
-                               Text="(Controller)" />
+                               Text="(Admin Panel)"/>
                 </StackPanel>
             </Grid>
         </Border>
 
         <!-- Main Content -->
-        <Grid Grid.Row="1" Margin="20">
+        <Grid Grid.Row="1" Margin="20,15,20,20">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*"/>
-                <ColumnDefinition Width="3*"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
-            <!-- Left Panel -->
-            <StackPanel Grid.Column="0" VerticalAlignment="Top" Margin="0,0,20,0">
-                <Image Source="pack://siteoforigin:,,,/Assets/cred.png" Width="130" Height="180" HorizontalAlignment="Center"/>
+            <!-- Left Panel - Form -->
+            <Border Grid.Column="0" 
+                    Background="White" 
+                    CornerRadius="8" 
+                    Padding="24"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    MinWidth="450"
+                    MaxWidth="500"
+                    VerticalAlignment="Top">
+                <StackPanel Orientation="Vertical" 
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            Width="Auto">
+                    <Image Source="pack://siteoforigin:,,,/Assets/cred.png" 
+                        Width="120" 
+                        Height="160" 
+                        HorizontalAlignment="Center"
+                        Margin="0,0,0,20"/>
 
-                <TextBox x:Name="EmployeeIdTextBox" Text="Enter Employee ID" GotFocus="EmployeeIdTextBox_GotFocus" LostFocus="EmployeeIdTextBox_LostFocus" Margin="0,0,0,10" Width="350"/>
-                <TextBox x:Name="NameTextBox" Text="Enter Name" GotFocus="NameTextBox_GotFocus" LostFocus="NameTextBox_LostFocus" Margin="0,0,0,10" Width="350"/>
-                <TextBox x:Name="EmailTextBox" Text="Enter Email" GotFocus="EmailTextBox_GotFocus" LostFocus="EmailTextBox_LostFocus" Margin="0,0,0,10" Width="350"/>
-                <TextBox x:Name="SalaryTextBox" Text="Enter Salary" GotFocus="SalaryTextBox_GotFocus" LostFocus="SalaryTextBox_LostFocus" Margin="0,0,0,10" Width="350"/>
-                <TextBox x:Name="DesignationTextBox" Text="Enter Designation" GotFocus="DesignationTextBox_GotFocus" LostFocus="DesignationTextBox_LostFocus" Margin="0,0,0,20" Width="350"/>
+                    <TextBlock Text="Employee Details"
+                            FontSize="18"
+                            FontWeight="SemiBold"
+                            Foreground="#2C3E50"
+                            Margin="60,0,0,20"
+                            HorizontalAlignment="Left"/>
 
-                <Button Content="Add Employee" Click="AddEmployeeButton_Click" Background="#4CA1AF" Foreground="White"/>
-            </StackPanel>
+                    <TextBox x:Name="EmployeeIdTextBox" 
+                            Style="{StaticResource ModernTextBox}"
+                            Tag="Employee ID"
+                            Margin="0,0,0,12"
+                            Width="300"/>
+                    <TextBox x:Name="NameTextBox" 
+                            Style="{StaticResource ModernTextBox}"
+                            Tag="Full Name"
+                            Margin="0,0,0,12"
+                            Width="300"/>
+                    <TextBox x:Name="EmailTextBox" 
+                            Style="{StaticResource ModernTextBox}"
+                            Tag="Email Address"
+                            Margin="0,0,0,12"
+                            Width="300"/>
+                    <TextBox x:Name="SalaryTextBox" 
+                            Style="{StaticResource ModernTextBox}"
+                            Tag="Salary"
+                            Margin="0,0,0,12"
+                            Width="300"/>
+                    <TextBox x:Name="DesignationTextBox" 
+                            Style="{StaticResource ModernTextBox}"
+                            Tag="Designation"
+                            Margin="0,0,0,24"
+                            Width="300"/>
 
-            <!-- Right Panel -->
-            <StackPanel Grid.Column="1">
-                <Border Background="White" CornerRadius="10" Padding="10" BorderBrush="#DDD" BorderThickness="1" Margin="0,0,0,10">
-                    <ListView x:Name="EmployeeListView" ItemsSource="{Binding Employees}" Height="430">
-                        <ListView.Resources>
-                            <Style TargetType="GridViewColumnHeader">
-                                <Setter Property="Background" Value="#ECEFF1"/>
-                                <Setter Property="FontWeight" Value="Bold"/>
-                                <Setter Property="FontSize" Value="15"/>
-                                <Setter Property="Foreground" Value="#333"/>
-                            </Style>
-                            <Style TargetType="ListViewItem">
-                                <Setter Property="FontSize" Value="14"/>
-                                <Setter Property="Background" Value="#FAFAFA"/>
-                                <Setter Property="Foreground" Value="#111"/>
-                                <Setter Property="Margin" Value="2"/>
-                                <Style.Triggers>
-                                    <Trigger Property="IsMouseOver" Value="True">
-                                        <Setter Property="Background" Value="#c8d0dc"/>
-                                    </Trigger>
-                                    <Trigger Property="IsSelected" Value="True">
-                                        <Setter Property="Background" Value="#adb9cb"/>
-                                        <Setter Property="FontWeight" Value="Bold"/>
-                                    </Trigger>
-                                </Style.Triggers>
-                            </Style>
-                        </ListView.Resources>
+                    <!-- Enhanced Button Container -->
+                    <Border Background="Transparent" 
+                            Padding="0">
+                        <Button Content="ADD EMPLOYEE" 
+                                Style="{StaticResource ModernButton}"
+                                Click="AddEmployeeButton_Click"
+                                Height="42"
+                                Width="175"
+                                MinWidth="120"
+                                FontSize="15"
+                                FontWeight="SemiBold"
+                                HorizontalAlignment="Stretch"
+                                Padding="15,0"
+                                Margin="0,0,0,0">
+                            <Button.Effect>
+                                <DropShadowEffect BlurRadius="8" 
+                                                ShadowDepth="2" 
+                                                Color="#40000000" 
+                                                Opacity="0.3"/>
+                            </Button.Effect>
+                        </Button>
+                    </Border>
+                </StackPanel>
+            </Border>
+
+            <!-- Right Panel - Data Grid -->
+            <Border Grid.Column="1" 
+                    Background="White" 
+                    CornerRadius="8" 
+                    Padding="0"
+                    BorderBrush="#E0E0E0"
+                    BorderThickness="1"
+                    Margin="16,0,0,0">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <ListView x:Name="EmployeeListView" 
+                            ItemsSource="{Binding Employees}"
+                            ItemContainerStyle="{StaticResource ModernListViewItem}"
+                            BorderThickness="0"
+                            ScrollViewer.VerticalScrollBarVisibility="Auto">
                         <ListView.View>
                             <GridView>
-                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="50"/>
-                                <GridViewColumn Header="Emp ID" DisplayMemberBinding="{Binding EmployeeId}" Width="90"/>
-                                <GridViewColumn Header="Name" DisplayMemberBinding="{Binding Name}" Width="160"/>
-                                <GridViewColumn Header="Email" DisplayMemberBinding="{Binding Email}" Width="195"/>
-                                <GridViewColumn Header="Salary" DisplayMemberBinding="{Binding Salary}" Width="110"/>
-                                <GridViewColumn Header="Designation" DisplayMemberBinding="{Binding Designation}" Width="180"/>
+                                <GridViewColumn Header="ID" DisplayMemberBinding="{Binding Id}" Width="60"/>
+                                <GridViewColumn Header="EMP ID" DisplayMemberBinding="{Binding EmployeeId}" Width="100"/>
+                                <GridViewColumn Header="NAME" DisplayMemberBinding="{Binding Name}" Width="120"/>
+                                <GridViewColumn Header="EMAIL" DisplayMemberBinding="{Binding Email}" Width="200"/>
+                                <GridViewColumn Header="SALARY" DisplayMemberBinding="{Binding Salary}" Width="100"/>
+                                <GridViewColumn Header="DESIGNATION" DisplayMemberBinding="{Binding Designation}" Width="120"/>
                             </GridView>
                         </ListView.View>
                     </ListView>
-                </Border>
 
-                <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,10,0,0">
-                    <Button Content="Edit" Click="EditButton_Click" Background="#4CA1AF" Margin="0,0,10,0"/>
-                    <Button Content="Delete" Click="DeleteButton_Click" Background="#EF5350"/>
-                </StackPanel>
-            </StackPanel>
+                    <Border Grid.Row="1" 
+                            Background="#F8F9FA" 
+                            CornerRadius="0,0,8,8"
+                            BorderBrush="#E0E0E0"
+                            BorderThickness="0,1,0,0"
+                            Padding="10">
+                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                            <Button Content="EDIT" 
+                                    Style="{StaticResource ModernButton}"
+                                    Click="EditButton_Click"
+                                    Margin="0,0,10,0"
+                                    MinWidth="80"
+                                    Height="32"
+                                    FontSize="13"/>
+                            <Button Content="DELETE" 
+                                    Style="{StaticResource DangerButton}"
+                                    Click="DeleteButton_Click"
+                                    MinWidth="80"
+                                    Height="32"
+                                    FontSize="13"/>
+                        </StackPanel>
+                    </Border>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </Window>
